@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- groupe 5-->
+<html>
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="keywords" content="author, viewport"/>
+	<link type="text/css" rel="stylesheet" href="docteur.css" media="screen"/>
+	<title>Docteur</title>
+	<script><!--JS Scripts--></script>
+	
+	<style><!--CSS Styles--></style>	
+	
+
+	</head>
+	
+	<body>
+		<div id="docteur">
+			<div id="entete">
+				<header><h1>Bienvenu sur la page réservé au medecin</h1>
+				<div id="logo">
+                        <img  src="ece_logo.jpg" alt="Logo ECE" />
+                           
+                </div>
+				</header>
+	
+				<nav id="navigation">
+					<ul>
+					<li><a href="analyse.html">Analyse</a></li>
+					<li><a href="resultat.html">Resultat</a></li>
+					<li><a href="recherche_patient.html">rechercher un patient</a></li>
+					<li><a href="Acceuil.html">Retour</a></li>
+					</ul>
+		
+				</nav>
+			</div>
+			<form method="post" action="identif.php">
+			<h2>Connectez vous</h2>
+			<p><i>Les champs marqués d'un astérisque (*) sont obligatoires</i></p>
+				<p>
+				<label for="Nom">Votre Nom :</label>
+				<input type="text" name="Nom" id="Nom" required="required" placeholder="Ex : Dupond" size="30" maxlength="10" />
+				<font color="red">*</font>
+				</p>
+				<p>
+				<label for="Prenom">Votre Prénom :</label>
+				<input type="text" name="Prenom" id="Prenom" required placeholder="Ex : Pierre" size="30" maxlength="10" />
+				<font color="red">*</font>
+				</p>
+				<p>
+				<label for="email">Votre adresse mail:</label>
+				<input type="email" name="email" id="email" required placeholder="Ex : pierre.dupond@gmail.fr" size="30" maxlength="10" />
+				<font color="red">*</font>
+				</p>
+				<p>
+				<label for="date">Votre date de naissance:</label>
+				<input type="date" name="date" id="date" required size="30" maxlength="10" />
+				<font color="red">*</font>
+				</p>
+				<p>
+				<label for="password">Votre mot de passe:</label>
+				<input type="password" name="password" id="password" required size="30" maxlength="10" />
+				<font color="red">*</font>
+				</p>
+				<?php if($password =="pass")  {
+					echo"Success!";
+					} 
+					else{
+						echo"Erreur";
+						}
+				?>
+				
+				<input type="submit" value="Envoyer" />
+			</form>
+	
+		<footer>AUDRAIN, 09/01/2018</footer>
+	</div>
+	</body>
+</html>
