@@ -17,14 +17,19 @@ $prenom = strip_tags(htmlspecialchars($_POST['prenom']));
 $date = strip_tags(htmlspecialchars($_POST['date']));
 $email_address = strip_tags(htmlspecialchars($_POST['email']));
 $mdp = strip_tags(htmlspecialchars($_POST['mdp']));
-$type = strip_tags(htmlspecialchars($_POST['type']));
-	
-// Create the email and send the message
-$to = 'david.thebaud@edu.ece.fr'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
-$email_subject = "Website Contact Form:  $name";
-$email_body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message";
-$headers = "From: noreply@edu.ece.fr\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
-$headers .= "Reply-To: $email_address";	
-mail($to,$email_subject,$email_body,$headers);
-return true;			
-?>
+$type = strip_tags(htmlspecialchars($_POST['type']));	
+include('function.php');
+try
+{
+	Session_start();
+	$base = new mysqli('localhost', 'root','','sante');
+}
+catch(Exception $e)
+{
+	die('Erreur:'.$e->getMessage());
+}
+$pass_hache= password_hash($_POST['password'],PASSWORD_DEFAULT);
+$sql='INSERT INTO membre(Nom, Prenom, Pass, BirthDate, Email, Type) VALUES("'.$_POST['name'].'","'.$_POST['prenom'].'","'.$pass_hache.'","'.$_POST['date'].'","'.$_POST['email'].'","'.$_POST['type'].'")';
+$req = $base->query($sql);
+header('refresh:1;url=http://localhost/Acceuil.html');
+?>		
