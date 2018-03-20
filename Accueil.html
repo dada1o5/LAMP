@@ -101,21 +101,21 @@
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Date de naissance</label>
-                  <input class="form-control" id="inscriptionDate" type="date" required="required" data-validation-required-message="Entrez votre date de naissance">
+                  <input class="form-control" id="inscriptionDate" type="date" required="required" data-validation-required-message="Entrez votre date de naissance.">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Adresse mail</label>
-                  <input class="form-control" id="inscriptionEmail" type="email" placeholder="Adresse mail" required="required" data-validation-required-message="Entrez votre Email">
+                  <input class="form-control" id="inscriptionEmail" type="email" placeholder="Adresse mail" required="required" data-validation-required-message="Entrez votre Email.">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Mot de passe</label>
-                  <input class="form-control" id="inscriptionPassword" type="password" placeholder="Mot de passe" required="required" data-validation-required-message="Entrez votre mot de passe">
+                  <input class="form-control" id="inscriptionPassword" type="password" placeholder="Mot de passe" required="required" data-validation-required-message="Entrez votre mot de passe.">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
@@ -123,7 +123,7 @@
 				<div class="form-group floating-form-group controls mb-0 pb-2">
                   <label>Vous êtes ?</label>
 				  
-					<select class="form-control" id="inscriptionStatut" required="required" data-validation-required-message="Please enter a message.">
+					<select class="form-control" id="inscriptionStatut" required="required" data-validation-required-message="Choisissez votre catégorie">
 						<option class="form-control" label="Choisissez votre catégorie"></option>
 						<option class="form-control" value="Docteur">Docteur</option>
 						<option class="form-control" value="Patient">Patient</option>
@@ -132,7 +132,7 @@
                 </div>
 				</div>
 				<br>
-				
+				<div id="success"></div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary btn-xl" id="sendInscriptionButton">S'inscrire</button>
 				</div>
@@ -171,29 +171,29 @@
             <form name="sentMessage" id="contactForm" novalidate="novalidate">
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Name</label>
-                  <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name.">
+                  <label>Nom</label>
+                  <input class="form-control" id="name" type="text" placeholder="Nom" required="required" data-validation-required-message="Entrez votre nom.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Email Address</label>
-                  <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address.">
+                  <label>Adresse Mail</label>
+                  <input class="form-control" id="email" type="email" placeholder="Adresse Mail" required="required" data-validation-required-message="Entrez votre Email.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Phone Number</label>
-                  <input class="form-control" id="phone" type="tel" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your phone number.">
+                  <label>Numéro de téléphone</label>
+                  <input class="form-control" id="phone" type="tel" placeholder="Numéro de téléphone" required="required" data-validation-required-message="Entrez votre numéro.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Message</label>
-                  <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Please enter a message."></textarea>
+                  <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Écrivez un message."></textarea>
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
@@ -272,6 +272,7 @@
     <!-- JavaScript Forulaire contact-->
     <script src="bootstrap/js/jqBootstrapValidation.js"></script>
     <script src="bootstrap/js/contact_me.js"></script>
+	<script src="bootstrap/js/inscription.js"></script>
 
     <!-- Custom scripts for this template -->
     <script src="bootstrap/js/freelancer.min.js"></script>
