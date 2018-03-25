@@ -14,11 +14,7 @@ $(function() {
       var email = $("input#inscriptionEmail").val();
       var mdp = $("input#inscriptionPassword").val();
       var type = $("input#inscriptionStatut").val();
-      var firstName = name; // For Success/Failure Message
-      // Check for white space in name for Success/Fail message
-      if (firstName.indexOf(' ') >= 0) {
-        firstName = name.split(' ').slice(0, -1).join(' ');
-      }
+      
       $this = $("#sendInscriptionButton");
       $this.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
       $.ajax({

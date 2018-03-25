@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -25,51 +23,58 @@
   <!-- Custom styles for this template-->
   <link href="docteur.css" rel="stylesheet">
 </head>
-
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-  <!-- Navigation-->
+  <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html">DocLink</a>
+    <a class="navbar-brand" href="Docteur.html">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
+	<!--Bouton pour petit ecran-->
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse bg-secondary" id="navbarResponsive">
+	<!--Barre de navigation coté gauche-->
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.html">
+	  <!--Tableau de bord-->
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
+          <a class="nav-link" href="Docteur.html">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="charts.html">
+        <!--Mes relevés-->
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relevés">
+          <a class="nav-link" href="releves.html">
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">Mes relevés</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+		<!--Mes rendez-vous-->
+	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
           <a class="nav-link" href="tables.html">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+        <!--Mon profil-->
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
           <a class="nav-link" href="profil.html">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>  
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+        <!--Mes ordonnances-->
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
           <a class="nav-link" href="ordonnance.html">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Mes ordonnances</span>
           </a>
           
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+        <!--Mes medecins-->
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
           <a class="nav-link" href="ListeMedecins.html">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes médecins</span>
@@ -77,19 +82,22 @@
          
         </li>    
       </ul>
-      <ul class="navbar-nav sidenav-toggler">
+      <!--Bouton fleche du bas-->
+	  <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
           <a class="nav-link text-center" id="sidenavToggler">
             <i class="fa fa-fw fa-angle-left"></i>
           </a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">
+     <!--Barre du haut-->
+	 <ul class="navbar-nav ml-auto">
+	 <!--Menu déroulant messages-->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-envelope"></i>
-            <span class="d-lg-none">Messages
-              <span class="badge badge-pill badge-primary">12 New</span>
+            <span class="d-lg-none">
+			Messages
             </span>
             <span class="indicator text-primary d-none d-lg-block">
               <i class="fa fa-fw fa-circle"></i>
@@ -97,6 +105,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="messagesDropdown">
             <h6 class="dropdown-header">Nouveaux messages:</h6>
+			<!--Permet de diviser les élements-->
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
               <strong>David Miller</strong>
@@ -119,11 +128,12 @@
             <a class="dropdown-item small" href="#">Voir tout les messages</a>
           </div>
         </li>
-        <li class="nav-item dropdown">
+        <!--Menu déroulant alertes-->
+		<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-bell"></i>
-            <span class="d-lg-none">Alertes
-              <span class="badge badge-pill badge-warning">6 New</span>
+            <span class="d-lg-none">
+			Alertes
             </span>
             <span class="indicator text-warning d-none d-lg-block">
               <i class="fa fa-fw fa-circle"></i>
@@ -162,25 +172,19 @@
             <a class="dropdown-item small" href="#">Voir toutes les alertes</a>
           </div>
         </li>
-        <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0 mr-lg-2">
-            <div class="input-group">
-              <input class="form-control" type="text" placeholder="Search for...">
-              <span class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-          </form>
+        <!--Bienvenue-->
+		<li class="nav-item">
+          <h3 class="text-white">Bienvenue<?php echo $_SESSION['pseudo'] . ' !' ?></h3>
         </li>
-        <li class="nav-item">
+        <!--Bouton deconnexion-->
+		<li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Déconnexion</a>
         </li>
       </ul>
     </div>
   </nav>
+  <!-- Contenu de la page A MODIFIER-->
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -1062,7 +1066,7 @@
           <div class="modal-body">Cliquez sur "Déconnexion" pour quitter cette session</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <a class="btn btn-primary" href="login.html">Déconnexion</a>
+            <a class="btn btn-primary" href="Accueil.html">Déconnexion</a>
           </div>
         </div>
       </div>
