@@ -86,39 +86,39 @@
 		<hr class="barre-dark mb-5">
 		<div class="row">
 		<div class="col-lg-8 mx-auto">
-			<form name="inscription" id="inscriptionForm" method="post" action="php/inscription.php">
+			<form name="inscription" id="inscriptionForm" method="POST" action="php/inscription.php">
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Nom</label>
-                  <input class="form-control" id="inscriptionNom" type="text" placeholder="Nom" >
+                  <input class="form-control" name="nom" id="nom" type="text" placeholder="Nom" >
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Prénom</label>
-                  <input class="form-control" id="inscriptionPrenom" type="text" placeholder="Prénom">
+                  <input class="form-control" name="prenom" id="prenom" type="text" placeholder="Prénom">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Date de naissance</label>
-                  <input class="form-control" id="inscriptionDate" type="date">
+                  <input class="form-control" name="date" id="date" type="date">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Adresse mail</label>
-                  <input class="form-control" id="inscriptionEmail" type="email" placeholder="Adresse mail">
+                  <input class="form-control" name="email" id="email" type="email" placeholder="Adresse mail">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Mot de passe</label>
-                  <input class="form-control" id="inscriptionPassword" type="password" placeholder="Mot de passe">
+                  <input class="form-control" name="mdp" id="mdp" type="password" placeholder="Mot de passe">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
@@ -126,7 +126,7 @@
 				<div class="form-group floating-form-group controls mb-0 pb-2">
                   <label>Vous êtes ?</label>
 				  
-					<select class="form-control" id="inscriptionStatut">
+					<select class="form-control" name="statut" id="statut">
 						<option class="form-control" label="Choisissez votre catégorie"></option>
 						<option class="form-control" value="Docteur">Docteur</option>
 						<option class="form-control" value="Patient">Patient</option>
