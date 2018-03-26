@@ -1,3 +1,18 @@
+<?php
+
+session_start();
+
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+
+if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
+{
+	$getid = intval($_GET['id_utilisateur']);
+	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
+	$requser->execute(array($getid));
+	$userinfo = $requser->fetch();
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -161,7 +176,7 @@
         </li>
         <!--Bienvenue-->
 		<li class="nav-item">
-          <h3 class="text-white">Bienvenue<?php echo $_SESSION['pseudo'] . ' !' ?></h3>
+          <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
         </li>
         <!--Bouton deconnexion-->
 		<li class="nav-item">
@@ -214,7 +229,7 @@
           <div class="modal-body">Cliquez sur "Déconnexion" pour quitter cette session</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <a class="btn btn-primary" href="Accueil.html">Déconnexion</a>
+            <a class="btn btn-primary" href="deconnexion.php">Déconnexion</a>
           </div>
         </div>
       </div>
@@ -237,3 +252,7 @@
 </body>
 
 </html>
+<?php
+}
+?>
+
