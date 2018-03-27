@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -255,6 +255,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 </body>
 
 </html>
+
 <?php
 }
 ?>

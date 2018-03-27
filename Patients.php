@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -79,7 +79,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
-          </a>  
+          </a>
         </li>
         <!--Mes ordonnances-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
@@ -87,7 +87,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Mes ordonnances</span>
           </a>
-          
+
         </li>
         <!--Mes medecins-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
@@ -95,8 +95,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes médecins</span>
           </a>
-         
-        </li>    
+
+        </li>
       </ul>
       <!--Bouton fleche du bas-->
 	  <ul class="navbar-nav sidenav-toggler">
@@ -210,8 +210,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <li class="breadcrumb-item active">Mon tableau de bord</li>
       </ol>
-     
-     
+
+
             <!-- Example Social Card-->
             <div class="card mb-3">
 			<h2 class="text-center text-uppercase text-secondary mb-0">Mes actualités</h2>
@@ -220,18 +220,18 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
               </a>
               <div class="card-body">
                 <h6 class="card-title mb-1"><a href="#"><?php echo $userinfo['prenom'];echo "   "; echo $userinfo['nom']  ?> </a></h6>
-                <p class="card-text small">Vos actualités récentes sur DocLink sont les suivantes : 
-                  
+                <p class="card-text small">Vos actualités récentes sur DocLink sont les suivantes :
+
                 </p>
               </div>
-              
+
               <hr class="my-0">
               <div class="card-body small bg-faded">
                 <div class="media">
                   <img id="avatar" class="d-flex mr-3" src="Images/logo.png" alt="Medlink">
                   <div class="media-body">
                     <h6 class="mt-0 mb-1"><a href="#">DocLink</a></h6>Les articles qui nous ont interpellé ces derniers temps sont:
-                    <iframe 
+                    <iframe
 					 src="https://www.20minutes.fr/sante/2244707-20180327-hepatite-b-pres-300-millions-personnes-touchees-monde"
 					 width="100%" height="400"
 					 sandbox>
@@ -245,9 +245,9 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
                   </div>
                 </div>
               </div>
-              
+
             </div>
-           
+
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">

@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -216,16 +216,16 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		while ($donnees = $reqpatients->fetch()){
 			if($donnees['statut']=='Patient')
 			{
-			?>				 			
+			?>
 			<li><a href="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>?id_patient=<?php echo $donnees['id_utilisateur']; ?>"><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></a></li>
 			<?php
-			
+
 			}
 		}
-		?>	
+		?>
         </ul>
       </div>
-	
+
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
