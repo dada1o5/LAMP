@@ -54,7 +54,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patient.html">
+          <a class="nav-link" href="Docteur.php">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
