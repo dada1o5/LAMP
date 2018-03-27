@@ -1,17 +1,3 @@
-<?php
-
-session_start();
-
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
-
-if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
-{
-	$getid = intval($_GET['id_utilisateur']);
-	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
-	$requser->execute(array($getid));
-	$userinfo = $requser->fetch();
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -28,8 +14,6 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <!-- Plugin CSS -->
 		<link href="bootstrap/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
-		<!--php-->
-		<link rel="stylesheet" href="patient.php" />
   <!-- Bootstrap core CSS-->
   <link href="bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -55,35 +39,35 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="Patient.html">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
         <!--Mes relevés-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relevés">
-          <a class="nav-link" href="releves.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="releves.html">
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">Mes relevés</span>
           </a>
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="tables.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="tables.html">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="profil.html">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>  
         </li>
         <!--Mes ordonnances-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
-          <a class="nav-link" href="ordonnance.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="ordonnance.html">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Mes ordonnances</span>
           </a>
@@ -91,7 +75,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <!--Mes medecins-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
-          <a class="nav-link" href="ListeMedecins.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="ListeMedecins.html">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes médecins</span>
           </a>
@@ -190,7 +174,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <!--Bienvenue-->
 		<li class="nav-item">
-          <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
+          <h3 class="text-white">Bienvenue<?php echo $_SESSION['pseudo'] . ' !' ?></h3>
         </li>
         <!--Bouton deconnexion-->
 		<li class="nav-item">
@@ -209,45 +193,53 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <a href="#">Tableau de bord</a>
         </li>
         <li class="breadcrumb-item active">Mon tableau de bord</li>
+		<li class="breadcrumb-item active"> Mes messages</li>
       </ol>
-     
-     
-            <!-- Example Social Card-->
-            <div class="card mb-3">
-			<h2 class="text-center text-uppercase text-secondary mb-0">Mes actualités</h2>
-              <a href="#">
-                <img id="actualites" class="card-img-top img-fluid w-100" src="https://www.sitti.fr/themes/2015/08/s/sitti.fr/images/diapo/actualites/image1.jpg" alt="">
-              </a>
-              <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#"><?php echo $userinfo['prenom'];echo "   "; echo $userinfo['nom']  ?> </a></h6>
-                <p class="card-text small">Vos actualités récentes sur DocLink sont les suivantes : 
+    
+      <!-- Example DataTables Card-->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Data Table Example</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Expéditeur</th>
+                  <th>Date</th>
                   
-                </p>
-              </div>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Titre</th>
+                  <th>Expéditeur</th>
+                  <th>Date</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+                  <td>2011/04/25</td>
+                 
+                </tr>
+                <tr>
+                  <td>Garrett Winters</td>
+                  <td>Accountant</td>
+                  
+                  <td>$170,750</td>
+                </tr>
               
-              <hr class="my-0">
-              <div class="card-body small bg-faded">
-                <div class="media">
-                  <img id="avatar" class="d-flex mr-3" src="Images/logo.png" alt="Medlink">
-                  <div class="media-body">
-                    <h6 class="mt-0 mb-1"><a href="#">DocLink</a></h6>Les articles qui nous ont interpellé ces derniers temps sont:
-                    <iframe 
-					 src="https://www.20minutes.fr/sante/2244707-20180327-hepatite-b-pres-300-millions-personnes-touchees-monde"
-					 width="100%" height="400"
-					 sandbox>
-					  <p>
-						<a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/">
-						  Un lien à utiliser dans les cas où les navigateurs ne supportent
-						  pas les <i>iframes</i>.
-						</a>
-					  </p>
-					</iframe>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
            
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+    </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -274,7 +266,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="modal-body">Cliquez sur "Déconnexion" pour quitter cette session</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <a class="btn btn-primary" href="deconnexion.php">Déconnexion</a>
+            <a class="btn btn-primary" href="Accueil.html">Déconnexion</a>
           </div>
         </div>
       </div>
@@ -297,7 +289,3 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 </body>
 
 </html>
-
-<?php
-}
-?>

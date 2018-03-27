@@ -843,3 +843,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 </body>
 
 </html>
+
+<?php
+}
+?>
