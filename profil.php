@@ -221,7 +221,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		<hr class="barre-dark mb-5">
 		<div class="card mb-3">
 		<div id="photo" >
-       <img class="card-img-top img-fluid w-100" src="https://picsum.photos/500/500?image=996" alt="">
+        <a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="card-img-top img-fluid w-100" src="https://picsum.photos/500/500?image=996" alt=""></a>
 	   </div>
 	   </div>
 		<div class="row">
@@ -348,6 +348,28 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
             <a class="btn btn-primary" href="deconnexion.php">Déconnexion</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- Changer photo profil-->
+    <div class="modal fade" id="profilModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Changez votre photo de profil</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" action="image.php" enctype="multipart/form-data">
+			<label for="profil">Icône du fichier (JPG, PNG ou GIF | max. 15 Ko) :</label><br />
+			<input type="file" name="profil" id="profil" /><br />
+		  </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <a class="btn btn-primary" href="deconnexion.php">Enregistrer</a>
           </div>
         </div>
       </div>
