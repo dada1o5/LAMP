@@ -55,35 +55,35 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patient.html">
+          <a class="nav-link" href="Patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
         <!--Mes relevés-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relevés">
-          <a class="nav-link" href="releves.html">
+          <a class="nav-link" href="releves.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">Mes relevés</span>
           </a>
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="tables.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil.html">
+          <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>  
         </li>
         <!--Mes ordonnances-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
-          <a class="nav-link" href="ordonnance.html">
+          <a class="nav-link" href="ordonnance.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Mes ordonnances</span>
           </a>
@@ -91,7 +91,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <!--Mes medecins-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
-          <a class="nav-link" href="ListeMedecins.html">
+          <a class="nav-link" href="ListeMedecins.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes médecins</span>
           </a>
