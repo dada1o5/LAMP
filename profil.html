@@ -1,4 +1,68 @@
 <!DOCTYPE html>
+<?php
+session_start();
+
+$bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
+
+
+if(isset($_POST['sendinscriptionButton']))
+{
+	$nom = htmlspecialchars($_POST['nom']);
+	$prenom = htmlspecialchars($_POST['prenom']);
+	$date = htmlspecialchars($_POST['date']);
+	$email = htmlspecialchars($_POST['email']);
+	$mdp = sha1($_POST['mdp']);
+	$conf_mdp = sha1($_POST['conf_mdp']);
+	$statut = htmlspecialchars($_POST['statut']);
+
+	if(!empty($_POST['nom']) AND !empty($_POST['prenom']) AND !empty($_POST['date']) AND !empty($_POST['email']) AND !empty($_POST['mdp']) AND !empty($_POST['conf_mdp']) AND !empty($_POST['statut']))
+	{
+		if(filter_var($email, FILTER_VALIDATE_EMAIL))
+		{
+			$reqmail = $bdd->prepare("SELECT * FROM utilisateurs WHERE email=?");
+			$reqmail->execute(array($email));
+			$mailexist=$reqmail->rowCount();
+			
+			if($mailexist==0)
+			{
+				if($mdp == $conf_mdp)
+				{
+					$insertmbr = $bdd->prepare("INSERT INTO utilisateurs(nom, prenom, date, email,mdp, conf_mdp, statut) VALUES(?, ?, ?, ?, ?, ?, ?)");
+					$insertmbr->execute(array($nom, $prenom, $date, $email, $mdp, $conf_mdp, $statut));	
+
+					$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE email=?');
+					$requser->execute(array($email));
+					$userinfo = $requser->fetch();
+					
+					if($statut=='Docteur')
+					{
+						header("Location:Docteur.php?id_utilisateur=".$userinfo['id_utilisateur']);
+					}
+					
+					if($statut=='Patient')
+					{
+						header("Location:Patients.php?id_utilisateur=".$userinfo['id_utilisateur']);
+					}
+					
+				}
+			}
+			else
+			{
+				$erreur_ins = "Cette adresse e-mail est déjà utilisée !";
+			}
+		}
+		else
+		{
+			$erreur_ins = "Votre adresse e-mail n'est pas valide !";
+		}
+	}
+	else
+	{
+		$erreur_ins = "Veuillez remplir tous les champs !";
+	}
+}
+
+?>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -242,6 +306,48 @@
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
+				
+				<div class="control-group">
+				<div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Groupe sanquin</label>
+                  <input class="form-control" id="inscriptionNom" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
+                  <p class="help-block text-danger"></p>
+                </div>
+				</div>
+				<div class="control-group">
+				<div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Taille</label>
+                  <input class="form-control" id="inscriptionNom" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
+                  <p class="help-block text-danger"></p>
+                </div>
+				</div><div class="control-group">
+				<div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Poids</label>
+                  <input class="form-control" id="inscriptionNom" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
+                  <p class="help-block text-danger"></p>
+                </div>
+				</div><div class="control-group">
+				<div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Medecin généraliste</label>
+                  <input class="form-control" id="inscriptionNom" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
+                  <p class="help-block text-danger"></p>
+                </div>
+				</div>
+				<div class="control-group">
+				<div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Handicapé</label>
+                  <input class="form-control" id="inscriptionNom" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
+                  <p class="help-block text-danger"></p>
+                </div>
+				</div>
+				<div class="control-group">
+				<div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Numéro de sécurité social</label>
+                  <input class="form-control" id="inscriptionNom" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
+                  <p class="help-block text-danger"></p>
+                </div>
+				</div>
+				<div class="control-group">
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Ancien mot de passe</label>
@@ -258,7 +364,7 @@
 				</div>
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>confirmer mot de passe</label>
+                  <label>Confirmer mot de passe</label>
                   <input class="form-control" id="inscriptionPassword" type="password" placeholder="Mot de passe" required="required" data-validation-required-message="Entrez votre mot de passe.">
                   <p class="help-block text-danger"></p>
                 </div>
