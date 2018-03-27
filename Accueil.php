@@ -1,3 +1,108 @@
+<?php
+session_start();
+
+$bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
+
+if(isset($_POST['sendinscriptionButton']))
+{
+	$nom = htmlspecialchars($_POST['nom']);
+	$prenom = htmlspecialchars($_POST['prenom']);
+	$date = htmlspecialchars($_POST['date']);
+	$email = htmlspecialchars($_POST['email']);
+	$mdp = sha1($_POST['mdp']);
+	$conf_mdp = sha1($_POST['conf_mdp']);
+	$statut = htmlspecialchars($_POST['statut']);
+
+	if(!empty($_POST['nom']) AND !empty($_POST['prenom']) AND !empty($_POST['date']) AND !empty($_POST['email']) AND !empty($_POST['mdp']) AND !empty($_POST['conf_mdp']) AND !empty($_POST['statut']))
+	{
+		if(filter_var($email, FILTER_VALIDATE_EMAIL))
+		{
+			$reqmail = $bdd->prepare("SELECT * FROM utilisateurs WHERE email=?");
+			$reqmail->execute(array($email));
+			$mailexist=$reqmail->rowCount();
+			
+			if($mailexist==0)
+			{
+				if($mdp == $conf_mdp)
+				{
+					$insertmbr = $bdd->prepare("INSERT INTO utilisateurs(nom, prenom, date, email,mdp, conf_mdp, statut) VALUES(?, ?, ?, ?, ?, ?, ?)");
+					$insertmbr->execute(array($nom, $prenom, $date, $email, $mdp, $conf_mdp, $statut));	
+
+					$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE email=?');
+					$requser->execute(array($email));
+					$userinfo = $requser->fetch();
+					
+					if($statut=='Docteur')
+					{
+						header("Location:Docteur.php?id_utilisateur=".$userinfo['id_utilisateur']);
+					}
+					
+					if($statut=='Patient')
+					{
+						header("Location:Patients.php?id_utilisateur=".$userinfo['id_utilisateur']);
+					}
+					
+				}
+			}
+			else
+			{
+				$erreur_ins = "Cette adresse e-mail est déjà utilisée !";
+			}
+		}
+		else
+		{
+			$erreur_ins = "Votre adresse e-mail n'est pas valide !";
+		}
+	}
+	else
+	{
+		$erreur_ins = "Veuillez remplir tous les champs !";
+	}
+}
+
+if(isset($_POST['connect']))
+{ 
+	$emailconnect = htmlspecialchars($_POST['connexionemail']);
+	$mdpconnect = sha1($_POST['connexionmdp']);
+	
+	if(!empty($emailconnect) AND !empty($mdpconnect))
+	{
+		$requser= $bdd->prepare("SELECT * FROM utilisateurs WHERE email=? AND mdp=?");
+		$requser->execute(array($emailconnect, $mdpconnect));
+		$userexist= $requser->rowCount();
+		
+		if($userexist == 1)
+		{
+			$userinfo = $requser->fetch();
+			
+			$_SESSION['id_utilisateur']=$userinfo['id_utilisateur'];
+			$_SESSION['email']=$userinfo['email'];
+			
+			if($userinfo['statut']=='Docteur')
+			{
+				header("Location:Docteur.php?id_utilisateur=".$_SESSION['id_utilisateur']);
+			}
+			
+            if($userinfo['statut']=='Patient')
+			{
+				header("Location:Patients.php?id_utilisateur=".$_SESSION['id_utilisateur']);
+			}
+			
+		}
+		else
+		{
+			echo " Vous avez entré les mauvais identifiants !";
+		}
+	}
+	else
+	{
+		echo "Tous les champs doivent être complétés !";
+	}
+}
+
+
+?>		
+
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -27,23 +132,23 @@
 		</div>
 		<div class="connexion text-white mb-0">
 		<!--Formulaire de connexion -->
-			<form name="connexion" id="connexion" novalidate="novalidate">
+			<form method="POST" action="">
 				<div class="row">
 					<div class="col-lg-4 connexion mx-auto" >
 					<div class="control-group">
-						<input class="form-control" id="connexionEmail" type="email" placeholder="Adresse mail" required="required" data-validation-required-message="Entre votre adresse mail.">
+						<input class="form-control" name="connexionemail" id="connexionemail" type="email" placeholder="Adresse mail">
 						<p class="help-block text-danger"></p>
 					</div>
 					</div>
 					<div class="col-lg-4 connexion mx-auto" >
 					<div class="control-group">
-						<input class="form-control" id="connexionPassword" type="password" placeholder="Mot de passe" required="required" data-validation-required-message="Entrez votre mot de passe">
+						<input class="form-control" name="connexionmdp" id="connexionmdp" type="password" placeholder="Mot de passe">
 						<p class="help-block text-danger"></p>
 					</div>
 					</div>
 					<div class="col-lg-4 connexion mx-auto" >
 					<div class="form-group">
-						<button type="submit" class="btn btn-secondary ">Se connecter
+						<button type="submit" name="connect" id="connect" class="btn btn-secondary ">Se connecter
 						</button>
 					</div>
 					</div>
@@ -86,39 +191,56 @@
 		<hr class="barre-dark mb-5">
 		<div class="row">
 		<div class="col-lg-8 mx-auto">
-			<form name="inscription" id="inscriptionForm" novalidate="novalidate">
+		<?php
+			if(isset($_POST['connect']))
+			{
+				echo "coucou";
+			}
+			if(isset($erreur_ins))
+			{
+				echo $erreur_ins;
+			}
+		?>
+			<form name="inscription" id="inscriptionForm" method="POST" action="">
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Nom</label>
-                  <input class="form-control" id="inscriptionNom" type="text" placeholder="Nom" required="required" data-validation-required-message="Entrez votre nom.">
+                  <input class="form-control" name="nom" id="nom" type="text" placeholder="Nom" >
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Prénom</label>
-                  <input class="form-control" id="inscriptionPrenom" type="text" placeholder="Prénom" required="required" data-validation-required-message="Entrez votre prénom.">
+                  <input class="form-control" name="prenom" id="prenom" type="text" placeholder="Prénom">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Date de naissance</label>
-                  <input class="form-control" id="inscriptionDate" type="date" required="required" data-validation-required-message="Entrez votre date de naissance.">
+                  <input class="form-control" name="date" id="date" type="date">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Adresse mail</label>
-                  <input class="form-control" id="inscriptionEmail" type="email" placeholder="Adresse mail" required="required" data-validation-required-message="Entrez votre Email.">
+                  <input class="form-control" name="email" id="email" type="email" placeholder="Adresse mail">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Mot de passe</label>
-                  <input class="form-control" id="inscriptionPassword" type="password" placeholder="Mot de passe" required="required" data-validation-required-message="Entrez votre mot de passe.">
+                  <input class="form-control" name="mdp" id="mdp" type="password" placeholder="Mot de passe">
+                  <p class="help-block text-danger"></p>
+                </div>
+				</div>
+				<div class="control-group">
+				<div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Confirmez votre mot de passe</label>
+                  <input class="form-control" name="conf_mdp" id="inscriptionPassword" type="password" placeholder="Confirmez votre mot de passe">
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
@@ -126,7 +248,7 @@
 				<div class="form-group floating-form-group controls mb-0 pb-2">
                   <label>Vous êtes ?</label>
 				  
-					<select class="form-control" id="inscriptionStatut" required="required" data-validation-required-message="Choisissez votre catégorie">
+					<select class="form-control" name="statut" id="statut">
 						<option class="form-control" label="Choisissez votre catégorie"></option>
 						<option class="form-control" value="Docteur">Docteur</option>
 						<option class="form-control" value="Patient">Patient</option>
@@ -137,9 +259,15 @@
 				<br>
 				<div id="success"></div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-xl" id="sendInscriptionButton">S'inscrire</button>
+					<button type="submit" class="btn btn-primary btn-xl" name="sendinscriptionButton" id="sendinscriptionButton">S'inscrire</button>
 				</div>
             </form>
+			<?php
+			if (isset($erreur_ins))
+			{
+				echo $erreur_ins;
+			}
+		?>
         </div>
         </div>
     </div>
@@ -171,32 +299,32 @@
           <div class="col-lg-8 mx-auto">
             <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
             <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-            <form name="sentMessage" id="contactForm" novalidate="novalidate">
+            <form name="sentMessage" id="contactForm">
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Nom</label>
-                  <input class="form-control" id="name" type="text" placeholder="Nom" required="required" data-validation-required-message="Entrez votre nom.">
+                  <input class="form-control" id="name" type="text" placeholder="Nom">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Adresse Mail</label>
-                  <input class="form-control" id="email" type="email" placeholder="Adresse Mail" required="required" data-validation-required-message="Entrez votre Email.">
+                  <input class="form-control" id="email" type="email" placeholder="Adresse Mail">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Numéro de téléphone</label>
-                  <input class="form-control" id="phone" type="tel" placeholder="Numéro de téléphone" required="required" data-validation-required-message="Entrez votre numéro.">
+                  <input class="form-control" id="phone" type="tel" placeholder="Numéro de téléphone">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Message</label>
-                  <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Écrivez un message."></textarea>
+                  <textarea class="form-control" id="message" rows="5" placeholder="Message"></textarea>
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
@@ -272,10 +400,7 @@
     <script src="bootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="bootstrap/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
-    <!-- JavaScript Forulaire contact-->
-    <script src="bootstrap/js/jqBootstrapValidation.js"></script>
-    <script src="bootstrap/js/contact_me.js"></script>
-	<script src="bootstrap/js/inscription.js"></script>
+
 
     <!-- Custom scripts for this template -->
     <script src="bootstrap/js/freelancer.min.js"></script>
