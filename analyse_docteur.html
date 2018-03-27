@@ -1,17 +1,3 @@
-<?php
-
-session_start();
-
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
-
-if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
-{
-	$getid = intval($_GET['id_utilisateur']);
-	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
-	$requser->execute(array($getid));
-	$userinfo = $requser->fetch();
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -19,7 +5,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Page Patient</title>
+  <title>Page Docteur</title>
   <!-- Fichier bootstrap CSS -->
 		<link href="bootstrap/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <!-- Polices -->
@@ -35,12 +21,12 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <!-- Page level plugin CSS-->
   <link href="bootstrap/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link href="Patient.css" rel="stylesheet">
+  <link href="accueil_docteur.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="Patient.html">DocLink</a>
+    <a class="navbar-brand" href="accueil_docteur.php">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -53,49 +39,42 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="accueil_docteur.php">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
-        <!--Mes relevés-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relevés">
-          <a class="nav-link" href="releves.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <!--Mes analyses-->
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Analyse">
+          <a class="nav-link" href="analyse_docteur.html">
             <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Mes relevés</span>
+            <span class="nav-link-text">Mes analyses patients</span>
           </a>
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="tables.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="rdv_docteur.html">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="profil_docteur.html">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>
         </li>
-        <!--Mes ordonnances-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
-          <a class="nav-link" href="ordonnance.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Mes ordonnances</span>
-          </a>
 
-        </li>
-        <!--Mes medecins-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
-          <a class="nav-link" href="ListeMedecins.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <!--Mes patients-->
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
+          <a class="nav-link" href="ListePatients.html">
             <i class="fa fa-fw fa-address-book"></i>
-            <span class="nav-link-text">Mes médecins</span>
+            <span class="nav-link-text">Mes patients</span>
           </a>
-
         </li>
       </ul>
+
       <!--Bouton fleche du bas-->
 	  <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -188,7 +167,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <!--Bienvenue-->
 		<li class="nav-item">
-          <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
+          <h3 class="text-white">Bienvenue<?php echo $_SESSION['pseudo'] . ' !' ?></h3>
         </li>
         <!--Bouton deconnexion-->
 		<li class="nav-item">
@@ -204,56 +183,22 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Tableau de bord</a>
+          <a href="#">Analyse Patient</a>
         </li>
-        <li class="breadcrumb-item active">Mon tableau de bord</li>
-		<li class="breadcrumb-item active"> Mes messages</li>
+        <li class="breadcrumb-item active">Nom du patient BDD</li>
       </ol>
 
-      <!-- Example DataTables Card-->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
-
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>2011/04/25</td>
-
-                </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-
-                  <td>$170,750</td>
-                </tr>
-
-
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      <!--Sélection patient menu déroulant-->
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Liste Patients
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Patient 1 BDD</a></li>
+          <li><a href="#">Patient 2 BDD</a></li>
+          <li><a href="#">Patient 3 BDD</a></li>
+        </ul>
       </div>
-    </div>
+
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -280,7 +225,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="modal-body">Cliquez sur "Déconnexion" pour quitter cette session</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <a class="btn btn-primary" href="deconnexion.php">Déconnexion</a>
+            <a class="btn btn-primary" href="Accueil.html">Déconnexion</a>
           </div>
         </div>
       </div>
@@ -303,7 +248,3 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 </body>
 
 </html>
-
-<?php
-}
-?>

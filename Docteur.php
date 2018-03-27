@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -59,7 +59,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
-      
+
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
           <a class="nav-link" href="tables.html">
@@ -72,17 +72,17 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <a class="nav-link" href="profil.html">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
-          </a>  
+          </a>
         </li>
- 
+
         <!--Mes patients-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
           <a class="nav-link" href="ListeMedecins.html">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes patients</span>
           </a>
-         
-        </li>    
+
+        </li>
       </ul>
       <!--Bouton fleche du bas-->
 	  <ul class="navbar-nav sidenav-toggler">
@@ -196,11 +196,11 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <li class="breadcrumb-item active">Mon tableau de bord</li>
       </ol>
-     
-     
-           
-         
-       
+
+
+
+
+
       </div>
     </div>
     <!-- /.container-fluid-->
@@ -255,4 +255,3 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 <?php
 }
 ?>
-
