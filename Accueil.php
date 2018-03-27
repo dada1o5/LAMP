@@ -34,7 +34,7 @@ if(isset($_POST['sendinscriptionButton']))
 					
 					if($statut=='Docteur')
 					{
-						header("Location:Docteur.php?id_utilisateur=".$userinfo['id_utilisateur']);
+						header("Location:accueil_docteur.php?id_utilisateur=".$userinfo['id_utilisateur']);
 					}
 					
 					if($statut=='Patient')
