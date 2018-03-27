@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -60,14 +60,14 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
 				<!--Mes analyses-->
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Analyse">
-					<a class="nav-link" href="analyse_docteur.html">
+					<a class="nav-link" href="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
 						<i class="fa fa-fw fa-area-chart"></i>
 						<span class="nav-link-text">Mes analyses patients</span>
 					</a>
 				</li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="rdv_docteur.html">
+          <a class="nav-link" href="rdv_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
@@ -820,7 +820,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="modal-body">Cliquez sur "Déconnexion" pour quitter cette session</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <a class="btn btn-primary" href="Accueil.html">Déconnexion</a>
+            <a class="btn btn-primary" href="deconnexion.php">Déconnexion</a>
           </div>
         </div>
       </div>
@@ -843,3 +843,6 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 </body>
 
 </html>
+ <?php
+}
+?>

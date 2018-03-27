@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -11,7 +11,6 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -36,12 +35,12 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <!-- Page level plugin CSS-->
   <link href="bootstrap/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link href="Patient.css" rel="stylesheet">
+  <link href="accueil_docteur.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="Patient.html">DocLink</a>
+    <a class="navbar-brand" href="accueil_docteur.php">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -54,36 +53,42 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Docteur.php">
+          <a class="nav-link" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
-
+        <!--Mes analyses-->
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Analyse">
+          <a class="nav-link" href="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Mes analyses patients</span>
+          </a>
+        </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="rdv_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil.html">
+          <a class="nav-link" href="profil_docteur.html">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>
         </li>
 
         <!--Mes patients-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
-          <a class="nav-link" href="ListeMedecins.html">
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
+          <a class="nav-link" href="ListePatients.html">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes patients</span>
           </a>
-
         </li>
       </ul>
+
       <!--Bouton fleche du bas-->
 	  <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -192,17 +197,35 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Tableau de bord</a>
+          <a href="#">Analyse Patient</a>
         </li>
-        <li class="breadcrumb-item active">Mon tableau de bord</li>
+        <li class="breadcrumb-item active"></li>
       </ol>
 
+      <!--Sélection patient menu déroulant-->
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Liste Patients
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <!--<li><a href="#">Patient 1 BDD</a></li>
+          <li><a href="#">Patient 2 BDD</a></li>
+          <li><a href="#">Patient 3 BDD</a></li>-->
+		  <?php
+		$reqpatients = $bdd->query('SELECT * FROM utilisateurs');
 
-
-
-
+		while ($donnees = $reqpatients->fetch()){
+			if($donnees['statut']=='Patient')
+			{
+			?>				 			
+			<li><a href="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>?id_patient=<?php echo $donnees['id_utilisateur']; ?>"><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></a></li>
+			<?php
+			
+			}
+		}
+		?>	
+        </ul>
       </div>
-    </div>
+	
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
