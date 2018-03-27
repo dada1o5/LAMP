@@ -82,7 +82,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
         <!--Mes patients-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
-          <a class="nav-link" href="ListePatients.html">
+          <a class="nav-link" href="ListePatients.php">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes patients</span>
           </a>
