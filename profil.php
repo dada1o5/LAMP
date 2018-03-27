@@ -2,8 +2,16 @@
 <?php
 session_start();
 
+try
 $bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
 
+{
+
+    $bdd = new PDO('mysql:host=localhost;dbname=sante;charset=utf8', 'root', '');
+
+}
+
+catch (Exception $e)
 
 if(isset($_POST['Button']))
 {
@@ -19,6 +27,7 @@ if(isset($_POST['Button']))
 	$conf_mdp = sha1($_POST['conf_mdp']);
 	$statut = htmlspecialchars($_POST['statut']);
 
+        die('Erreur : ' . $e->getMessage());
 	if(!empty($_POST['nom']) AND !empty($_POST['prenom']) AND !empty($_POST['date']) AND !empty($_POST['email']) AND !empty($_POST['mdp']) AND !empty($_POST['conf_mdp']) AND !empty($_POST['statut']))
 	{
 		if(filter_var($email, FILTER_VALIDATE_EMAIL))
@@ -66,6 +75,11 @@ if(isset($_POST['Button']))
 	}
 }
 
+$reponse = $bdd->query('SELECT * FROM patient');
+
+
+
+$reponse->closeCursor();
 ?>
 <html lang="fr">
 <head>
@@ -424,4 +438,5 @@ if(isset($_POST['Button']))
   </div>
 </body>
 
+?>
 </html>
