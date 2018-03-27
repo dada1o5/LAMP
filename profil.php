@@ -1,68 +1,15 @@
 <?php
 
-
-try
-$bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
-
-{
-
-    $bdd = new PDO('mysql:host=localhost;dbname=sante;charset=utf8', 'root', '');
-
-}
-
-catch (Exception $e)
-
 session_start();
 
 $bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
 
-
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
-
-	$nom = htmlspecialchars($_POST['nom']);
-	$prenom = htmlspecialchars($_POST['prenom']);
-	$date = htmlspecialchars($_POST['date']);
-	$email = htmlspecialchars($_POST['email']);
-	$sanguin = htmlspecialchars($_POST['sanguin']);
-	$taille = htmlspecialchars($_POST['taille']);
-	$poids = htmlspecialchars($_POST['poids']);
-	$medecin= htmlspecialchars($_POST['medecin']);
-	$mdp = sha1($_POST['mdp']);
-	$conf_mdp = sha1($_POST['conf_mdp']);
-	$statut = htmlspecialchars($_POST['statut']);
-
-        die('Erreur : ' . $e->getMessage());
-	if(!empty($_POST['nom']) AND !empty($_POST['prenom']) AND !empty($_POST['date']) AND !empty($_POST['email']) AND !empty($_POST['mdp']) AND !empty($_POST['conf_mdp']) AND !empty($_POST['statut']))
-	{
-		if(filter_var($email, FILTER_VALIDATE_EMAIL))
-		{
-			$reqmail = $bdd->prepare("SELECT * FROM utilisateurs WHERE email=?");
-			$reqmail->execute(array($email));
-			$mailexist=$reqmail->rowCount();
-			
-			if($mailexist==0)
-			{
-				if($mdp == $conf_mdp)
-				{
-					$insertmbr = $bdd->prepare("INSERT INTO utilisateurs(nom, prenom, date, email,mdp, conf_mdp, statut) VALUES(?, ?, ?, ?, ?, ?, ?)");
-					$insertmbr->execute(array($nom, $prenom, $date, $email, $mdp, $conf_mdp, $statut));	
-
 	$getid = intval($_GET['id_utilisateur']);
 	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
-
-
-
-
-
-
-$reponse = $bdd->query('SELECT * FROM patient');
-
-
-
-$reponse->closeCursor();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
