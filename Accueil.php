@@ -20,28 +20,28 @@ if(isset($_POST['sendinscriptionButton']))
 			$reqmail = $bdd->prepare("SELECT * FROM utilisateurs WHERE email=?");
 			$reqmail->execute(array($email));
 			$mailexist=$reqmail->rowCount();
-
+			
 			if($mailexist==0)
 			{
 				if($mdp == $conf_mdp)
 				{
 					$insertmbr = $bdd->prepare("INSERT INTO utilisateurs(nom, prenom, date, email,mdp, conf_mdp, statut) VALUES(?, ?, ?, ?, ?, ?, ?)");
-					$insertmbr->execute(array($nom, $prenom, $date, $email, $mdp, $conf_mdp, $statut));
+					$insertmbr->execute(array($nom, $prenom, $date, $email, $mdp, $conf_mdp, $statut));	
 
 					$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE email=?');
 					$requser->execute(array($email));
 					$userinfo = $requser->fetch();
-
+					
 					if($statut=='Docteur')
 					{
 						header("Location:accueil_docteur.php?id_utilisateur=".$userinfo['id_utilisateur']);
 					}
-
+					
 					if($statut=='Patient')
 					{
 						header("Location:Patients.php?id_utilisateur=".$userinfo['id_utilisateur']);
 					}
-
+					
 				}
 			}
 			else
@@ -61,33 +61,33 @@ if(isset($_POST['sendinscriptionButton']))
 }
 
 if(isset($_POST['connect']))
-{
+{ 
 	$emailconnect = htmlspecialchars($_POST['connexionemail']);
 	$mdpconnect = sha1($_POST['connexionmdp']);
-
+	
 	if(!empty($emailconnect) AND !empty($mdpconnect))
 	{
 		$requser= $bdd->prepare("SELECT * FROM utilisateurs WHERE email=? AND mdp=?");
 		$requser->execute(array($emailconnect, $mdpconnect));
 		$userexist= $requser->rowCount();
-
+		
 		if($userexist == 1)
 		{
 			$userinfo = $requser->fetch();
-
+			
 			$_SESSION['id_utilisateur']=$userinfo['id_utilisateur'];
 			$_SESSION['email']=$userinfo['email'];
-
+			
 			if($userinfo['statut']=='Docteur')
 			{
-				header("Location:Docteur.php?id_utilisateur=".$_SESSION['id_utilisateur']);
+				header("Location:accueil_docteur.php?id_utilisateur=".$_SESSION['id_utilisateur']);
 			}
-
+			
             if($userinfo['statut']=='Patient')
 			{
 				header("Location:Patients.php?id_utilisateur=".$_SESSION['id_utilisateur']);
 			}
-
+			
 		}
 		else
 		{
@@ -101,7 +101,7 @@ if(isset($_POST['connect']))
 }
 
 
-?>
+?>		
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -247,7 +247,7 @@ if(isset($_POST['connect']))
 				<div class="control-group">
 				<div class="form-group floating-form-group controls mb-0 pb-2">
                   <label>Vous êtes ?</label>
-
+				  
 					<select class="form-control" name="statut" id="statut">
 						<option class="form-control" label="Choisissez votre catégorie"></option>
 						<option class="form-control" value="Docteur">Docteur</option>
