@@ -1,6 +1,6 @@
 <?php
 
-<<<<<<< HEAD
+
 try
 $bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
 
@@ -11,15 +11,15 @@ $bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
 }
 
 catch (Exception $e)
-=======
+
 session_start();
 
 $bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
->>>>>>> 627cc52aeb6ef816c21ab2348bec7787ddea2208
+
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
-<<<<<<< HEAD
+
 	$nom = htmlspecialchars($_POST['nom']);
 	$prenom = htmlspecialchars($_POST['prenom']);
 	$date = htmlspecialchars($_POST['date']);
@@ -47,25 +47,24 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 				{
 					$insertmbr = $bdd->prepare("INSERT INTO utilisateurs(nom, prenom, date, email,mdp, conf_mdp, statut) VALUES(?, ?, ?, ?, ?, ?, ?)");
 					$insertmbr->execute(array($nom, $prenom, $date, $email, $mdp, $conf_mdp, $statut));	
-=======
+
 	$getid = intval($_GET['id_utilisateur']);
 	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
-?>
->>>>>>> 627cc52aeb6ef816c21ab2348bec7787ddea2208
 
-<!DOCTYPE html>
 
-<<<<<<< HEAD
+
+
+
+
 $reponse = $bdd->query('SELECT * FROM patient');
 
 
 
 $reponse->closeCursor();
 ?>
-=======
->>>>>>> 627cc52aeb6ef816c21ab2348bec7787ddea2208
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -423,13 +422,9 @@ $reponse->closeCursor();
   </div>
 </body>
 
-<<<<<<< HEAD
-?>
-</html>
-=======
+
 </html>
 
 <?php
 }
 ?>
->>>>>>> 627cc52aeb6ef816c21ab2348bec7787ddea2208
