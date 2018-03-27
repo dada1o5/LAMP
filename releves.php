@@ -1,3 +1,17 @@
+<?php
+
+session_start();
+
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+
+if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
+{
+	$getid = intval($_GET['id_utilisateur']);
+	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
+	$requser->execute(array($getid));
+	$userinfo = $requser->fetch();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -39,35 +53,35 @@
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patient.html">
+          <a class="nav-link" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
         <!--Mes relevés-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relevés">
-          <a class="nav-link" href="releves.html">
+          <a class="nav-link" href="releves.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">Mes relevés</span>
           </a>
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="tables.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil.html">
+          <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>  
         </li>
         <!--Mes ordonnances-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
-          <a class="nav-link" href="ordonnance.html">
+          <a class="nav-link" href="ordonnance.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Mes ordonnances</span>
           </a>
@@ -75,7 +89,7 @@
         </li>
         <!--Mes medecins-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
-          <a class="nav-link" href="ListeMedecins.html">
+          <a class="nav-link" href="ListeMedecins.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes médecins</span>
           </a>
@@ -174,7 +188,7 @@
         </li>
         <!--Bienvenue-->
 		<li class="nav-item">
-          <h3 class="text-white">Bienvenue<?php echo $_SESSION['pseudo'] . ' !' ?></h3>
+          <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
         </li>
         <!--Bouton deconnexion-->
 		<li class="nav-item">
@@ -193,53 +207,19 @@
           <a href="#">Tableau de bord</a>
         </li>
         <li class="breadcrumb-item active">Mon tableau de bord</li>
-		<li class="breadcrumb-item active"> Mes messages</li>
+		<li class="breadcrumb-item active"> Mes relevés</li>
       </ol>
-    
-      <!-- Example DataTables Card-->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
-                  
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>2011/04/25</td>
-                 
-                </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-                  
-                  <td>$170,750</td>
-                </tr>
-              
-           
-              </tbody>
-            </table>
+   
+       <!-- Example Pie Chart Card-->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fa fa-pie-chart"></i> Pie Chart Example</div>
+            <div class="card-body">
+              <canvas id="myPieChart" width="100%" height="100"></canvas>
+            </div>
+            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
           </div>
-        </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-      </div>
-    </div>
+		 
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -266,7 +246,7 @@
           <div class="modal-body">Cliquez sur "Déconnexion" pour quitter cette session</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <a class="btn btn-primary" href="Accueil.html">Déconnexion</a>
+            <a class="btn btn-primary" href="deconnexion.php">Déconnexion</a>
           </div>
         </div>
       </div>
@@ -289,3 +269,7 @@
 </body>
 
 </html>
+
+<?php
+}
+?>

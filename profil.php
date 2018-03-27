@@ -1,7 +1,6 @@
-<!DOCTYPE html>
 <?php
-session_start();
 
+<<<<<<< HEAD
 try
 $bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
 
@@ -12,9 +11,15 @@ $bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
 }
 
 catch (Exception $e)
+=======
+session_start();
 
-if(isset($_POST['Button']))
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+>>>>>>> 627cc52aeb6ef816c21ab2348bec7787ddea2208
+
+if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
+<<<<<<< HEAD
 	$nom = htmlspecialchars($_POST['nom']);
 	$prenom = htmlspecialchars($_POST['prenom']);
 	$date = htmlspecialchars($_POST['date']);
@@ -42,45 +47,25 @@ if(isset($_POST['Button']))
 				{
 					$insertmbr = $bdd->prepare("INSERT INTO utilisateurs(nom, prenom, date, email,mdp, conf_mdp, statut) VALUES(?, ?, ?, ?, ?, ?, ?)");
 					$insertmbr->execute(array($nom, $prenom, $date, $email, $mdp, $conf_mdp, $statut));	
+=======
+	$getid = intval($_GET['id_utilisateur']);
+	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
+	$requser->execute(array($getid));
+	$userinfo = $requser->fetch();
+?>
+>>>>>>> 627cc52aeb6ef816c21ab2348bec7787ddea2208
 
-					$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE email=?');
-					$requser->execute(array($email));
-					$userinfo = $requser->fetch();
-					
-					if($statut=='Docteur')
-					{
-						header("Location:Docteur.php?id_utilisateur=".$userinfo['id_utilisateur']);
-					}
-					
-					if($statut=='Patient')
-					{
-						header("Location:Patients.php?id_utilisateur=".$userinfo['id_utilisateur']);
-					}
-					
-				}
-			}
-			else
-			{
-				$erreur_ins = "Cette adresse e-mail est déjà utilisée !";
-			}
-		}
-		else
-		{
-			$erreur_ins = "Votre adresse e-mail n'est pas valide !";
-		}
-	}
-	else
-	{
-		$erreur_ins = "Veuillez remplir tous les champs !";
-	}
-}
+<!DOCTYPE html>
 
+<<<<<<< HEAD
 $reponse = $bdd->query('SELECT * FROM patient');
 
 
 
 $reponse->closeCursor();
 ?>
+=======
+>>>>>>> 627cc52aeb6ef816c21ab2348bec7787ddea2208
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -123,35 +108,35 @@ $reponse->closeCursor();
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patient.html">
+          <a class="nav-link" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
         <!--Mes relevés-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relevés">
-          <a class="nav-link" href="releves.html">
+          <a class="nav-link" href="releves.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">Mes relevés</span>
           </a>
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="tables.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil.html">
+          <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>  
         </li>
         <!--Mes ordonnances-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
-          <a class="nav-link" href="ordonnance.html">
+          <a class="nav-link" href="ordonnance.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Mes ordonnances</span>
           </a>
@@ -159,7 +144,7 @@ $reponse->closeCursor();
         </li>
         <!--Mes medecins-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
-          <a class="nav-link" href="ListeMedecins.html">
+          <a class="nav-link" href="ListeMedecins.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes médecins</span>
           </a>
@@ -258,7 +243,7 @@ $reponse->closeCursor();
         </li>
         <!--Bienvenue-->
 		<li class="nav-item">
-          <h3 class="text-white">Bienvenue</h3>
+          <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
         </li>
         <!--Bouton deconnexion-->
 		<li class="nav-item">
@@ -416,7 +401,7 @@ $reponse->closeCursor();
           <div class="modal-body">Cliquez sur "Déconnexion" pour quitter cette session</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <a class="btn btn-primary" href="Accueil.html">Déconnexion</a>
+            <a class="btn btn-primary" href="deconnexion.php">Déconnexion</a>
           </div>
         </div>
       </div>
@@ -438,5 +423,13 @@ $reponse->closeCursor();
   </div>
 </body>
 
+<<<<<<< HEAD
 ?>
 </html>
+=======
+</html>
+
+<?php
+}
+?>
+>>>>>>> 627cc52aeb6ef816c21ab2348bec7787ddea2208
