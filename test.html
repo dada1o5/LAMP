@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MF8RX6L');</script>
+<link rel="shortcut icon" href="https://scriptcase-suporte.kayakocdn.com/favicon.ico?1503493672" type="image/x-icon">	<link rel="shortcut icon" href="https://scriptcase-suporte.kayakocdn.com/favicon.ico?1503493672" type="image/x-icon">
+	<title>Générateur de code PHP Scriptcase | Développement d'applications WEB | Constructeur de Formulaires</title>
+	<meta name="title" content="Générateur de code PHP Scriptcase | Développement d'applications WEB | Constructeur de Formulaires"/>
+	<link rel="shortcut icon" type="image/x-icon" href="https://scriptcase-suporte.kayakocdn.com/favicon.ico">
+	<meta name="description" content="Générez des applications web PHP. Constructeur de Rapports, Graphiques, et Formulaires. Support de bases de données MySQL, PostgreSQL, Access, SQL Server, Oracle, DB2, Firebird et Informix."/>
+
+	<meta name="keywords" content="form builder, web applications, php generator, php builder, php form builder, php form generator, php mysql generator, form generator, generate php, rad, rapid application development, report builder, development tool, code generator, generate forms, generate forms and reports, generate form, forms and reports, php, generator, generate, mysql, mysql support, php mysql, reports, forms, charts, database"/>
+	<meta name="author" content="ScriptCase - www.scriptcase.net"/>
+	<meta name="copyright" content="ScriptCase Code Generator - www.scriptcase.net"/>
+	<meta name="google-site-verification" content="xQeTQK_W6dxsQWGKuopTxHVIfAm_EJ6y2D8LoID0MWI"/>
+	<meta http-equiv="content-language" content="en_us"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>	
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+<script type="text/javascript">var sc_pathToTB='../lib/js/jquery_plugins/thickbox/';</script>
+
+		<link rel="canonical" href="//www.scriptcase.net/scriptcase-exemples/"/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,500,500italic,300,700" rel="stylesheet" type="text/css"/><link href="//cdn1.scriptcase.net/lib/third/bootstrap-4/css/cdn1scriptcasenet_bootstrap.min.css?cssv=409" rel="stylesheet" type="text/css"/><link href="//cdn1.scriptcase.net/lib/css/cdn1scriptcasenet_scriptcase9.css?cssv=409" rel="stylesheet" type="text/css"/><link href="//cdn1.scriptcase.net/lib/css/cdn1scriptcasenet_samples.css?cssv=409" rel="stylesheet" type="text/css"/>
+	
+	
+	
+</head>
+
+<body id="page-body" class="page-samples" data-spy="scroll" data-target="#scrollspy" data-offset="101">
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MF8RX6L" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<style>.sb{background:#76ce79;height:31px;text-align:center;font-size:12px;text-transform:uppercase;font-weight:bold;letter-spacing:1px;box-shadow:0 1px 1px rgba(0,0,0,.15);position:fixed;top:0;left:0;width:100%;z-index:999999}.sb small{font-size:12px;font-weight:bold}.sb a{display:block;text-decoration:none;color:#0f4610;padding:2px 0}.sb a span,.popup a span{display:inline-block;border-radius:2px;padding:1px 5px;color:#fff;background:rgba(0,0,0,.4);margin:0 5px}.popup{background:#76ce79;position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);z-index:999999999;border-top-left-radius:5px;border-top-right-radius:5px;text-align:center;border:1px solid #477c49;font-size:16px;transition:all 1.2s}.popup.show{bottom:-1px}.popup a{padding:15px 25px;text-decoration:none;color:#165418;display:block;font-weight:bold}.popup a strong{font-size:24px;font-weight:bold;color:#fff;display:block}.popup .close{position:absolute;top:0;right:0;background:#477c49;width:32px;height:28px;border-bottom-left-radius:16px;padding-left:5px}.sb+.sh{margin-top:31px!important}.sb+.sh+.sp{margin-top:95px!important}.sb em,.popup em{font-style:normal;font-size:18px;display:inline-block;color:#000;border-bottom:2px solid;line-height:22px}@media (max-width:575px){.sb{font-size:10px!important;letter-spacing:0}.sb strong,.sb a span{display:none!important}}</style>
+
+
+	<div class="popup hidden-sm-down" id="promo_popup">
+		<a href="//www.scriptcase.net/acheter-scriptcase/">
+			<strong>OFFRE À DURÉE LIMITÉE!</strong> <em>40%</em> de rabais pour les nouvelles licences et mises à niveau <span>achat maintenant</span>		</a>
+
+		<button type="button" class="close" aria-label="Close" id="promo_popup_close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<script>function getCookie(name){var value="; "+document.cookie;var parts=value.split("; "+name+"=");if(parts.length==2)return parts.pop().split(";").shift();}window.onload=function(){if(getCookie('sc_banner')!='yes'){document.getElementById('promo_popup').className='popup hidden-sm-down show';}}
+document.getElementById('promo_popup_close').onclick=function(){document.cookie="sc_banner=yes";document.getElementById('promo_popup').className='popup';}</script>
+
+
+	<div class="sb">
+		<a href="//www.scriptcase.net/acheter-scriptcase/">
+			<strong>OFFRE À DURÉE LIMITÉE!</strong> <em>40%</em> de rabais pour les nouvelles licences et mises à niveau <span>achat maintenant</span>		</a>
+	</div>
+	
+	<div class="sh full">
+		<div class="sh-container">
+			<div class="sh-logo">
+								<a href="//www.scriptcase.net/" title="Scriptcase">
+					<svg width="150px" preserveAspectRatio="xMidYMid" viewBox="0 0 215.5 43.469" xmlns="http://www.w3.org/2000/svg"> <defs><style>.cls-1{fill:#5381c6}.cls-1,.cls-2{fill-rule:evenodd}.cls-2{fill:#ffd532}</style></defs> <path class="cls-1" d="m113.91 27.64c0.516 0.439 1.199 0.659 2.048 0.659 1.133 0 2.492-0.248 4.077-0.744v4.82c-1.614 0.722-3.595 1.083-5.945 1.083-2.59 0-4.476-0.655-5.658-1.964s-1.773-3.273-1.773-5.892v-11.444h-3.1v-2.739l3.567-2.165 1.868-5.011h4.141v5.053h6.645v4.862h-6.645v11.444c0 0.92 0.258 1.6 0.775 2.038zm-17.591 4.353c-1.373 0.977-2.987 1.465-4.841 1.465-2.788 0-4.975-1.012-6.56-3.036h-0.34c0.226 1.982 0.34 3.128 0.34 3.439v9.618h-6.476v-34.183h5.265l0.913 3.079h0.298c1.514-2.35 3.758-3.525 6.73-3.525 2.803 0 4.997 1.083 6.582 3.249 1.585 2.165 2.378 5.173 2.378 9.023 0 2.534-0.372 4.735-1.115 6.603-0.743 1.869-1.801 3.291-3.174 4.268zm-3.386-16.211c-0.715-1.167-1.837-1.751-3.366-1.751-1.599 0-2.767 0.492-3.503 1.475-0.736 0.984-1.118 2.609-1.146 4.873v0.701c0 2.548 0.378 4.374 1.136 5.478 0.757 1.104 1.956 1.656 3.598 1.656 2.902 0 4.353-2.392 4.353-7.177 0-2.335-0.358-4.087-1.072-5.255zm-24.512-9.437c-2.35 0-3.525-1.062-3.525-3.185 0-2.109 1.175-3.163 3.525-3.163 2.349 0 3.524 1.054 3.524 3.163 0 1.005-0.294 1.787-0.881 2.346-0.588 0.56-1.469 0.839-2.643 0.839zm-9.958 8.556c-2.067 0-3.677 0.531-4.83 1.593-1.154 1.061-1.731 2.548-1.731 4.458v12.081h-6.475v-23.737h4.904l0.956 3.992h0.318c0.736-1.331 1.73-2.403 2.983-3.217s2.615-1.221 4.087-1.221c0.878 0 1.606 0.064 2.187 0.191l-0.488 6.073c-0.524-0.142-1.161-0.213-1.911-0.213zm-22.548-0.435c-0.878-0.262-1.756-0.393-2.633-0.393-3.369 0-5.053 2.393-5.053 7.177 0 4.642 1.684 6.964 5.053 6.964 1.245 0 2.399-0.167 3.461-0.499 1.061-0.333 2.123-0.853 3.185-1.561v5.542c-1.048 0.665-2.106 1.125-3.175 1.38s-2.417 0.382-4.044 0.382c-7.389 0-11.083-4.055-11.083-12.166 0-4.034 1.005-7.116 3.015-9.246 2.009-2.13 4.89-3.196 8.641-3.196 2.746 0 5.209 0.538 7.389 1.614l-1.911 5.011c-1.019-0.411-1.968-0.747-2.845-1.009zm-24.502 4.13c1.854 0.75 3.213 1.451 4.077 2.102 0.863 0.651 1.5 1.401 1.911 2.25 0.41 0.849 0.615 1.862 0.615 3.036 0 2.435-0.846 4.289-2.537 5.563s-4.222 1.911-7.59 1.911c-1.727 0-3.199-0.117-4.416-0.35-1.218-0.234-2.357-0.577-3.419-1.03v-5.351c1.203 0.567 2.559 1.041 4.066 1.423 1.508 0.382 2.835 0.573 3.981 0.573 2.35 0 3.525-0.679 3.525-2.038 0-0.51-0.156-0.924-0.468-1.242-0.311-0.319-0.849-0.68-1.613-1.083-0.765-0.403-1.784-0.874-3.058-1.412-1.825-0.764-3.167-1.472-4.023-2.123-0.857-0.651-1.479-1.398-1.868-2.24-0.39-0.842-0.584-1.879-0.584-3.11 0-2.109 0.817-3.741 2.452-4.894 1.635-1.154 3.952-1.731 6.953-1.731 2.859 0 5.641 0.623 8.345 1.869l-1.954 4.671c-1.189-0.51-2.3-0.927-3.333-1.253-1.034-0.325-2.088-0.488-3.164-0.488-1.911 0-2.866 0.517-2.866 1.55 0 0.58 0.308 1.082 0.924 1.507 0.615 0.425 1.964 1.055 4.044 1.89zm60.235 14.437h-6.476v-23.737h6.476v23.737z"/> <path class="cls-2" d="m200.18 22.778c0.071 1.841 0.616 3.277 1.635 4.31 1.019 1.034 2.448 1.55 4.289 1.55 1.429 0 2.781-0.148 4.055-0.446 1.274-0.297 2.604-0.771 3.991-1.422v5.011c-1.132 0.566-2.342 0.987-3.63 1.263s-2.86 0.414-4.714 0.414c-3.821 0-6.808-1.054-8.959-3.164-2.152-2.109-3.228-5.095-3.228-8.959 0-3.978 0.995-7.053 2.983-9.226 1.989-2.172 4.738-3.259 8.249-3.259 3.355 0 5.966 0.956 7.834 2.867 1.869 1.91 2.803 4.55 2.803 7.919v3.142h-15.308zm7.983-8.015c-0.807-0.87-1.897-1.305-3.27-1.305s-2.449 0.435-3.227 1.305c-0.778 0.871-1.224 2.106-1.337 3.705h9.087c-0.029-1.599-0.446-2.834-1.253-3.705zm-24.756 3.833c1.854 0.75 3.213 1.451 4.076 2.102 0.864 0.651 1.5 1.401 1.911 2.25s0.616 1.862 0.616 3.036c0 2.435-0.846 4.289-2.537 5.563-1.692 1.274-4.222 1.911-7.591 1.911-1.727 0-3.199-0.117-4.416-0.35-1.217-0.234-2.357-0.577-3.418-1.03v-5.351c1.203 0.567 2.558 1.041 4.066 1.423 1.507 0.382 2.834 0.573 3.981 0.573 2.349 0 3.524-0.679 3.524-2.038 0-0.51-0.156-0.924-0.467-1.242-0.311-0.319-0.849-0.68-1.614-1.083-0.764-0.403-1.783-0.874-3.057-1.412-1.826-0.764-3.167-1.472-4.023-2.123-0.857-0.651-1.48-1.398-1.869-2.24s-0.584-1.879-0.584-3.11c0-2.109 0.818-3.741 2.453-4.894 1.634-1.154 3.952-1.731 6.953-1.731 2.859 0 5.64 0.623 8.344 1.869l-1.953 4.671c-1.189-0.51-2.301-0.927-3.334-1.253-1.033-0.325-2.088-0.488-3.163-0.488-1.911 0-2.866 0.517-2.866 1.55 0 0.58 0.307 1.082 0.923 1.507s1.964 1.055 4.045 1.89zm-22.4 11.21h-0.17c-1.09 1.373-2.211 2.325-3.365 2.856-1.154 0.53-2.657 0.796-4.512 0.796-2.279 0-4.073-0.651-5.382-1.953-1.309-1.303-1.964-3.157-1.964-5.563 0-2.519 0.881-4.377 2.644-5.573 1.762-1.196 4.419-1.858 7.972-1.986l4.119-0.127v-1.04c0-2.407-1.231-3.61-3.694-3.61-1.897 0-4.126 0.573-6.688 1.72l-2.145-4.374c2.732-1.429 5.761-2.144 9.088-2.144 3.184 0 5.626 0.693 7.325 2.081 1.698 1.387 2.547 3.496 2.547 6.327v15.817h-4.522l-1.253-3.227zm-0.658-7.771l-2.505 0.085c-1.883 0.057-3.284 0.397-4.204 1.019-0.92 0.623-1.38 1.571-1.38 2.845 0 1.826 1.047 2.739 3.142 2.739 1.5 0 2.7-0.431 3.599-1.295 0.899-0.863 1.348-2.01 1.348-3.439v-1.954zm-22.675-7.569c-0.878-0.262-1.756-0.393-2.633-0.393-3.369 0-5.053 2.393-5.053 7.177 0 4.642 1.684 6.964 5.053 6.964 1.245 0 2.399-0.167 3.461-0.499 1.061-0.333 2.123-0.853 3.184-1.561v5.542c-1.047 0.665-2.105 1.125-3.174 1.38s-2.417 0.382-4.044 0.382c-7.389 0-11.083-4.055-11.083-12.166 0-4.034 1.004-7.116 3.015-9.246 2.009-2.13 4.89-3.196 8.641-3.196 2.746 0 5.209 0.538 7.389 1.614l-1.911 5.011c-1.019-0.411-1.968-0.747-2.845-1.009z"/> </svg>
+					<div class="scriptcase-version" style="font-family: 'Open Sans', sans-serif;font-weight: 400;color: #ffd532;position: relative;float: right;right: -4px;margin-top: 10px;font-size: 12px;letter-spacing: 1px;">v9</div>
+				</a>
+							</div>
+
+			<span class="sh-menu-toggle">
+				<span class="legend">Menu</span>
+			</span>
+			
+			<style>.sh-nav li a{font-size:12px!important}.sh-nav-login .caret{border-color:#29eb7f!important}ul.sh-dropdown-menu{}ul.sh-dropdown-menu li{line-height:14px}ul.sh-dropdown-menu div{padding:20px 12px;border-bottom:1px solid rgba(255,255,255,.25);display:flex}ul.sh-dropdown-menu div .imagem{float:left;width:48px;height:48px;background:#3e5062;border-radius:25px;text-align:center;overflow:hidden;margin-right:10px;position:relative;top:-5px}ul.sh-dropdown-menu div .conteudo{flex:1}ul.sh-dropdown-menu div h5{font-size:18px;margin:0 0 5px;color:#29eb7f;text-overflow:ellipsis;white-space:nowrap}ul.sh-dropdown-menu div small{font-size:11px;opacity:.5}ul.sh-dropdown-menu div span svg{position:relative;position:relative;top:3px}</style>
+
+			
+			<div class="sh-menu">
+				<ul class="sh-nav sh-nav-main">
+						    <!-- Site Menu-->
+		<li>	<a href="//www.scriptcase.net/fr/scriptcase-fonctionnalites/" target="_self">Fonctionnalités</a></li><li>	<a href="//www.scriptcase.net/fr/scriptcase-exemples/" target="_self">Exemples</a></li><li class="sh-dropdown">	<a href="//www.scriptcase.net/fr/apprentissage/">E-Learning <span class="caret"></span></a><ul class="sh-dropdown-menu"><li>	<a href="//www.scriptcase.net/fr/scriptcase-webinars/" target="_self">Webinaire</a></li><li>	<a href="//www.scriptcase.net/fr/scriptcase-atelier-online/" target="_self">Démo en direct</a></li><li>	<a href="//www.scriptcase.net/fr/all_courses/" target="_self">Cours</a></li><li>	<a href="//www.scriptcase.net/fr/scriptcase-documentation/" target="_self">Documentation</a></li><li>	<a href="//www.scriptcase.net/fr/scriptcase-videos/" target="_self">Vidéos</a></li></ul></li><li>	<a href="http://www.scriptcaseblog.net" target="_blank">Blog</a></li><li class="sh-dropdown">	<a href="//www.scriptcase.net/fr/scriptcase-support/">Support <span class="caret"></span></a><ul class="sh-dropdown-menu"><li>	<a href="//www.scriptcase.net/fr/scriptcase-support/" target="_self">Support Technique</a></li><li>	<a href="//www.scriptcase.net/fr/scriptcase-faq/" target="_self">FAQ</a></li><li>	<a href="/forum" target="_blank">Forum</a></li></ul></li><li class="sh-dropdown">	<a href="//www.scriptcase.net/fr/telecharger-scriptcase/">Télécharger <span class="caret"></span></a><ul class="sh-dropdown-menu"><li>	<a href="//www.scriptcase.net/fr/telecharger-scriptcase/" target="_self">Scriptcase</a></li><li>	<a href="//www.scriptcase.net/fr/timeline/" target="_self">Quoi de neuf</a></li><li>	<a href="//www.scriptcase.net/fr/scriptcase-changelog/" target="_self">Changelog</a></li><li>	<a href="//www.scriptcase.net/fr/telecharger-autres/" target="_self">Autres fichiers</a></li><li>	<a href="//www.scriptcase.net/fr/telecharger-vieille-version/" target="_self">Anciennes versions</a></li></ul></li>					<li><a target="_blank" href="//scriptcase.host/fr/hebergement-scriptcase">Host</a></li>
+					<li><a href="//www.scriptcase.net/acheter-scriptcase/">Acheter</a></li>
+				</ul>
+
+				<ul class="sh-nav sh-nav-login" id="nav-login">
+											<li><a href="//www.scriptcase.net/my-scriptcase/" target="_self" class="special">Login</a></li>
+
+											
+					<li class="sh-dropdown">
+						<a href="#" class="special">
+							<img src="//cdn2.scriptcase.net/lib/img/fr.png">
+							<span class="caret" style="border-color:white!important;"></span>
+						</a>
+
+						<ul class="sh-dropdown-menu">
+							<li><a href="javascript:setLang('en_us', 'samples')"><img src="//cdn2.scriptcase.net/lib/img/en_us.png" style="position:relative; top:-1px; margin-right: 5px;"> English</a></li>
+							<li><a href="javascript:setLang('fr', 'samples')"><img src="//cdn2.scriptcase.net/lib/img/fr.png" style="position:relative; top:-1px; margin-right: 5px;"> Français</a></li>
+							<li><a href="javascript:setLang('es', 'samples')"><img src="//cdn2.scriptcase.net/lib/img/es.png" style="position:relative; top:-1px; margin-right: 5px;"> Español</a></li>
+							<li><a href="javascript:setLang('it', 'samples')"><img src="//cdn2.scriptcase.net/lib/img/it.png" style="position:relative; top:-1px; margin-right: 5px;"> Italiano</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="sp">
+	<!-- start of site page -->
+
+	
+	
+	<!-- Container Center -->
+	<style type="text/css">.page-header{margin-top:64px!important}</style>
+	<style>html,body,.sp{height:100%!important}.sp{height:100%!important;padding:0!important}body{height:calc(100% - 94px)!important;padding-top:0!important}li.active>a{background:#f1f1f1}li.has-submenu.active>a{background:none}.bg-white{background:#fff}.list{column-count:2}.list a{background:#fff;border:none;color:#3572fa;display:block;transition:all .2s;font-weight:bold;font-size:12px;padding:0}.list a:hover{text-decoration:none}.list a:hover span{text-decoration:underline}.list a:before{color:#3e5062;content:"\203A";display:inline-block}.list small{font-size:12px}.system-list .item{padding:15px 10px 10px;border-radius:4px;border:1px solid #e5e5e5;position:relative;overflow:hidden}.system-list .item:hover{background:#f5f5f5;text-decoration:none}.system-list .item .badge{position:absolute;top:0;left:0;width:100%;border:0;border-radius:0;text-transform:uppercase;letter-spacing:5px;font-size:10px}</style>
+
+<main>
+	<div class="aside-toggle">
+		<a href="#">
+			<span></span>
+			<span></span>
+			<span></span>
+		</a>
+	</div>
+
+	<style>.page-samples nav ul li.open .subgroup{display:block;padding:10px 0}.page-samples nav ul li .subgroup{display:none}.page-samples nav ul li.open .subgroup h5{font-size:13px;font-weight:bold;padding:0 35px}.page-samples nav ul li.open .subgroup ul{margin:0 0 10px}.page-samples nav ul li.open .subgroup ul li a{font-size:13px;color:#000;display:block;padding:2px 35px}.page-samples nav>ul>li>a{font-size:13px!important;text-transform:uppercase!important;font-weight:bold!important;color:#415062!important}</style>
+<aside>
+    <form action="">
+        <input type="text" class="text-input" id="filter" value="" placeholder="Search...">
+    </form>
+
+    <nav>
+        <ul>
+                                        <li>
+                                <a href="//www.scriptcase.net/scriptcase-exemples/">Home</a>
+                            </li>
+
+                            <li class="active">
+                                <a href="//www.scriptcase.net/scriptcase-exemples/php-systems/list/">Systèmes</a>
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Applications formulaires</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Types de formulaire                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Formulaire-simple-avec-bouton-copier"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Formulaire-simple-avec-bouton-copier/">Formulaire simple</a></li>
+                                                                                                                                    <li id="nv-Plusieurs-enregistrements-marche-arret-champ"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Plusieurs-enregistrements-marche-arret-champ/">Enregistrements multiples</a></li>
+                                                                                                                                    <li id="nv-Grille-editable-recherche-rapide"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Grille-editable-recherche-rapide/">Grille éditable</a></li>
+                                                                                                                                    <li id="nv-Vue-grille-editable-fenatre-modale"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Vue-grille-editable-fenatre-modale/">Vue Grille éditable avec fenêtre modale</a></li>
+                                                                                                                                    <li id="nv-Grille-editable"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Grille-editable/">Grille éditable en ligne</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Layout                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Blocs-arborescence"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Blocs-arborescence/">Formulaire avec blocs arborescence</a></li>
+                                                                                                                                    <li id="nv-Etiquettes-dessous-champs-saisie"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Etiquettes-dessous-champs-saisie/">Champs avec étiquette en-dessous</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Formatage des champs                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-form-special-fields"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/form-special-fields/">Champs spéciaux (Google Maps, YouTube et HTML Editor)</a></li>
+                                                                                                                                    <li id="nv-Nouvelle-saisie-donnees"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Nouvelle-saisie-donnees/">Masque pour saisie de données</a></li>
+                                                                                                                                    <li id="nv-filigrane"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/filigrane/">Filigrane</a></li>
+                                                                                                                                    <li id="nv-Grille-editable-selectionner-case-a-cocher"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Grille-editable-selectionner-case-a-cocher/">Grille éditable (vue) à l'aide de la sélection case à cocher</a></li>
+                                                                                                                                    <li id="nv-Telechargements-plusieurs-images"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Telechargements-plusieurs-images/">Formulaire avec téléchargement d'images multiples</a></li>
+                                                                                                                                    <li id="nv-Selection-langue-a-la-connexion"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Selection-langue-a-la-connexion/">Formulaire de connexion avec sélection des langues</a></li>
+                                                                                                                                    <li id="nv-Editer-selection-champ"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Editer-selection-champ/">Editer un champ sélectionné en utilisant un autre Formulaire</a></li>
+                                                                                                                                    <li id="nv-Mise-a-jour-une-table-de-liens"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Mise-a-jour-une-table-de-liens/">Mettre à jour une table de liens</a></li>
+                                                                                                                                    <li id="nv-Mise-a-jour-relations-n-n"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Mise-a-jour-relations-n-n/">Mise à jour des relations multifonctions via la liste des cases</a></li>
+                                                                                                                                    <li id="nv-Cle-de-validation-unique"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Cle-de-validation-unique/">Clé unique de validation</a></li>
+                                                                                                                                    <li id="nv-Saisie-semi-automatique"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Saisie-semi-automatique/">Saisie semi-automatique</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Liens d'application                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Maitre-detail"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Maitre-detail/">Maître/Détail</a></li>
+                                                                                                                                    <li id="nv-Maitre-detail-single-to-single"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Maitre-detail-single-to-single/">Formulaire Maître/Détail (Single-to-Single)</a></li>
+                                                                                                                                    <li id="nv-Collecte-donnees-depuis-grille"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Collecte-donnees-depuis-grille/">Collecte de données depuis une Grille</a></li>
+                                                                                                                                    <li id="nv-Maitre-detail-employes-projet"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Maitre-detail-employes-projet/">Relation Maître/Détail simple pour Projets/Employés</a></li>
+                                                                                                                                    <li id="nv-Grille-et-formulaire-meme-page"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Grille-et-formulaire-meme-page/">Grille et Formulaire dans la même page</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Boutons                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-ajax-bouton"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/ajax-bouton/">AJAX Bouton</a></li>
+                                                                                                                                    <li id="nv-formulaire-groupe-boutons"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/formulaire-groupe-boutons/">Formulaire de demande avec boutons de groupe</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Filtres / Recherche                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-formulaire-dynamique-rechercher"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/formulaire-dynamique-rechercher/">Recherche dynamique pour former des Applications</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Exportations                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Generer-pdf-depuis-formulaire"><a href="//www.scriptcase.net/scriptcase-exemples/php-formulaire/Generer-pdf-depuis-formulaire/">Générer PDF</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Grilles et rapports</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Layout                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-vertical-grid-application"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/vertical-grid-application/">Requête d'orientation verticale</a></li>
+                                                                                                                                    <li id="nv-Rapport-simple"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Rapport-simple/">Grille par défaut</a></li>
+                                                                                                                                    <li id="nv-Grille-pour-diapositive-avec-champ-image"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Grille-pour-diapositive-avec-champ-image/">Profil Employé</a></li>
+                                                                                                                                    <li id="nv-Support-internationalisation"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Support-internationalisation/">Grille avec support d'internationalisation</a></li>
+                                                                                                                                    <li id="nv-Boutons-grouper"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Boutons-grouper/">Grille utilisant des boutons groupés</a></li>
+                                                                                                                                    <li id="nv-Themes-dynamiques"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Themes-dynamiques/">Rapport avec thèmes dynamiques</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Formatage des champs                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Champ-google-map"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Champ-google-map/">Champ Google Maps</a></li>
+                                                                                                                                    <li id="nv-champ-accumulee"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/champ-accumulee/">Champ Cumul</a></li>
+                                                                                                                                    <li id="nv-Zoom-avant"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Zoom-avant/">Zoom avant simple</a></li>
+                                                                                                                                    <li id="nv-Image-champ"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Image-champ/">Champ Image sur une Grille</a></li>
+                                                                                                                                    <li id="nv-Code-qr"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Code-qr/">Code QR</a></li>
+                                                                                                                                    <li id="nv-Champ-youtube"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Champ-youtube/">Champ YouTube</a></li>
+                                                                                                                                    <li id="nv-Champ-codes-barres"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Champ-codes-barres/">Champs codes barres</a></li>
+                                                                                                                                    <li id="nv-Champ-pourcentage"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Champ-pourcentage/">Champ pourcentage</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Liens d'application                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Clients-commandes-integre-grille"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Clients-commandes-integre-grille/">Etat des commandes clients</a></li>
+                                                                                                                                    <li id="nv-Liens-sur-fenetre-modale"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Liens-sur-fenetre-modale/">Liens modaux</a></li>
+                                                                                                                                    <li id="nv-Integree-grille-utilisant-arborescence"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Integree-grille-utilisant-arborescence/">Grilles intégrées utilisant l'arborescence</a></li>
+                                                                                                                                    <li id="nv-Grille-maitre-detail"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Grille-maitre-detail/">Grille Maître/Détail</a></li>
+                                                                                                                                    <li id="nv-Liaison-pour-editer-enregistrements"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Liaison-pour-editer-enregistrements/">Rapport de synthèse pour éditer l'enregistrement</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Par groupe                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-grille-dynamique-resume"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/grille-dynamique-resume/">Demande de grille à l'aide de dynamique de groupe par Résumé</a></li>
+                                                                                                                                    <li id="nv-grille-dynamique-groupby"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/grille-dynamique-groupby/">Application de grille à l'aide de dynamique Group By</a></li>
+                                                                                                                                    <li id="nv-Pauses-et-totaux"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Pauses-et-totaux/">Utiliser Group By et totaux</a></li>
+                                                                                                                                    <li id="nv-Group-by-clients-etats-rapport"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Group-by-clients-etats-rapport/">Group By – Clients x Etats-Rapports</a></li>
+                                                                                                                                    <li id="nv-Group-by-dynamique"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Group-by-dynamique/">Group By dynamique</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Résumés et tableaux croisés dynamiques                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-table-pivotante-filtre"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/table-pivotante-filtre/" onclick="setActiveItem(this);" target="_blank">Table pivotante avec filtre</a></li>
+                                                                                                                                    <li id="nv-Tableau-croise-dynamique"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Tableau-croise-dynamique/">Tableau croisé dynamique</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Graphiques de grille                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Sommaire-et-graphiques"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Sommaire-et-graphiques/">Sommaire et graphiques</a></li>
+                                                                                                                                    <li id="nv-graphique-3D"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/graphique-3D/">Graphique 3D</a></li>
+                                                                                                                                    <li id="nv-Tableau-croise-dynamique-et-graphiques"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Tableau-croise-dynamique-et-graphiques/">Tableau croisé dynamique et graphique</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Filtres / Recherche                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-raffinee-recherche"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/raffinee-recherche/">Recherche affinée</a></li>
+                                                                                                                                    <li id="nv-Recherche-rapide"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Recherche-rapide/">Option de recherche rapide</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Navigations                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Grille-parchemin-infini"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Grille-parchemin-infini/">Grille utilisant un parchemin infini</a></li>
+                                                                                                                                    <li id="nv-grid-infinite-scroll-fixed-height"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/grid-infinite-scroll-fixed-height/">Grille utilisant un défilement infini à hauteur fixe</a></li>
+                                                                                                                                    <li id="nv-grid-slide-infinite-scroll"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/grid-slide-infinite-scroll/">Diapositive de grille utilisant un parchemin infini</a></li>
+                                                                                                                                    <li id="nv-Grille-avec-Ajax"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Grille-avec-Ajax/">Grille avec Ajax</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Exportations                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Nouveau-createur-pdf-grille"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Nouveau-createur-pdf-grille/">Nouveau créateur de PDF</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Programmation dans les événements                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Calcul-client"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Calcul-client/">Rapport clients</a></li>
+                                                                                                                                    <li id="nv-Operations-traitement-d-une-grille"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Operations-traitement-d-une-grille/">Bouton Exécuter dans une application Grille (traitement des enregistrements)</a></li>
+                                                                                                                                    <li id="nv-Grille-avec-evenement-ajax"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapports/Grille-avec-evenement-ajax/">Grille avec événements Ajax</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Graphiques</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Les types                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-graphique-barres-2d"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-barres-2d/">Graphique Barres 2D</a></li>
+                                                                                                                                    <li id="nv-graphique-barres-23"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-barres-23/">Graphique Barres 3D</a></li>
+                                                                                                                                    <li id="nv-graphique-circulaire-3d"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-circulaire-3d/">Graphique Circulaire 3D</a></li>
+                                                                                                                                    <li id="nv-diagramme-dispersion"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/diagramme-dispersion/">Diagramme de dispersion</a></li>
+                                                                                                                                    <li id="nv-Stacked-Column-2D"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/Stacked-Column-2D/">Graphique d'empilement 2D</a></li>
+                                                                                                                                    <li id="nv-area-chart"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/area-chart/">Graphique zone</a></li>
+                                                                                                                                    <li id="nv-Graphique-entonnoir-html5"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/Graphique-entonnoir-html5/">Graphique en entonnoir HTML 5</a></li>
+                                                                                                                                    <li id="nv-graphique-bulles"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-bulles/">Graphique à bulles</a></li>
+                                                                                                                                    <li id="nv-Graphique-radar-html5"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/Graphique-radar-html5/">Graphique radar HTML 5</a></li>
+                                                                                                                                    <li id="nv-graphique-etape-ligne"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-etape-ligne/">Graphique Étape de Ligne</a></li>
+                                                                                                                                    <li id="nv-graphique-colonne-2d"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-colonne-2d/">Graphique Colonne 2D</a></li>
+                                                                                                                                    <li id="nv-graphique-colonne-3d"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-colonne-3d/">Graphique Colonne 3D</a></li>
+                                                                                                                                    <li id="nv-graphique-doughnut"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-doughnut/">Graphique Doughnut</a></li>
+                                                                                                                                    <li id="nv-graphique-ligne"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-ligne/">Graphique Ligne</a></li>
+                                                                                                                                    <li id="nv-graphique-circulaire-2d"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-circulaire-2d/">Graphique Circulaire 2D</a></li>
+                                                                                                                                    <li id="nv-graphique-pyramide"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-pyramide/">Graphique Pyramide</a></li>
+                                                                                                                                    <li id="nv-graphique-spline"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-spline/">Graphique Spline</a></li>
+                                                                                                                                    <li id="nv-graphique-empiler"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-empiler/">Graphique Empiler</a></li>
+                                                                                                                                    <li id="nv-graphique-combinaison"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/graphique-combinaison/">Graphique Combinaison</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Autres                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-multiple-series-chart"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/multiple-series-chart/">Graphique de série multiple</a></li>
+                                                                                                                                    <li id="nv-chart-with-link"><a href="//www.scriptcase.net/scriptcase-exemples/php-graphiques/chart-with-link/">Graphique avec lien</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Applications calendriers</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Google Calendar                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-calendar-google-Integration"><a href="//www.scriptcase.net/scriptcase-exemples/php-calendrier/calendar-google-Integration/" onclick="setActiveItem(this);" target="_blank">Calendrier (Intégration avec Google Calendar)</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Horaire                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-nouvelles-calendrier"><a href="//www.scriptcase.net/scriptcase-exemples/php-calendrier/nouvelles-calendrier/" onclick="setActiveItem(this);" target="_blank">Calendar Application with print button and event color per day</a></li>
+                                                                                                                                    <li id="nv-Calendrier-simple"><a href="//www.scriptcase.net/scriptcase-exemples/php-calendrier/Calendrier-simple/" onclick="setActiveItem(this);" target="_blank">Calendrier</a></li>
+                                                                                                                                    <li id="nv-Calendrier-par-utilisateur"><a href="//www.scriptcase.net/scriptcase-exemples/php-calendrier/Calendrier-par-utilisateur/" onclick="setActiveItem(this);" target="_blank">Calendrier par utilisateur</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Control Form Applications</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    HTML Livre                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-freehtml-control-form-sample"><a href="//www.scriptcase.net/scriptcase-exemples/control-form/freehtml-control-form-sample/">Formulaire d'inscription</a></li>
+                                                                                                                                    <li id="nv-sample-login-form"><a href="//www.scriptcase.net/scriptcase-exemples/control-form/sample-login-form/">Formulaire de connexion</a></li>
+                                                                                                                                    <li id="nv-sample-contact-form"><a href="//www.scriptcase.net/scriptcase-exemples/control-form/sample-contact-form/">Formulaire de contact</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Application Dashboard</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Lier des widgets                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-links-dashboard"><a href="//www.scriptcase.net/scriptcase-exemples/php-conteneur-tableau/links-dashboard/" onclick="setActiveItem(this);" target="_blank">Liens entre applications</a></li>
+                                                                                                                                    <li id="nv-Parametres-de-passage"><a href="//www.scriptcase.net/scriptcase-exemples/php-conteneur-tableau/Parametres-de-passage/">Conteneur avec paramètres</a></li>
+                                                                                                                                    <li id="nv-sales-region-dashboard"><a href="//www.scriptcase.net/scriptcase-exemples/php-conteneur-tableau/sales-region-dashboard/" onclick="setActiveItem(this);" target="_blank">Ventes par région</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                                                    <div class="subgroup">
+                                                <h5>
+                                                    Autres                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-employes-region"><a href="//www.scriptcase.net/scriptcase-exemples/php-conteneur-tableau/employes-region/" onclick="setActiveItem(this);" target="_blank">Employés par région</a></li>
+                                                                                                                                    <li id="nv-dashboard-ventes"><a href="//www.scriptcase.net/scriptcase-exemples/php-conteneur-tableau/dashboard-ventes/" onclick="setActiveItem(this);" target="_blank">Dashboard des ventes</a></li>
+                                                                                                                                    <li id="nv-Conteneur-simple"><a href="//www.scriptcase.net/scriptcase-exemples/php-conteneur-tableau/Conteneur-simple/">Application Conteneur</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Applications onglets</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Autres                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Creer-un-onglet-application"><a href="//www.scriptcase.net/scriptcase-exemples/php-onglet/Creer-un-onglet-application/">Cet exemple explique comment créer un onglet d'application.</a></li>
+                                                                                                                                    <li id="nv-Coder-une-application-vierge"><a href="//www.scriptcase.net/scriptcase-exemples/php-onglet/Coder-une-application-vierge/">Application vierge</a></li>
+                                                                                                                                    <li id="nv-Onglet-application"><a href="//www.scriptcase.net/scriptcase-exemples/php-onglet/Onglet-application/">Onglets d'applications</a></li>
+                                                                                                                                    <li id="nv-Onglet-avec-formulaire-et-grille"><a href="//www.scriptcase.net/scriptcase-exemples/php-onglet/Onglet-avec-formulaire-et-grille/">Onglets d'applications utilisant Formulaire et Grille</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Formulaires filtres</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Searches                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Capture-lien-dans-un-filtre"><a href="//www.scriptcase.net/scriptcase-exemples/php-recherche-filtre/Capture-lien-dans-un-filtre/">Effectuer une capture reliée à un Filtre</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Applications menus</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Autres                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Menu-horizontal"><a href="//www.scriptcase.net/scriptcase-exemples/php-menu/Menu-horizontal/">Menu Horizontal</a></li>
+                                                                                                                                    <li id="nv-Menu-dynamique"><a href="//www.scriptcase.net/scriptcase-exemples/php-menu/Menu-dynamique/">Menu dynamique</a></li>
+                                                                                                                                    <li id="nv-Application-initiale"><a href="//www.scriptcase.net/scriptcase-exemples/php-menu/Application-initiale/">Menu utilisant l'application initiale</a></li>
+                                                                                                                                    <li id="nv-menu-onglets"><a href="//www.scriptcase.net/scriptcase-exemples/php-menu/menu-onglets/">Onglets du menu</a></li>
+                                                                                                                                    <li id="nv-menu-fil-dariane"><a href="//www.scriptcase.net/scriptcase-exemples/php-menu/menu-fil-dariane/">Fil d'Ariane Menu</a></li>
+                                                                                                                                    <li id="nv-Menu-arborescence"><a href="//www.scriptcase.net/scriptcase-exemples/php-menu/Menu-arborescence/">Menu Arborescence</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Applications rapports PDF</a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Autres                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-Carte-visite-pdf-rapport"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapport-pdf/Carte-visite-pdf-rapport/">Rapport carte de visite avec application PDF</a></li>
+                                                                                                                                    <li id="nv-Imprimer-un-envoi"><a href="//www.scriptcase.net/scriptcase-exemples/php-rapport-pdf/Imprimer-un-envoi/">Imprimer un envoi</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                                    <li class="has-submenu">
+                                <a href="#">Programmer  </a>
+
+                                                                            <div class="subgroup">
+                                                <h5>
+                                                    Autres                                                </h5>
+
+                                                <ul class="list-unstyled">
+                                                                                                                        <li id="nv-gojs-library-sample"><a href="//www.scriptcase.net/scriptcase-exemples/php-programmation-codage/gojs-library-sample/" onclick="setActiveItem(this);" target="_blank">Organogramme utilisant la bibliothèque Gojs</a></li>
+                                                                                                                                    <li id="nv-Confirmation-email"><a href="//www.scriptcase.net/scriptcase-exemples/php-programmation-codage/Confirmation-email/">Confirmation d'e-mail</a></li>
+                                                                                                                                    <li id="nv-authentifications"><a href="//www.scriptcase.net/scriptcase-exemples/php-programmation-codage/authentifications/" onclick="setActiveItem(this);" target="_blank">Authentification avec les réseaux sociaux</a></li>
+                                                                                                                                    <li id="nv-fusioncharts-library-sample"><a href="//www.scriptcase.net/scriptcase-exemples/php-programmation-codage/fusioncharts-library-sample/" onclick="setActiveItem(this);" target="_blank">Sales Map à l'aide de la bibliothèque FusionChart</a></li>
+                                                                                                                </ul>
+                                            </div>
+                                                
+                            </li>
+                                </ul>
+    </nav>
+</aside>
+	
+		<style>.sb,.sh,aside,.aside-toggle,.headline{display:none!important}.sb+.sh+.sp{margin-top:0!important}body{height:100%!important}.page-samples section{padding:0!important;overflow-y:initial!important}.frame,.iframe-wrapper,iframe,.embed-responsive{height:100%!important;margin:0!important}</style>
+	
+	<section>
+		<div class="section-overlay">
+		</div>
+
+		<div class="headline mt-0 mb-5">
+			<div class="row">
+				<div class="col-sm-9">
+					<h1 class="heading">
+						HealthCare					</h1>
+				</div>
+
+				<div class="col-sm-3 text-right pt-2">
+									</div>
+			</div>
+
+			<p>
+				Système de modèle  de santé et médical pour les cliniques, les hôpitaux et les médecins pour créer des calendriers médicaux et gérer le dossier de santé électronique des patients. Le modèle a toutes les pages essentielles pré-faites et beaucoup plus pour votre commodité. Profils de médecins, profils de patients, rapports, tableaux et bien d'autres pages supplémentaires.			</p>
+		</div>
+
+		<div class="frame mb-5" style="border:none!important;">
+			<div id="iframe-wrapper" class="embed-responsive embed-responsive-16by9">
+				<iframe id="iframe" src="/sistemas/v9/healthcare/login/" style="border:0!important;width:100%;"></iframe>
+			</div>
+		</div>
+
+				
+	</section>
+	
+	</main>	<style>.sf .sf-button{padding:8px;height:auto}.sf .sf-line{margin:15px 0}.sf{padding:40px 0 20px}</style>
+
+	
+					<form name="form_lang" action="/scriptcase-samples/php-systems/healthcare/?rand=fafc5332c1016b63" method="POST">
+					<input type="hidden" name="str_action" value="/healthcare//">
+									</form>
+			
+	<script type="text/javascript" src="//cdn2.scriptcase.net/lib/js/jquery/jquery-2.0.2.min.js?jsv=333"></script><script type="text/javascript" src="//cdn2.scriptcase.net/lib/js/bootstrap.min.js?jsv=333"></script><script type="text/javascript" src="//cdn2.scriptcase.net/home/js/featherlight.js?jsv=333"></script><script type="text/javascript" src="//cdn2.scriptcase.net/home/js/parallax.min.js?jsv=333"></script><script type="text/javascript" src="//cdn2.scriptcase.net/lib/js/config.inc.js?jsv=333"></script><script type="text/javascript" src="//cdn2.scriptcase.net/lib/js/function.js?jsv=333"></script><script type="text/javascript" src="//cdn2.scriptcase.net/lib/js/ajax.js?jsv=333"></script><script type="text/javascript" src="//cdn2.scriptcase.net/lib/js/alias_arr_fr.js?jsv=333"></script><script type="text/javascript" src="//cdn2.scriptcase.net/lib/js/alias_fn.js?jsv=333"></script><script type="text/javascript" src="//cdn2.scriptcase.net/samples/js/samples.js?jsv=333"></script>
+	<!-- Begin New Kayako -->
+<script>(function(d,a){function c(){var b=d.createElement("script");b.async=!0;b.type="text/javascript";b.src=a._settings.messengerUrl;b.crossOrigin="anonymous";var c=d.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}window.kayako=a;a.readyQueue=[];a.newEmbedCode=!0;a.ready=function(b){a.readyQueue.push(b)};a._settings={apiUrl:"https://scriptcase-sales.kayako.com/api/v1",teamName:"Scriptcase Sales",homeTitles:[{"locale":"en-us","translation":"Hello!"},{"locale":"pt-br","translation":"Olá!"},{"locale":"es","translation":"Hola!"}],homeSubtitles:[{"locale":"en-us","translation":"Welcome to Scriptcase. Let's chat — start a new conversation below."},{"locale":"pt-br","translation":"Bem-Vindo ao Scriptcase. Vamos conversar?"},{"locale":"es","translation":"Bienvenido al Scriptcase. ¿Vamos a hablar?"}],messengerUrl:"https://scriptcase-sales.kayakocdn.com/messenger",realtimeUrl:"wss://kre.kayako.net/socket",widgets:{presence:{enabled:false},twitter:{enabled:false,twitterHandle:"null"},articles:{enabled:false,sectionId:2}},styles:{primaryColor:"#3F5AF1",homeBackground:"-134deg, #581F7E 0%, #5195F8 100%",homePattern:"https://assets.kayako.com/messenger/pattern-1--dark.svg",homeTextColor:"#FFFFFF"}};window.attachEvent?window.attachEvent("onload",c):window.addEventListener("load",c,!1)})(document,window.kayako||{});</script>
+
+<script type="text/javascript">setTimeout(function(){kayako.ready(function(){kayako.config={hideReplyTime:true}})})</script>
+
+<!-- END New Kayako -->
+
+
+	<style></style>
+
+	<script>kayako.ready(function(){kayako.forget();document.getElementById('kayako-messenger').className="minimized";kayako.on('chat_window_maximized',function(){document.getElementById('kayako-messenger').className="";})});</script>
+	
+
+
+
+<!-- BEGIN TAG CODE - DO NOT EDIT! OLD -->
+<!--
+<div id="swifttagcontainer26mr1xefzm">
+	<div id="proactivechatcontainer26mr1xefzm"></div>
+	<div style="display: inline;" id="swifttagdatacontainer26mr1xefzm"></div>
+</div>
+
+<script type="text/javascript">
+	var swiftscriptelem26mr1xefzm=document.createElement("script");
+	swiftscriptelem26mr1xefzm.type="text/javascript";
+	var swiftrandom = Math.floor(Math.random()*1001);
+	var swiftuniqueid = "26mr1xefzm";
+	var swifttagurl26mr1xefzm="https://suporte.scriptcase.com.br/visitor/index.php?/en/LiveChat/HTML/SiteBadge/cHJvbXB0dHlwZT1jaGF0JnVuaXF1ZWlkPTI2bXIxeGVmem0mdmVyc2lvbj00LjcyLjEmcHJvZHVjdD1mdXNpb24mZmlsdGVyZGVwYXJ0bWVudGlkPTE1JnNpdGViYWRnZWNvbG9yPXdoaXRlJmJhZGdlbGFuZ3VhZ2U9ZW4mYmFkZ2V0ZXh0PWxpdmVoZWxwJm9ubGluZWNvbG9yPSMxOThjMTkmb25saW5lY29sb3Job3Zlcj0jNWZhZjVmJm9ubGluZWNvbG9yYm9yZGVyPSMxMjYyMTImb2ZmbGluZWNvbG9yPSNhMmE0YWMmb2ZmbGluZWNvbG9yaG92ZXI9I2JlYzBjNSZvZmZsaW5lY29sb3Jib3JkZXI9IzcxNzM3OCZhd2F5Y29sb3I9IzczN2M0YSZhd2F5Y29sb3Job3Zlcj0jOWVhNDgxJmF3YXljb2xvcmJvcmRlcj0jNTE1NzM0JmJhY2tzaG9ydGx5Y29sb3I9Izc4OGEyMyZiYWNrc2hvcnRseWNvbG9yaG92ZXI9I2ExYWU2NiZiYWNrc2hvcnRseWNvbG9yYm9yZGVyPSM1NDYxMTkmY3VzdG9tb25saW5lPSZjdXN0b21vZmZsaW5lPSZjdXN0b21hd2F5PSZjdXN0b21iYWNrc2hvcnRseT0KZDU0MGYxYzRlOTY1NTUyODY3ZGRhMjYyYTk3M2RkYmZlYTc5NmRhZQ==";
+	setTimeout("swiftscriptelem26mr1xefzm.src=swifttagurl26mr1xefzm;document.getElementById('swifttagcontainer26mr1xefzm').appendChild(swiftscriptelem26mr1xefzm);",1);
+</script>
+-->
+<!-- END TAG CODE - DO NOT EDIT! -->	<script>$(document).ready(function(){var headerHeight=$('header').outerHeight();var navbarHeight=$('header .navbar').outerHeight();$(window).scroll(function(){if($(window).scrollTop()>headerHeight-navbarHeight){$('header').addClass('fixed');$('body').css('margin-top',headerHeight);}else{$('header').removeClass('fixed');$('body').css('margin-top',0);}});$("nav > ul > li.has-submenu > a").click(function(e){e.preventDefault();$(this).parent().toggleClass('open');});$("#filter").keyup(function(){var filter=$(this).val(),count=0;if(!filter){$("nav li").each(function(){$(this).show();$(this).attr('style','');$(this).find('ul').attr('style','');})
+return;}var regex=new RegExp(filter,"i");$("nav li").each(function(){$(this).show();if($(this).text().search(regex)<0){$(this).hide();$(this).removeClass('open');}else{$(this).addClass('open');count++;}});});$("li.has-submenu.active").addClass('open');$(".aside-toggle").click(function(){$('aside').addClass('visible');$(".section-overlay").show();});$(".section-overlay").click(function(){$('aside').removeClass('visible');$(".section-overlay").hide();});});</script>
+	<script>$('.btn-anchor').click(function(){var anchorOffset=$('.sh').height();if($(this).attr('data-anchor-offset')){anchorOffset=$(this).attr('data-anchor-offset');}else{anchorOffset=0;}var top=$('body').find($(this).attr('href')).offset().top-anchorOffset;$('html, body').animate({scrollTop:top},600);return false;});</script>
+	<script>$(document).ready(function(){$(".sh-menu-toggle").click(function(e){e.preventDefault();$('.sh').toggleClass('opened');$('body').toggleClass('menu-opened');})
+$(".sf-col .sf-headline").click(function(e){e.preventDefault();$(this).toggleClass('clicked');$(this).parent().toggleClass('opened');})
+var headerHeight=$('.sh').outerHeight();})</script>
+
+	<script type="text/javascript">setTimeout(function(){var a=document.createElement("script");var b=document.getElementsByTagName("script")[0];a.src=document.location.protocol+"//script.crazyegg.com/pages/scripts/0020/9350.js?"+Math.floor(new Date().getTime()/3600000);a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)},1);</script>
+
+		
+	
+		
+	</body></html>
