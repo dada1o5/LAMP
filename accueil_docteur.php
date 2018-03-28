@@ -843,15 +843,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 </body>
 
 </html>
-<<<<<<< HEAD
-<<<<<<< HEAD
- <?php
-}
-?>
-https://www.20minutes.fr/sante/2244707-20180327-hepatite-b-pres-300-millions-personnes-touchees-monde
-=======
 
  <?php
 }
 ?>
->>>>>>> 9f59f126920aecd6d0f4cce4035b5524e1f748d2
