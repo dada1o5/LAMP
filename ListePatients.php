@@ -222,16 +222,17 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
               $reponse = $bdd->query('SELECT * FROM utilisateurs');
               while($donnees = $reponse->fetch())
               {
+				if($donnees['statut'] == "Patient")
+				{
                 ?>
-
-              <tbody>
-                <tr>
-                  <td><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></td>
-                  <td><?php echo $donnees['date']; ?></td>
-                  <td><?php echo $donnees['email']; ?></td>
-                </tr>
-
+				  <tbody>
+					<tr>
+					  <td><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></td>
+					  <td><?php echo $donnees['date']; ?></td>
+					  <td><?php echo $donnees['email']; ?></td>
+					</tr>
               <?php
+				}
             }
                ?>
 
