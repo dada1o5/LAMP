@@ -10,6 +10,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
+	
+	$reqpatients = $bdd->query('SELECT * FROM utilisateurs');
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +84,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
         <!--Mes patients-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
-          <a class="nav-link" href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">">
+          <a class="nav-link" href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes patients</span>
           </a>
@@ -204,26 +206,21 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
       <!--Sélection patient menu déroulant-->
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Liste Patients
         <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-          <!--<li><a href="#">Patient 1 BDD</a></li>
-          <li><a href="#">Patient 2 BDD</a></li>
-          <li><a href="#">Patient 3 BDD</a></li>-->
-		  <?php
-		$reqpatients = $bdd->query('SELECT * FROM utilisateurs');
-
-		while ($donnees = $reqpatients->fetch()){
+        <label>Patients :</label>
+		<select name="patients">
+			<?php
+			while ($donnees = $reqpatients->fetch()){
 			if($donnees['statut']=='Patient')
 			{
-			?>				 			
-			<li><a href="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>?id_patient=<?php echo $donnees['id_utilisateur']; ?>"><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></a></li>
-			<?php
-			
+			?>
+			<option><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></option>
+			<?php	
 			}
 		}
 		?>	
-        </ul>
+		</select>
+		<input type="submit" value="Valider" name="select_patient" />
       </div>
 	
     <!-- /.container-fluid-->
