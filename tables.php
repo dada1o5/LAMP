@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -78,7 +78,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
-          </a>  
+          </a>
         </li>
         <!--Mes ordonnances-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
@@ -86,7 +86,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Mes ordonnances</span>
           </a>
-          
+
         </li>
         <!--Mes medecins-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
@@ -94,8 +94,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes médecins</span>
           </a>
-         
-        </li>    
+
+        </li>
       </ul>
       <!--Bouton fleche du bas-->
 	  <ul class="navbar-nav sidenav-toggler">
@@ -210,7 +210,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         <li class="breadcrumb-item active">Mon tableau de bord</li>
 		<li class="breadcrumb-item active"> Mes messages</li>
       </ol>
-    
+
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
@@ -223,7 +223,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
                   <th>Titre</th>
                   <th>Expéditeur</th>
                   <th>Date</th>
-                  
+
                 </tr>
               </thead>
               <tfoot>
@@ -238,16 +238,16 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
                   <td>Tiger Nixon</td>
                   <td>System Architect</td>
                   <td>2011/04/25</td>
-                 
+
                 </tr>
                 <tr>
                   <td>Garrett Winters</td>
                   <td>Accountant</td>
-                  
+
                   <td>$170,750</td>
                 </tr>
-              
-           
+
+
               </tbody>
             </table>
           </div>

@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -78,7 +78,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
-          </a>  
+          </a>
         </li>
         <!--Mes ordonnances-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
@@ -86,7 +86,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Mes ordonnances</span>
           </a>
-          
+
         </li>
         <!--Mes medecins-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
@@ -94,8 +94,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes médecins</span>
           </a>
-         
-        </li>    
+
+        </li>
       </ul>
       <!--Bouton fleche du bas-->
 	  <ul class="navbar-nav sidenav-toggler">
@@ -210,18 +210,18 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         <li class="breadcrumb-item active">Mon tableau de bord</li>
 		<li class="breadcrumb-item active"> Mon profil</li>
       </ol>
-    
+
       <!-- Example DataTables Card-->
-      
+
 	   <!--Mon profil-->
-	   
+
 	 <section id="inscrire">
 	<div class="container">
 		<h2 class="text-center text-uppercase text-secondary mb-0">Mes informations</h2>
 		<hr class="barre-dark mb-5">
 		<div class="card mb-3">
 		<div id="photo" >
-       <img class="card-img-top img-fluid w-100" src="https://picsum.photos/500/500?image=996" alt="">
+        <a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="card-img-top img-fluid w-100" src="https://picsum.photos/500/500?image=996" alt=""></a>
 	   </div>
 	   </div>
 		<div class="row">
@@ -255,7 +255,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
-				
+
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Groupe sanguin</label>
@@ -296,7 +296,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
                   <p class="help-block text-danger"></p>
                 </div>
 				</div>
-				
+
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Nouveau mot de passe</label>
@@ -348,6 +348,28 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
             <a class="btn btn-primary" href="deconnexion.php">Déconnexion</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- Changer photo profil-->
+    <div class="modal fade" id="profilModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Changez votre photo de profil</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" action="image.php" enctype="multipart/form-data">
+			<label for="profil">Icône du fichier (JPG, PNG ou GIF | max. 15 Ko) :</label><br />
+			<input type="file" name="profil" id="profil" /><br />
+		  </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <a class="btn btn-primary" href="deconnexion.php">Enregistrer</a>
           </div>
         </div>
       </div>

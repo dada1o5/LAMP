@@ -53,7 +53,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="accueil_docteur.php">
+          <a class="nav-link" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
@@ -82,7 +82,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
         <!--Mes patients-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
-          <a class="nav-link" href="ListePatients.html">
+          <a class="nav-link" href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes patients</span>
           </a>
@@ -844,7 +844,14 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
 </html>
 <<<<<<< HEAD
+<<<<<<< HEAD
  <?php
 }
 ?>
 https://www.20minutes.fr/sante/2244707-20180327-hepatite-b-pres-300-millions-personnes-touchees-monde
+=======
+
+ <?php
+}
+?>
+>>>>>>> 9f59f126920aecd6d0f4cce4035b5524e1f748d2
