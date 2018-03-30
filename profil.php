@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -10,6 +10,45 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
+	
+	if(isset($_POST['valider']))
+	{		
+		if(isset($_FILES['profil']) AND !empty($_FILES['profil']['name']))
+		{
+			$tailleMax = 2097152;	
+			$extensionValides = array('jpg','jpeg','gif','png');
+			if($_FILES['profil']['size']<= $tailleMax)
+			{
+				$extensionUpload = strtolower(substr(strrchr($_FILES['profil']['name'],'.'),1));
+				if(in_array($extensionUpload, $extensionValides))
+				{
+					$chemin = "membres/avatars/".$_SESSION['id_utilisateur'].".".$extensionUpload;
+					$resultat = move_uploaded_file($_FILES['profil']['tmp_name'],$chemin);
+					if($resultat)
+					{
+						$updatephoto = $bdd->prepare('UPDATE utilisateurs SET avatar=? WHERE id_utilisateur=?');
+						$updatephoto->execute(array($_SESSION['id_utilisateur'].".".$extensionUpload,$_SESSION['id_utilisateur']));
+						header("Location:profil.php?id_utilisateur=".$_SESSION['id_utilisateur']);
+					}
+					else
+					{
+						echo "Erreur pendant l'importation de la photo !";
+					}
+				}
+				else
+				{
+					echo "Votre photo doit être au format jpg, jpeg, gif ou png !";
+				}
+			}
+			else
+			{
+				echo "Votre photo ne doit pas dépasser 2Mo !";
+			}
+		}
+	}
+$reqavatar = $bdd->prepare('SELECT avatar FROM utilisateurs WHERE id_utilisateur=?');
+$reqavatar->execute(array($_SESSION['id_utilisateur']));
+$avatar = $reqavatar->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -219,13 +258,58 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	<div class="container">
 		<h2 class="text-center text-uppercase text-secondary mb-0">Mes informations</h2>
 		<hr class="barre-dark mb-5">
+		<h2 class="text-center text-uppercase text-secondary mb-0"><?php echo $userinfo['prenom']." ".$userinfo['nom']; ?></h2>
 		<div class="card mb-3">
 		<div id="photo" >
-        <a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="card-img-top img-fluid w-100" src="https://picsum.photos/500/500?image=996" alt=""></a>
+		<?php 
+		if ($avatar['avatar'] == NULL)
+		{
+		?>
+			<a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="card-img-top img-fluid w-100" src="membres/avatars/default.png" alt=""></a>
+		<?php
+		}
+		else 
+		{
+		?>
+        <a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="card-img-top img-fluid w-100" src="membres/avatars/<?php echo $userinfo['avatar']; ?>" alt=""></a>
+		<?php
+		}
+		?>
 	   </div>
 	   </div>
-		<div class="row">
-		<div class="col-lg-8 mx-auto">
+		
+		
+		Date de naissance : <?php echo $userinfo['date']; ?></br>
+		Adresse e-mail : <?php echo $userinfo['email']; ?></br>
+		Sexe : <br>
+		Lieu de Naissance : <?php if($userinfo['lieu_naissance']==NULL) { echo "inconnu"; } else echo $userinfo['lieu_naissance']; ?> <br>
+		Numéro de sécurité sociale : <?php if($userinfo['numero_secu']==NULL) { echo "inconnu"; } else echo $userinfo['numero_secu']; ?> <br><br>
+		
+		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
+		<a class="nav-link" data-toggle="modal" data-target="#maj"><i class="fa fa-fw fa-sign-out"></i>Mettre à jour mes infos</a>
+		<br><br>
+		
+		<h3> ALLERGIES </h3><br><br>
+		
+		<button type="submit" class="btn btn-primary btn-xl" name="valider_allergies" id="valider_allergies">Ajouter une allergie</button>
+		
+		
+		<br><br>
+		
+		<h3> PATHOLOGIES </h3><br><br>
+		
+		<button type="submit" class="btn btn-primary btn-xl" name="valider_pathologies" id="valider_pathologies">Ajouter une pathologie</button>
+		
+		<br><br>
+		
+		<h3> VACCINS </h3><br><br>
+	
+		<button type="submit" class="btn btn-primary btn-xl" name="valider_vaccins" id="valider_vaccins">Ajouter un vaccin</button>
+		
+		<br><br>
+		
+			
+		<!--<div class="col-lg-8 mx-auto">
 			<form name="inscription" id="inscriptionForm" novalidate="novalidate">
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
@@ -317,7 +401,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 					<button type="submit" class="btn btn-primary btn-xl" id="Button">Soumettre</button>
 				</div>
             </form>
-        </div>
+        </div>-->
         </div>
     </div>
    </section>
@@ -363,13 +447,38 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
             </button>
           </div>
           <div class="modal-body">
-			<form method="post" action="image.php" enctype="multipart/form-data">
+			<form method="post" enctype="multipart/form-data">
 			<label for="profil">Icône du fichier (JPG, PNG ou GIF | max. 15 Ko) :</label><br />
 			<input type="file" name="profil" id="profil" /><br />
 		  </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <a class="btn btn-primary" href="deconnexion.php">Enregistrer</a>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider" id="valider">Enregister</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	<div class="modal fade" id="maj" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Mettre à jour vos informations</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<label for="prenom">Prénom :</label><br />
+			<input type="text" name="prenom" id="prenom" /><br />
+			<label for="prenom">Nom :</label><br />
+			<input type="text" name="prenom" id="prenom" /><br />
+		  </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider" id="valider">Enregister</button>
           </div>
         </div>
       </div>
