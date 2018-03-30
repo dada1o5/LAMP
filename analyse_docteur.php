@@ -222,7 +222,25 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		</select>
 		<input type="submit" value="Valider" name="select_patient" />
       </div>
-	
+	<img
+    src="http://localhost/lamp/graphique.php" 
+    alt=""
+    height="400px" 
+    width="100%"
+/>
+
+<div id="container">
+<h2>Commentaires</h2>
+<form method="post" action="">
+
+             <textarea name="message" rows="4" cols="100"></textarea>
+             <br />
+			  <br />
+             <input type="submit" value="Envoyer" />
+           </p>
+         </form>
+         <p></p>
+</div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
