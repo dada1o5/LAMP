@@ -1,8 +1,11 @@
 <?php
-
+ 
+// Bibliothèque nécessaire
+include ("/xampp/htdocs/Lamp/jpgraph-4.2.0/src/jpgraph.php");
+include ("/xampp/htdocs/Lamp/jpgraph-4.2.0/src/jpgraph_line.php");
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -209,20 +212,13 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         <li class="breadcrumb-item active">Mon tableau de bord</li>
 		<li class="breadcrumb-item active"> Mes relevés</li>
       </ol>
-<<<<<<< HEAD
-=======
+<img
+    src="http://localhost/lamp/graphique.php" 
+    alt=""
+    height="400px" 
+    width="100%"
+/>
 
-       <!-- Example Pie Chart Card-->
-          <div class="card mb-3">
-            <div class="card-header">
-              <i class="fa fa-pie-chart"></i> Pie Chart Example</div>
-            <div class="card-body">
-              <canvas id="myPieChart" width="100%" height="100"></canvas>
-            </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-          </div>
-
->>>>>>> 9f59f126920aecd6d0f4cce4035b5524e1f748d2
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
