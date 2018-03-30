@@ -218,6 +218,16 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
     height="400px" 
     width="100%"
 />
+<h2>Commentaires</h2>
+
+<form method="post" action="">
+
+             <textarea name="message" rows="8" cols="35"></textarea>
+             <br />
+             <input type="submit" value="Envoyer" />
+           </p>
+         </form>
+         <p></p>
 
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
