@@ -11,25 +11,21 @@ html {
     flex-direction: row;
     align-items: baseline;
 	margin:auto;
-	
+
 }
-#logo img 
+#logo img
 {
     width: 100%;
     height: 100%;
 }
 
-#actualites 
+#actualites
 {
 	width: 50%;
     height: 100%;
 }
-#actualites 
-{
-	width: 50%;
-    height: 100%;
-}
-#avatar 
+
+#avatar
 {
 	width: 10%;
     height: 10%;

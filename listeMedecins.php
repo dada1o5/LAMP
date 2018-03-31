@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -204,16 +204,15 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Tableau de bord</a>
+          <a href="#">Liste Médecins</a>
         </li>
-        <li class="breadcrumb-item active">Mon tableau de bord</li>
-		<li class="breadcrumb-item active"> Mes messages</li>
+        <li class="breadcrumb-item active">Mes médecins</li>
       </ol>
 
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
+          <i class="fa fa-table"></i> Liste des médecins</div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -225,27 +224,24 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
                 </tr>
               </thead>
-              <tfoot>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>2011/04/25</td>
 
-                </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-
-                  <td>$170,750</td>
-                </tr>
-
+							<?php
+              $reponse = $bdd->query('SELECT * FROM utilisateurs');
+              while($donnees = $reponse->fetch())
+              {
+				if($donnees['statut'] == "Docteur")
+				{
+                ?>
+				  <tbody>
+					<tr>
+					  <td><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></td>
+					  <td><?php echo $donnees['date']; ?></td>
+					  <td><?php echo $donnees['email']; ?></td>
+					</tr>
+              <?php
+				}
+            }
+               ?>
 
               </tbody>
             </table>

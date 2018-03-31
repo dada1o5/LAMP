@@ -206,8 +206,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         <li class="breadcrumb-item">
           <a href="#">Tableau de bord</a>
         </li>
-        <li class="breadcrumb-item active">Mon tableau de bord</li>
-		<li class="breadcrumb-item active"> Mes messages</li>
+        <li class="breadcrumb-item active">Mes ordonnances</li>
       </ol>
 
       <!-- Example DataTables Card-->

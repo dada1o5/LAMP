@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink','root','root');
 
 if(isset($_POST['sendinscriptionButton']))
 {
@@ -147,7 +147,7 @@ if(isset($_POST['connect']))
           </ul>
         </div>
 		</form>
-		
+
 		<!--Bouton Menu pour petit écran-->
 		<button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 			Menu

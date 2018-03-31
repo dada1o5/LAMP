@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -10,7 +10,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
-	
+
 	$reqpatients = $bdd->query('SELECT * FROM utilisateurs');
 ?>
 
@@ -215,17 +215,17 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 			{
 			?>
 			<option><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></option>
-			<?php	
+			<?php
 			}
 		}
-		?>	
+		?>
 		</select>
 		<input type="submit" value="Valider" name="select_patient" />
       </div>
 	<img
-    src="http://localhost/lamp/graphique.php" 
+    src="http://localhost/lamp/graphique.php"
     alt=""
-    height="400px" 
+    height="400px"
     width="100%"
 />
 

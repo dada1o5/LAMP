@@ -189,7 +189,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <!--Bienvenue-->
 		<li class="nav-item">
-          <h3 class="text-white">Bienvenue <?php echo $_SESSION['id_utilisateur'] ?> !</h3>
+			<h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
         </li>
         <!--Bouton deconnexion-->
 		<li class="nav-item">
@@ -207,8 +207,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         <li class="breadcrumb-item">
           <a href="#">Tableau de bord</a>
         </li>
-        <li class="breadcrumb-item active">Mon tableau de bord</li>
-		<li class="breadcrumb-item active"> Mes messages</li>
+        <li class="breadcrumb-item active">Mes RDV</li>
       </ol>
 
       <!-- Example DataTables Card-->

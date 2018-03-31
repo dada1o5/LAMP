@@ -1,11 +1,11 @@
 <?php
- 
+
 // Bibliothèque nécessaire
 include ("/xampp/htdocs/Lamp/jpgraph-4.2.0/src/jpgraph.php");
 include ("/xampp/htdocs/Lamp/jpgraph-4.2.0/src/jpgraph_line.php");
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -209,13 +209,12 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         <li class="breadcrumb-item">
           <a href="#">Tableau de bord</a>
         </li>
-        <li class="breadcrumb-item active">Mon tableau de bord</li>
 		<li class="breadcrumb-item active"> Mes relevés</li>
       </ol>
 <img
-    src="http://localhost/lamp/graphique.php" 
+    src="http://localhost/lamp/graphique.php"
     alt=""
-    height="400px" 
+    height="400px"
     width="100%"
 />
 
