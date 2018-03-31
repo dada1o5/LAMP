@@ -130,31 +130,24 @@ if(isset($_POST['connect']))
 		<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
-		<div class="connexion text-white mb-0">
-		<!--Formulaire de connexion -->
-			<form method="POST" action="">
-				<div class="row">
-					<div class="col-lg-4 connexion mx-auto" >
-					<div class="control-group">
-						<input class="form-control" name="connexionemail" id="connexionemail" type="email" placeholder="Adresse mail">
-						<p class="help-block text-danger"></p>
-					</div>
-					</div>
-					<div class="col-lg-4 connexion mx-auto" >
-					<div class="control-group">
-						<input class="form-control" name="connexionmdp" id="connexionmdp" type="password" placeholder="Mot de passe">
-						<p class="help-block text-danger"></p>
-					</div>
-					</div>
-					<div class="col-lg-4 connexion mx-auto" >
-					<div class="form-group">
-						<button type="submit" name="connect" id="connect" class="btn btn-secondary ">Se connecter
-						</button>
-					</div>
-					</div>
-				</div>
-			</form>
-		</div>
+		<!--Formulaire de connexion-->
+		<form method="POST" action="">
+		<div class="container">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item mx-0 mx-lg-1">
+             <input class="form-control" name="connexionemail" id="connexionemail" type="email" placeholder="Adresse mail">
+            </li>
+            <li class="nav-item mx-0 mx-lg-1">
+              <input class="form-control" name="connexionmdp" id="connexionmdp" type="password" placeholder="Mot de passe">
+            </li>
+            <li class="nav-item mx-0 mx-lg-1">
+             <button type="submit" name="connect" id="connect" class="btn btn-secondary ">Se connecter
+			</button>
+            </li>
+          </ul>
+        </div>
+		</form>
+		
 		<!--Bouton Menu pour petit écran-->
 		<button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 			Menu
@@ -218,6 +211,18 @@ if(isset($_POST['connect']))
 				</div>
 				<div class="control-group">
 				<div class="form-group floating-label-form-group controls mb-0 pb-2">
+               <label></label>
+			   <br>
+					<select class="form-control" name="sexe" id="sexe">
+						<option class="form-control" label="Choisissez votre sexe"></option>
+						<option class="form-control" value="Homme">Homme</option>
+						<option class="form-control" value="Femme">Femme</option>
+					</select>
+                  <p class="help-block text-danger"></p>
+                </div>
+				</div>
+				<div class="control-group">
+				<div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Date de naissance</label>
                   <input class="form-control" name="date" id="date" type="date">
                   <p class="help-block text-danger"></p>
@@ -245,9 +250,9 @@ if(isset($_POST['connect']))
                 </div>
 				</div>
 				<div class="control-group">
-				<div class="form-group floating-form-group controls mb-0 pb-2">
-                  <label>Vous êtes ?</label>
-
+				<div class="form-group floating-label-form-group controls mb-0 pb-2">
+					<label></label>
+					<br>
 					<select class="form-control" name="statut" id="statut">
 						<option class="form-control" label="Choisissez votre catégorie"></option>
 						<option class="form-control" value="Docteur">Docteur</option>

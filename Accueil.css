@@ -24,7 +24,9 @@ h6 {
 	justify-content: space-around;
     flex-direction: row;
     align-items: baseline;
-	margin:auto;
+	margin-top:auto;
+	margin-bottom:auto;
+
 	
 }
 #logo img
@@ -90,9 +92,6 @@ section h2 {
   font-family: 'Montserrat';
 }
 
-#mainNav .navbar-brand {
-  color: #FF1654;
-}
 
 #mainNav .navbar-nav {
   margin-top: 1rem;
@@ -183,9 +182,12 @@ header.masthead h2 {
   }
 }
 /*CSS Labels du formulaire*/
+
+
 .floating-label-form-group {
   position: relative;
   border-bottom: 1px solid #e9ecef;
+  
 }
 
 .floating-label-form-group input,
@@ -237,13 +239,17 @@ form .row:first-child .floating-label-form-group {
   border-top: 1px solid #e9ecef;
 
 }
+
 /*CSS des classes*/
+
 .connexion {
-	
+		 
 	     margin-left:5rem;
 		 margin-right:5rem;
-		 padding:0;
+		
+		 
 }
+
 .footer {
   padding-top: 5rem;
   padding-bottom: 5rem;
