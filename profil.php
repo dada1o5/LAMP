@@ -285,18 +285,37 @@ $avatar = $reqavatar->fetch();
 		?>
 	   </div>
 	   </div>
-		
-		
-		Date de naissance : <?php echo $userinfo['date']; ?></br>
-		Adresse e-mail : <?php echo $userinfo['email']; ?></br>
-		Sexe : <br>
-		Lieu de Naissance : <?php if($userinfo['lieu_naissance']==NULL) { echo "inconnu"; } else echo $userinfo['lieu_naissance']; ?> <br>
-		Numéro de sécurité sociale : <?php if($userinfo['numero_secu']==NULL) { echo "inconnu"; } else echo $userinfo['numero_secu']; ?> <br><br>
-		
+		<div class="row">
+		<div class="lead text-info col-lg-3 ml-auto">
+		Date de naissance : <?php echo $userinfo['date']; ?>
+		<hr class="barre-dark mb-5">
+		</div>
+		<div class="lead text-center text-info col-lg-6 ml-auto">
+		Adresse e-mail : <?php echo $userinfo['email']; ?>
+		<hr class="barre-dark mb-5">
+		</div>
+		<div class="lead text-right text-info col-lg-3 ml-auto">
+		Sexe :  <?php echo $userinfo['sexe']; ?>
+		<hr class="barre-dark mb-5">
+		</div>
+		</div>
+		<div class="row">
+		<div class="lead text-left text-info col-lg-6 ml-auto">
+		Lieu de Naissance : <?php if($userinfo['lieu_naissance']==NULL) { echo "inconnu"; } else echo $userinfo['lieu_naissance']; ?> 
+		<hr class="barre-dark mb-5">
+		</div>
+		<div class="lead text-right text-info col-lg-6 ml-auto">
+		Numéro de sécurité sociale : <?php if($userinfo['numero_secu']==NULL) { echo "inconnu"; } else echo $userinfo['numero_secu']; ?> 
+		<hr class="barre-dark mb-5">
+		</div>
+		</div>
+		<div class="row">
+		<div class="lead text-center col-lg-12 ml-auto">
 		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
-		<a class="nav-link" data-toggle="modal" data-target="#maj"><i class="fa fa-fw fa-sign-out"></i>Mettre à jour mes infos</a>
+		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj"><i class="fa fa-fw fa-sign-out"></i>Mettre à jour mes infos</a>
+		</div>
+		</div>
 		<br><br>
-		
 		<h3> ALLERGIES </h3><br><br>
 		
 		<button type="submit" class="btn btn-primary btn-xl" name="valider_allergies" id="valider_allergies">Ajouter une allergie</button>
@@ -317,99 +336,7 @@ $avatar = $reqavatar->fetch();
 		<br><br>
 		
 			
-		<!--<div class="col-lg-8 mx-auto">
-			<form name="inscription" id="inscriptionForm" novalidate="novalidate">
-				<div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Nom</label>
-                  <input class="form-control" id="Nom" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-				<div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Prénom</label>
-                  <input class="form-control" id="Prenom" type="text" placeholder="Prénom" required="required" data-validation-required-message="Entrez votre prénom.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-				<div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Date de naissance</label>
-                  <input class="form-control" id="Date" type="date" required="required" data-validation-required-message="Entrez votre date de naissance.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-				<div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Adresse mail</label>
-                  <input class="form-control" id="Email" type="email" placeholder="Adresse mail" required="required" data-validation-required-message="Entrez votre Email.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-
-				<div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Groupe sanguin</label>
-                  <input class="form-control" id="Sang" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-				<div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Taille</label>
-                  <input class="form-control" id="Taille" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div><div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Poids</label>
-                  <input class="form-control" id="Poids" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div><div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Medecin généraliste</label>
-                  <input class="form-control" id="Medecin" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-				<div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Maladie récurrente</label>
-                  <input class="form-control" id="Maladie" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-				<div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Numéro de sécurité social</label>
-                  <input class="form-control" id="SS" type="text" placeholder= "" required="required" data-validation-required-message="Entrez votre nom.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-
-				<div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Nouveau mot de passe</label>
-                  <input class="form-control" id="inscriptionPassword" type="password" placeholder="Mot de passe" required="required" data-validation-required-message="Entrez votre mot de passe.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-				<div class="control-group">
-				<div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Confirmer mot de passe</label>
-                  <input class="form-control" id="inscriptionPassword" type="password" placeholder="Mot de passe" required="required" data-validation-required-message="Entrez votre mot de passe.">
-                  <p class="help-block text-danger"></p>
-                </div>
-				</div>
-				<br>
-				<div id="success"></div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-xl" id="Button">Soumettre</button>
-				</div>
-            </form>
-        </div>-->
+		
         </div>
     </div>
    </section>
@@ -467,6 +394,7 @@ $avatar = $reqavatar->fetch();
         </div>
       </div>
     </div>
+	<!--Mettre à jour infos-->
 	<div class="modal fade" id="maj" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -478,6 +406,7 @@ $avatar = $reqavatar->fetch();
           </div>
           <div class="modal-body">
 			<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
 			<label for="email">Adresse e-mail :</label><br />
 			<input type="mail" name="email" id="email" placeholder="<?php echo $userinfo['email'];  ?>" /><br />
 			<label for="mdp">Mot de passe :</label><br />
@@ -491,7 +420,8 @@ $avatar = $reqavatar->fetch();
 			<input type="text" name="lieu" id="lieu" <?php if($userinfo['lieu_naissance'] != NULL) { ?> placeholder="<?php $userinfo['lieu_naissance']; } ?>"><br/>
 			<label for="numero_secu">Numéro de sécurité social :</label><br/>
 			<input type="text" name="numero_secu" id="numero_secu" <?php if($userinfo['numero_secu'] != NULL) { ?> placeholder="<?php $userinfo['numero_secu']; } ?>"></br>
-		  </div>
+		 </div>
+		 </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
             <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
