@@ -40,7 +40,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="accueil_docteur.php">DocLink</a>
+    <a class="navbar-brand" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -53,38 +53,45 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
-        <!--Mes analyses-->
+        <!--Mes relevés-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Analyse">
-          <a class="nav-link" href="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="releves.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Mes analyses patients</span>
+            <span class="nav-link-text">Mes relevéss</span>
           </a>
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="rdv_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="rdv_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil_docteur.html">
+          <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>
         </li>
+				<!--Mes ordonnances-->
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
+					<a class="nav-link" href="ordonnance.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+						<i class="fa fa-fw fa-file"></i>
+						<span class="nav-link-text">Mes ordonnances</span>
+					</a>
 
-        <!--Mes patients-->
+				</li>
+        <!--Mes médecins-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
-          <a class="nav-link" href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">">
+          <a class="nav-link" href="ListeMedecins.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-address-book"></i>
-            <span class="nav-link-text">Mes patients</span>
+            <span class="nav-link-text">Mes médecins</span>
           </a>
         </li>
       </ul>
@@ -182,7 +189,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         <!--Bienvenue-->
 		<li class="nav-item">
           <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
-					
+
         </li>
         <!--Bouton deconnexion-->
 		<li class="nav-item">

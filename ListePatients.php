@@ -41,7 +41,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="accueil_docteur.php">DocLink</a>
+    <a class="navbar-brand" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -269,7 +269,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="modal-body">Cliquez sur "Déconnexion" pour quitter cette session</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <a class="btn btn-primary" href="Accueil.html">Déconnexion</a>
+            <a class="btn btn-primary" href="Accueil.php">Déconnexion</a>
           </div>
         </div>
       </div>

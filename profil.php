@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -10,12 +10,12 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
-	
+
 	if(isset($_POST['valider']))
-	{		
+	{
 		if(isset($_FILES['profil']) AND !empty($_FILES['profil']['name']))
 		{
-			$tailleMax = 2097152;	
+			$tailleMax = 2097152;
 			$extensionValides = array('jpg','jpeg','gif','png');
 			if($_FILES['profil']['size']<= $tailleMax)
 			{
@@ -88,7 +88,7 @@ $avatar = $reqavatar->fetch();
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="Patient.html">DocLink</a>
+    <a class="navbar-brand" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -115,7 +115,7 @@ $avatar = $reqavatar->fetch();
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="tables.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="rdv_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
@@ -252,10 +252,9 @@ $avatar = $reqavatar->fetch();
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Tableau de bord</a>
+          <a href="#">Mon profil</a>
         </li>
-        <li class="breadcrumb-item active">Mon tableau de bord</li>
-		<li class="breadcrumb-item active"> Mon profil</li>
+		<li class="breadcrumb-item active"> Mes informations</li>
       </ol>
 
       <!-- Example DataTables Card-->
@@ -264,51 +263,69 @@ $avatar = $reqavatar->fetch();
 
 	 <section id="inscrire">
 	<div class="container">
-		<h2 class="text-center text-uppercase text-secondary mb-0">Mes informations</h2>
-		<hr class="barre-dark mb-5">
+
 		<h2 class="text-center text-uppercase text-secondary mb-0"><?php echo $userinfo['prenom']." ".$userinfo['nom']; ?></h2>
-		<div class="card mb-3">
+
 		<div id="photo" >
-		<?php 
+		<?php
 		if ($avatar['avatar'] == NULL)
 		{
 		?>
-			<a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="card-img-top img-fluid w-100" src="membres/avatars/default.png" alt=""></a>
+			<a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="ronded-circle w-100 " src="membres/avatars/default.png" alt=""></a>
 		<?php
 		}
-		else 
+		else
 		{
 		?>
-        <a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="card-img-top img-fluid w-100" src="membres/avatars/<?php echo $userinfo['avatar']; ?>" alt=""></a>
+        <a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="rounded-circle w-100 " src="membres/avatars/<?php echo $userinfo['avatar']; ?>" alt=""></a>
 		<?php
 		}
 		?>
 	   </div>
-	   </div>
+
 		<div class="row">
-		<div class="lead text-info col-lg-3 ml-auto">
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+			<?php echo '<br>'; ?>
 		Date de naissance : <?php echo $userinfo['date']; ?>
-		<hr class="barre-dark mb-5">
+		<hr class="barre-dark ">
 		</div>
-		<div class="lead text-center text-info col-lg-6 ml-auto">
-		Adresse e-mail : <?php echo $userinfo['email']; ?>
-		<hr class="barre-dark mb-5">
+			<div class="lead text-left text-info col-lg-12 ml-auto">
+			Adresse e-mail : <?php echo $userinfo['email']; ?>
+			<hr class="barre-dark ">
+			</div>
+			<div class="lead text-left text-info col-lg-12 ml-auto">
+			Sexe :  <?php echo $userinfo['sexe']; ?>
+			<hr class="barre-dark">
+			</div>
+
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Lieu de naissance : <?php if($userinfo['lieu_naissance']==NULL) { echo "inconnu"; } else echo $userinfo['lieu_naissance']; ?>
+		<hr class="barre-dark ">
 		</div>
-		<div class="lead text-right text-info col-lg-3 ml-auto">
-		Sexe :  <?php echo $userinfo['sexe']; ?>
-		<hr class="barre-dark mb-5">
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Numéro de sécurité sociale : <?php if($userinfo['numero_secu']==NULL) { echo "inconnu"; } else echo $userinfo['numero_secu']; ?>
+		<hr class="barre-dark">
 		</div>
+
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Mes allergies : <?php if($userinfo['allergies']==NULL) { echo "inconnu"; } else echo $userinfo['allergies']; ?>
+		<hr class="barre-dark ">
 		</div>
-		<div class="row">
-		<div class="lead text-left text-info col-lg-6 ml-auto">
-		Lieu de Naissance : <?php if($userinfo['lieu_naissance']==NULL) { echo "inconnu"; } else echo $userinfo['lieu_naissance']; ?> 
-		<hr class="barre-dark mb-5">
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Mes pathologies : <?php if($userinfo['patho']==NULL) { echo "inconnu"; } else echo $userinfo['patho']; ?>
+		<hr class="barre-dark ">
 		</div>
-		<div class="lead text-right text-info col-lg-6 ml-auto">
-		Numéro de sécurité sociale : <?php if($userinfo['numero_secu']==NULL) { echo "inconnu"; } else echo $userinfo['numero_secu']; ?> 
-		<hr class="barre-dark mb-5">
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Mes vaccins : <?php if($userinfo['vaccins']==NULL) { echo "inconnu"; } else echo $userinfo['vaccins']; ?>
+		<hr class="barre-dark ">
 		</div>
-		</div>
+	</div>
+<br>
 		<div class="row">
 		<div class="lead text-center col-lg-12 ml-auto">
 		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
@@ -316,27 +333,7 @@ $avatar = $reqavatar->fetch();
 		</div>
 		</div>
 		<br><br>
-		<h3> ALLERGIES </h3><br><br>
-		
-		<button type="submit" class="btn btn-primary btn-xl" name="valider_allergies" id="valider_allergies">Ajouter une allergie</button>
-		
-		
-		<br><br>
-		
-		<h3> PATHOLOGIES </h3><br><br>
-		
-		<button type="submit" class="btn btn-primary btn-xl" name="valider_pathologies" id="valider_pathologies">Ajouter une pathologie</button>
-		
-		<br><br>
-		
-		<h3> VACCINS </h3><br><br>
-	
-		<button type="submit" class="btn btn-primary btn-xl" name="valider_vaccins" id="valider_vaccins">Ajouter un vaccin</button>
-		
-		<br><br>
-		
-			
-		
+
         </div>
     </div>
    </section>
@@ -415,11 +412,23 @@ $avatar = $reqavatar->fetch();
 			<input type="password" name="mdp2" id="mdp2" /><br />
 			<label for="conf_mdp2">Confirmer le nouveau mot de passe :</label><br />
 			<input type="password" name="conf_mdp2" id="conf_mdp2" /><br /><br/><br/>
-			
+
+			<label for="date">Date de naissance :</label><br />
+			<input type="date" name="date" id="date" placeholder="<?php echo $userinfo['date'];  ?>" /><br />
+			<label for="sexe">Sexe :</label><br />
+			<input type="text" name="sexe" id="sexe" placeholder="<?php echo $userinfo['sexe'];  ?>" /><br />
 			<label for="lieu">Lieu de naissance :</label><br/>
 			<input type="text" name="lieu" id="lieu" <?php if($userinfo['lieu_naissance'] != NULL) { ?> placeholder="<?php $userinfo['lieu_naissance']; } ?>"><br/>
 			<label for="numero_secu">Numéro de sécurité social :</label><br/>
 			<input type="text" name="numero_secu" id="numero_secu" <?php if($userinfo['numero_secu'] != NULL) { ?> placeholder="<?php $userinfo['numero_secu']; } ?>"></br>
+			<label for="allergies">Mes allergies :</label><br />
+			<input type="text" name="allergies" id="allergies" placeholder="<?php echo $userinfo['allergies'];  ?>" /><br />
+			<label for="pathologies">Mes pathologies :</label><br />
+			<input type="pathologies" name="pathologies" id="pathologies" placeholder="<?php echo $userinfo['patho'];  ?>" /><br />
+			<label for="vaccins">Mes vaccins :</label><br />
+			<input type="vaccins" name="vaccins" id="vaccins" placeholder="<?php echo $userinfo['vaccins'];  ?>" /><br />
+
+
 		 </div>
 		 </div>
           <div class="modal-footer">

@@ -29,7 +29,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
     <!-- Plugin CSS -->
 		<link href="bootstrap/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
 		<!--php-->
-		<link rel="stylesheet" href="patient.php" />
+		<link rel="stylesheet" href="Patients.php" />
   <!-- Bootstrap core CSS-->
   <link href="bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -42,7 +42,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="Patient.html">DocLink</a>
+    <a class="navbar-brand" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -55,7 +55,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
@@ -69,7 +69,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="tables.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="rdv_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>

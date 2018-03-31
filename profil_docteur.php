@@ -10,8 +10,54 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
-?>
 
+	if(isset($_POST['valider']))
+	{
+		if(isset($_FILES['profil']) AND !empty($_FILES['profil']['name']))
+		{
+			$tailleMax = 2097152;
+			$extensionValides = array('jpg','jpeg','gif','png');
+			if($_FILES['profil']['size']<= $tailleMax)
+			{
+				$extensionUpload = strtolower(substr(strrchr($_FILES['profil']['name'],'.'),1));
+				if(in_array($extensionUpload, $extensionValides))
+				{
+					$chemin = "membres/avatars/".$_SESSION['id_utilisateur'].".".$extensionUpload;
+					$resultat = move_uploaded_file($_FILES['profil']['tmp_name'],$chemin);
+					if($resultat)
+					{
+						$updatephoto = $bdd->prepare('UPDATE utilisateurs SET avatar=? WHERE id_utilisateur=?');
+						$updatephoto->execute(array($_SESSION['id_utilisateur'].".".$extensionUpload,$_SESSION['id_utilisateur']));
+						header("Location:profil.php?id_utilisateur=".$_SESSION['id_utilisateur']);
+					}
+					else
+					{
+						echo "Erreur pendant l'importation de la photo !";
+					}
+				}
+				else
+				{
+					echo "Votre photo doit être au format jpg, jpeg, gif ou png !";
+				}
+			}
+			else
+			{
+				echo "Votre photo ne doit pas dépasser 2Mo !";
+			}
+		}
+	}
+$reqavatar = $bdd->prepare('SELECT avatar FROM utilisateurs WHERE id_utilisateur=?');
+$reqavatar->execute(array($_SESSION['id_utilisateur']));
+$avatar = $reqavatar->fetch();
+
+	if(isset($_POST['valider_maj']) AND !empty($_POST['email']))
+	{
+		$nouvmail = htmlspecialchars($_POST['email']);
+		$insertmail = $bdd->prepare("UPDATE utilisateurs SET email = ? WHERE id_utilisateur = ?");
+		$insertmail->execute(array($nouvmail,$_SESSION['id_utilisateur']));
+		header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+	}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -22,6 +68,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <title>Page Patient</title>
   <!-- Fichier bootstrap CSS -->
 		<link href="bootstrap/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<!--php-->
+		<link rel="stylesheet" href="patient.php" />
     <!-- Polices -->
 		<link href="bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -35,12 +83,12 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <!-- Page level plugin CSS-->
   <link href="bootstrap/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link href="Patient.css" rel="stylesheet">
+  <link href="profil.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
+    <a class="navbar-brand" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -50,52 +98,45 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
     </button>
     <div class="collapse navbar-collapse bg-secondary" id="navbarResponsive">
 	<!--Barre de navigation coté gauche-->
-      <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
-	  <!--Tableau de bord-->
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Tableau de bord</span>
-          </a>
-        </li>
-        <!--Mes relevés-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relevés">
-          <a class="nav-link" href="releves.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Mes relevés</span>
-          </a>
-        </li>
-		<!--Mes rendez-vous-->
-	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="rdv_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Mes rendez-vous</span>
-          </a>
-        </li>
-        <!--Mon profil-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-wrench"></i>
-            <span class="nav-link-text">Mon Profil</span>
-          </a>
-        </li>
-        <!--Mes ordonnances-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
-          <a class="nav-link" href="ordonnance.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Mes ordonnances</span>
-          </a>
+  <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
+<!--Tableau de bord-->
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
+      <a class="nav-link" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <i class="fa fa-fw fa-dashboard"></i>
+        <span class="nav-link-text">Tableau de bord</span>
+      </a>
+    </li>
+    <!--Mes analyses-->
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Analyse">
+      <a class="nav-link" href="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <i class="fa fa-fw fa-area-chart"></i>
+        <span class="nav-link-text">Mes analyses patients</span>
+      </a>
+    </li>
+<!--Mes rendez-vous-->
+ <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
+      <a class="nav-link" href="rdv_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <i class="fa fa-fw fa-table"></i>
+        <span class="nav-link-text">Mes rendez-vous</span>
+      </a>
+    </li>
+    <!--Mon profil-->
+<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
+      <a class="nav-link" href="profil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <i class="fa fa-fw fa-wrench"></i>
+        <span class="nav-link-text">Mon Profil</span>
+      </a>
+    </li>
 
-        </li>
-        <!--Mes medecins-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
-          <a class="nav-link" href="ListeMedecins.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-address-book"></i>
-            <span class="nav-link-text">Mes médecins</span>
-          </a>
+    <!--Mes patients-->
+<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
+      <a class="nav-link" href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <i class="fa fa-fw fa-address-book"></i>
+        <span class="nav-link-text">Mes patients</span>
+      </a>
+    </li>
+  </ul>
 
-        </li>
-      </ul>
       <!--Bouton fleche du bas-->
 	  <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -204,54 +245,82 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Mes ordonnances</a>
+          <a href="#">Mon profil</a>
         </li>
+		<li class="breadcrumb-item active"> Mes informations</li>
       </ol>
 
       <!-- Example DataTables Card-->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
 
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>2011/04/25</td>
+	   <!--Mon profil-->
 
-                </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
+	 <section id="inscrire">
+	<div class="container">
 
-                  <td>$170,750</td>
-                </tr>
+		<h2 class="text-center text-uppercase text-secondary mb-0"><?php echo $userinfo['prenom']." ".$userinfo['nom']; ?></h2>
+
+		<div id="photo" >
+		<?php
+		if ($avatar['avatar'] == NULL)
+		{
+		?>
+			<a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="ronded-circle w-100 " src="membres/avatars/default.png" alt=""></a>
+		<?php
+		}
+		else
+		{
+		?>
+        <a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="rounded-circle w-100 " src="membres/avatars/<?php echo $userinfo['avatar']; ?>" alt=""></a>
+		<?php
+		}
+		?>
+	   </div>
+
+		<div class="row">
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+			<?php echo '<br>'; ?>
+		Date de naissance : <?php echo $userinfo['date']; ?>
+		<hr class="barre-dark ">
+		</div>
+			<div class="lead text-left text-info col-lg-12 ml-auto">
+			Adresse e-mail : <?php echo $userinfo['email']; ?>
+			<hr class="barre-dark ">
+			</div>
+			<div class="lead text-left text-info col-lg-12 ml-auto">
+			Sexe :  <?php echo $userinfo['sexe']; ?>
+			<hr class="barre-dark">
+			</div>
 
 
-              </tbody>
-            </table>
-          </div>
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Lieu de naissance : <?php if($userinfo['lieu_naissance']==NULL) { echo "inconnu"; } else echo $userinfo['lieu_naissance']; ?>
+		<hr class="barre-dark ">
+		</div>
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Carte CPS : <?php if($userinfo['numero_cps']==NULL) { echo "inconnu"; } else echo $userinfo['numero_cps']; ?>
+		<hr class="barre-dark">
+		</div>
+
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Mes spécialités : <?php if($userinfo['specialites']==NULL) { echo "inconnu"; } else echo $userinfo['specialites']; ?>
+		<hr class="barre-dark ">
+		</div>
+
+	</div>
+<br>
+		<div class="row">
+		<div class="lead text-center col-lg-12 ml-auto">
+		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
+		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj"><i class="fa fa-fw fa-sign-out"></i>Mettre à jour mes infos</a>
+		</div>
+		</div>
+		<br><br>
+
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-      </div>
     </div>
+   </section>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -283,6 +352,73 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </div>
       </div>
     </div>
+	<!-- Changer photo profil-->
+    <div class="modal fade" id="profilModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Changez votre photo de profil</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<label for="profil">Icône du fichier (JPG, PNG ou GIF | max. 15 Ko) :</label><br />
+			<input type="file" name="profil" id="profil" /><br />
+		  </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider" id="valider">Enregister</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!--Mettre à jour infos-->
+	<div class="modal fade" id="maj" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Mettre à jour vos informations</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			<label for="email">Adresse e-mail :</label><br />
+			<input type="mail" name="email" id="email" placeholder="<?php echo $userinfo['email'];  ?>" /><br />
+			<label for="mdp">Mot de passe :</label><br />
+			<input type="password" name="mdp" id="mdp" /><br />
+			<label for="mdp2">Nouveau mot de passe :</label><br />
+			<input type="password" name="mdp2" id="mdp2" /><br />
+			<label for="conf_mdp2">Confirmer le nouveau mot de passe :</label><br />
+			<input type="password" name="conf_mdp2" id="conf_mdp2" /><br /><br/><br/>
+
+			<label for="date">Date de naissance :</label><br />
+			<input type="date" name="date" id="date" placeholder="<?php echo $userinfo['date'];  ?>" /><br />
+			<label for="sexe">Sexe :</label><br />
+			<input type="text" name="sexe" id="sexe" placeholder="<?php echo $userinfo['sexe'];  ?>" /><br />
+			<label for="lieu">Lieu de naissance :</label><br/>
+			<input type="text" name="lieu" id="lieu" <?php if($userinfo['lieu_naissance'] != NULL) { ?> placeholder="<?php $userinfo['lieu_naissance']; } ?>"><br/>
+			<label for="numero_secu">Carte CPS :</label><br/>
+			<input type="text" name="numero_cps" id="numero_cps" <?php if($userinfo['numero_cps'] != NULL) { ?> placeholder="<?php $userinfo['numero_cps']; } ?>"></br>
+			<label for="allergies">Mes spécialités :</label><br />
+			<input type="text" name="specialites" id="specialites" placeholder="<?php echo $userinfo['specialites'];  ?>" /><br />
+
+
+		 </div>
+		 </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj" id="valider_maj">Enregister</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Bootstrap core JavaScript-->
     <script src="bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -299,6 +435,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
     <script src="bootstrap/js/sb-admin-charts.min.js"></script>
   </div>
 </body>
+
 
 </html>
 

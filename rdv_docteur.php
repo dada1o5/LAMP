@@ -40,7 +40,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="accueil_docteur.php">DocLink</a>
+    <a class="navbar-brand" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -74,7 +74,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil_docteur.html">
+          <a class="nav-link" href="profil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>
@@ -82,7 +82,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
         <!--Mes patients-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
-          <a class="nav-link" href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">">
+          <a class="nav-link" href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-address-book"></i>
             <span class="nav-link-text">Mes patients</span>
           </a>
