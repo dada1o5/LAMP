@@ -49,6 +49,14 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 $reqavatar = $bdd->prepare('SELECT avatar FROM utilisateurs WHERE id_utilisateur=?');
 $reqavatar->execute(array($_SESSION['id_utilisateur']));
 $avatar = $reqavatar->fetch();
+
+	if(isset($_POST['valider_maj']) AND !empty($_POST['email']))
+	{
+		$nouvmail = htmlspecialchars($_POST['email']);
+		$insertmail = $bdd->prepare("UPDATE utilisateurs SET email = ? WHERE id_utilisateur = ?");
+		$insertmail->execute(array($nouvmail,$_SESSION['id_utilisateur']));
+		header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+	}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -470,15 +478,24 @@ $avatar = $reqavatar->fetch();
           </div>
           <div class="modal-body">
 			<form method="post" enctype="multipart/form-data">
-			<label for="prenom">Prénom :</label><br />
-			<input type="text" name="prenom" id="prenom" /><br />
-			<label for="prenom">Nom :</label><br />
-			<input type="text" name="prenom" id="prenom" /><br />
+			<label for="email">Adresse e-mail :</label><br />
+			<input type="mail" name="email" id="email" placeholder="<?php echo $userinfo['email'];  ?>" /><br />
+			<label for="mdp">Mot de passe :</label><br />
+			<input type="password" name="mdp" id="mdp" /><br />
+			<label for="mdp2">Nouveau mot de passe :</label><br />
+			<input type="password" name="mdp2" id="mdp2" /><br />
+			<label for="conf_mdp2">Confirmer le nouveau mot de passe :</label><br />
+			<input type="password" name="conf_mdp2" id="conf_mdp2" /><br /><br/><br/>
+			
+			<label for="lieu">Lieu de naissance :</label><br/>
+			<input type="text" name="lieu" id="lieu" <?php if($userinfo['lieu_naissance'] != NULL) { ?> placeholder="<?php $userinfo['lieu_naissance']; } ?>"><br/>
+			<label for="numero_secu">Numéro de sécurité social :</label><br/>
+			<input type="text" name="numero_secu" id="numero_secu" <?php if($userinfo['numero_secu'] != NULL) { ?> placeholder="<?php $userinfo['numero_secu']; } ?>"></br>
 		  </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
             <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
-			<button type="submit" class="btn btn-primary btn-xl" name="valider" id="valider">Enregister</button>
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj" id="valider_maj">Enregister</button>
           </div>
         </div>
       </div>
