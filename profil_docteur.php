@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -28,7 +28,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 					{
 						$updatephoto = $bdd->prepare('UPDATE utilisateurs SET avatar=? WHERE id_utilisateur=?');
 						$updatephoto->execute(array($_SESSION['id_utilisateur'].".".$extensionUpload,$_SESSION['id_utilisateur']));
-						header("Location:profil_docteur.php?id_utilisateur=".$_SESSION['id_utilisateur']);
+						header("Location:profil.php?id_utilisateur=".$_SESSION['id_utilisateur']);
 					}
 					else
 					{
@@ -46,66 +46,17 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 			}
 		}
 	}
+$reqavatar = $bdd->prepare('SELECT avatar FROM utilisateurs WHERE id_utilisateur=?');
+$reqavatar->execute(array($_SESSION['id_utilisateur']));
+$avatar = $reqavatar->fetch();
 
-	if(isset($_POST['valider_maj']))
+	if(isset($_POST['valider_maj']) AND !empty($_POST['email']))
 	{
-
-		if(isset($_POST['email']) AND !empty($_POST['email']))
-		{
-			$nouvmail = htmlspecialchars($_POST['email']);
-			$insertmail = $bdd->prepare("UPDATE utilisateurs SET email = ? WHERE id_utilisateur = ?");
-			$insertmail->execute(array($nouvmail,$_SESSION['id_utilisateur']));
-			header('Location:profil_docteur.php?id_utilisateur='.$_SESSION['id_utilisateur']);
-		}
-		if(isset($_POST['mdp']) AND !empty($_POST['mdp']) AND isset($_POST['mdp2']) AND !empty($_POST['mdp2']) AND isset($_POST['conf_mdp2']) AND !empty($_POST['conf_mdp2']))
-		{
-			$mdp = sha1($_POST['mdp']);
-			$mdp2 = sha1($_POST['mdp2']);
-			$conf_mdp2 = sha1($_POST['conf_mdp2']);
-
-			if($mdp == $userinfo['mdp'])
-			{
-				if($mdp2 == $conf_mdp2)
-				{
-					$modifmdp=$bdd->prepare("UPDATE utilisateurs SET mdp=? WHERE id_utilisateur=?");
-					$modifmdp->execute(array($mdp2,$_SESSION['id_utilisateur']));
-					header('Location:profil_docteur.php?id_utilisateur='.$_SESSION['id_utilisateur']);
-				}
-			}
-		}
-
-		if(!empty($_POST['date']))
-		{
-			$date = htmlspecialchars($_POST['date']);
-			$modifdate = $bdd->prepare("UPDATE utilisateurs SET date = ? WHERE id_utilisateur = ?");
-			$modifdate->execute(array($date,$_SESSION['id_utilisateur']));
-			header('Location:profil_docteur.php?id_utilisateur='.$_SESSION['id_utilisateur']);
-		}
-		if(!empty($_POST['lieu']))
-		{
-			$lieu = htmlspecialchars($_POST['lieu']);
-			$modiflieu = $bdd->prepare("UPDATE utilisateurs SET lieu_naissance = ? WHERE id_utilisateur = ?");
-			$modiflieu->execute(array($lieu,$_SESSION['id_utilisateur']));
-			header('Location:profil_docteur.php?id_utilisateur='.$_SESSION['id_utilisateur']);
-		}
-		if(!empty($_POST['numero_cps']))
-		{
-			$numero_secu = htmlspecialchars($_POST['numero_cps']);
-			$modifns = $bdd->prepare("UPDATE utilisateurs SET numero_cps = ? WHERE id_utilisateur = ?");
-			$modifns->execute(array($numero_secu,$_SESSION['id_utilisateur']));
-			header('Location:profil_docteur.php?id_utilisateur='.$_SESSION['id_utilisateur']);
-		}
-		if(!empty($_POST['specialites']))
-		{
-			$numero_secu = htmlspecialchars($_POST['specialites']);
-			$modifns = $bdd->prepare("UPDATE utilisateurs SET specialites = ? WHERE id_utilisateur = ?");
-			$modifns->execute(array($numero_secu,$_SESSION['id_utilisateur']));
-			header('Location:profil_docteur.php?id_utilisateur='.$_SESSION['id_utilisateur']);
-		}
+		$nouvmail = htmlspecialchars($_POST['email']);
+		$insertmail = $bdd->prepare("UPDATE utilisateurs SET email = ? WHERE id_utilisateur = ?");
+		$insertmail->execute(array($nouvmail,$_SESSION['id_utilisateur']));
+		header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
 	}
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -132,7 +83,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <!-- Page level plugin CSS-->
   <link href="bootstrap/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link href="profil_docteur.css" rel="stylesheet">
+  <link href="profil.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
@@ -448,12 +399,14 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
 			<label for="date">Date de naissance :</label><br />
 			<input type="date" name="date" id="date" placeholder="<?php echo $userinfo['date'];  ?>" /><br />
+			<label for="sexe">Sexe :</label><br />
+			<input type="text" name="sexe" id="sexe" placeholder="<?php echo $userinfo['sexe'];  ?>" /><br />
 			<label for="lieu">Lieu de naissance :</label><br/>
-			<input type="text" name="lieu" id="lieu" <?php if($userinfo['lieu_naissance'] != NULL) { ?> placeholder="<?php echo $userinfo['lieu_naissance']; } ?>"></br>
+			<input type="text" name="lieu" id="lieu" <?php if($userinfo['lieu_naissance'] != NULL) { ?> placeholder="<?php $userinfo['lieu_naissance']; } ?>"><br/>
 			<label for="numero_secu">Carte CPS :</label><br/>
-			<input type="text" name="numero_cps" id="numero_cps" <?php if($userinfo['numero_cps'] != NULL) { ?> placeholder="<?php echo $userinfo['numero_cps']; } ?>"></br>
+			<input type="text" name="numero_cps" id="numero_cps" <?php if($userinfo['numero_cps'] != NULL) { ?> placeholder="<?php $userinfo['numero_cps']; } ?>"></br>
 			<label for="allergies">Mes spécialités :</label><br />
-			<input type="text" name="specialites" id="specialites" <?php if($userinfo['specialites'] != NULL) { ?> placeholder="<?php echo $userinfo['specialites']; } ?>"></br>
+			<input type="text" name="specialites" id="specialites" placeholder="<?php echo $userinfo['specialites'];  ?>" /><br />
 
 
 		 </div>

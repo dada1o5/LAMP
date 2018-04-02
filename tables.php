@@ -12,6 +12,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$userinfo = $requser->fetch();
 ?>
 
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -40,7 +41,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
+    <a class="navbar-brand" href="Patient.html">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -67,7 +68,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="rdv_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="tables.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
@@ -188,7 +189,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <!--Bienvenue-->
 		<li class="nav-item">
-          <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
+          <h3 class="text-white">Bienvenue <?php echo $_SESSION['id_utilisateur'] ?> !</h3>
         </li>
         <!--Bouton deconnexion-->
 		<li class="nav-item">
@@ -204,15 +205,16 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Liste Médecins</a>
+          <a href="#">Tableau de bord</a>
         </li>
-        <li class="breadcrumb-item active">Mes médecins</li>
+        <li class="breadcrumb-item active">Mon tableau de bord</li>
+		<li class="breadcrumb-item active"> Mes messages</li>
       </ol>
 
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Liste des médecins</div>
+          <i class="fa fa-table"></i> Data Table Example</div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -224,24 +226,27 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
                 </tr>
               </thead>
+              <tfoot>
+                <tr>
+                  <th>Titre</th>
+                  <th>Expéditeur</th>
+                  <th>Date</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+                  <td>2011/04/25</td>
 
-							<?php
-              $reponse = $bdd->query('SELECT * FROM utilisateurs');
-              while($donnees = $reponse->fetch())
-              {
-				if($donnees['statut'] == "Docteur")
-				{
-                ?>
-				  <tbody>
-					<tr>
-					  <td><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></td>
-					  <td><?php echo $donnees['date']; ?></td>
-					  <td><?php echo $donnees['email']; ?></td>
-					</tr>
-              <?php
-				}
-            }
-               ?>
+                </tr>
+                <tr>
+                  <td>Garrett Winters</td>
+                  <td>Accountant</td>
+
+                  <td>$170,750</td>
+                </tr>
+
 
               </tbody>
             </table>

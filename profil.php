@@ -117,7 +117,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	{
 		$nom_vaccin = htmlspecialchars($_POST['nom_vaccin']);
 		$commentaire_vaccin = htmlspecialchars($_POST['commentaire_vaccin']);
-		$ajoutvaccin = $bdd->prepare("INSERT INTO vaccins(nom_vaccin,commentaire,id_utilisateur) VALUES(?,?,?)");
+		$ajoutvaccin = $bdd->prepare("INSERT INTO vaccins(nom_vaccin,commentaire,id_utilisateur,date_vaccin) VALUES(?,?,?)");
 		$ajoutvaccin->execute(array($nom_vaccin,$commentaire_vaccin,$_SESSION['id_utilisateur']));
 	}
 	
@@ -322,11 +322,11 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		<li class="breadcrumb-item active"> Mes informations</li>
       </ol>
 
-      
+      <!-- Example DataTables Card-->
 
 	   <!--Mon profil-->
 
-	 <section id="Profil">
+	 <section id="inscrire">
 	<div class="container">
 
 		<h2 class="text-center text-uppercase text-secondary mb-0"><?php echo $userinfo['prenom']." ".$userinfo['nom']; ?></h2>
@@ -349,7 +349,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	   </div>
 
 		<div class="row">
-		<div id="infos" >
+
 		<div class="lead text-left text-info col-lg-12 ml-auto">
 			<?php echo '<br>'; ?>
 		Date de naissance : <?php echo $userinfo['date']; ?>
@@ -376,20 +376,16 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		
 		<div class="row">
 		<div class="lead text-center col-lg-12 ml-auto">
-		
+		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
 		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj"><i class="fa fa-fw fa-sign-out"></i>Mettre à jour mes infos</a>
 		</div>
 		</div>
-		</div>
-		</div>
-		<div class="row">
-		<div id="pathologies">
+
 		<div class="lead text-left text-info col-lg-12 ml-auto">
-		
 		Mes allergies : 
 		<hr class="barre-dark ">
 		</div>
-		<div class="text-left col-lg-12 ml-auto">
+		
 		<?php
 			$reqallergies = $bdd->prepare('SELECT * FROM allergies WHERE id_utilisateur = ?');
 			$reqallergies->execute(array($_SESSION['id_utilisateur']));
@@ -406,7 +402,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 			}
 		
 		?>
-		</div>
+		
 		<div class="row">
 		<div class="lead text-center col-lg-12 ml-auto">
 		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
@@ -418,7 +414,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		Mes pathologies : 
 		<hr class="barre-dark ">
 		</div>
-		<div class="text-left col-lg-12 ml-auto">
+		
 		<?php
 			$reqpathologies = $bdd->prepare('SELECT * FROM pathologies WHERE id_utilisateur = ?');
 			$reqpathologies->execute(array($_SESSION['id_utilisateur']));
@@ -435,10 +431,10 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 			}
 		
 		?>
-		</div>
+		
 		<div class="row">
 		<div class="lead text-center col-lg-12 ml-auto">
-		
+		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
 		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj_pathologie"><i class="fa fa-fw fa-sign-out"></i>Ajouter une pathologie</a>
 		</div>
 		</div>
@@ -447,7 +443,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		Mes vaccins : 
 		<hr class="barre-dark ">
 		</div>
-		<div class="text-left col-lg-12 ml-auto">
+		
 		<?php
 			$reqvaccins = $bdd->prepare('SELECT * FROM vaccins WHERE id_utilisateur = ?');
 			$reqvaccins->execute(array($_SESSION['id_utilisateur']));
@@ -465,7 +461,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		
 		?>
 		
-		</div>
+		
 		<div class="row">
 		<div class="lead text-center col-lg-12 ml-auto">
 		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
@@ -473,7 +469,6 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		</div>
 		</div>
 		
-	</div>
 	</div>
 <br>
 		

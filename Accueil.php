@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink','root','root');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink','root','');
 
 if(isset($_POST['sendinscriptionButton']))
 {
