@@ -12,7 +12,10 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$userinfo = $requser->fetch();
 
 	$reqpatients = $bdd->query('SELECT * FROM utilisateurs');
+	
+	$analyse = $bdd->query('SELECT * FROM graph');
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -38,7 +41,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <link href="bootstrap/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="accueil_docteur.css" rel="stylesheet">
-  
+   
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
@@ -223,12 +226,39 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		</select>
 		<input type="submit" value="Valider" name="select_patient" />
       </div>
-	<img
-    src="http://localhost/lamp/graphique.php"
-    alt=""
-    height="400px"
-    width="100%"
-/>
+	  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+      
+	var data = google.visualization.arrayToDataTable([
+          ['col1', 'col2'],
+	  <?php
+		$nbr=0;
+		$echo = "";
+		while ($Camp = $analyse->fetch(PDO::FETCH_ASSOC)) {
+		$nbr++;
+		$echo .= "['".$Camp['col1']."', ".$Camp['col2']."],";
+		}
+		echo substr($echo,0,-1); // on enlve la virgule de la fin
+		?>]);
+
+				
+        
+
+        var options = {
+          title: 'Company Performance',
+          hAxis: {title: 'col1',  titleTextStyle: {color: '#333'}},
+          
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+<div id="chart_div" style="width: 100%; height: 500px;"></div>
 
 <div id="container">
 <h2>Commentaires</h2>
