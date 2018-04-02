@@ -21,7 +21,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Page Patient</title>
+    <title>Page Docteur</title>
   <!-- Fichier bootstrap CSS -->
 		<link href="bootstrap/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <!-- Polices -->
@@ -37,12 +37,12 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <!-- Page level plugin CSS-->
   <link href="bootstrap/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link href="Patient.css" rel="stylesheet">
+  <link href="accueil_docteur.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
+		<a class="navbar-brand" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -55,49 +55,42 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
-        <!--Mes relevés-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relevés">
-          <a class="nav-link" href="releves.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Mes relevés</span>
-          </a>
-        </li>
+				<!--Mes analyses-->
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Analyse">
+					<a class="nav-link" href="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+						<i class="fa fa-fw fa-area-chart"></i>
+						<span class="nav-link-text">Mes analyses patients</span>
+					</a>
+				</li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="rdv_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="rdv_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="profil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>
         </li>
-        <!--Mes ordonnances-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
-          <a class="nav-link" href="ordonnance.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Mes ordonnances</span>
-          </a>
 
-        </li>
-        <!--Mes medecins-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
-          <a class="nav-link" href="ListeMedecins.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <!--Mes patients-->
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
+          <a class="nav-link" href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-address-book"></i>
-            <span class="nav-link-text">Mes médecins</span>
+            <span class="nav-link-text">Mes patients</span>
           </a>
-
         </li>
       </ul>
+
       <!--Bouton fleche du bas-->
 	  <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -122,12 +115,13 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="dropdown-menu" aria-labelledby="messagesDropdown">
             <h6 class="dropdown-header">Nouveaux messages:</h6>
 			<!--Permet de diviser les élements-->
-            
+           
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="messagerie.php">Voir tout les messages</a>
+            <a class="dropdown-item small" href="messagerie_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">Voir tout les messages</a>
           </div>
         </li>
-		
+
+         
         <!--Bienvenue-->
 		<li class="nav-item">
           <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>

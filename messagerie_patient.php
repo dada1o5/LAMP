@@ -1,8 +1,5 @@
 <?php
 
-// Bibliothèque nécessaire
-include ("/xampp/htdocs/Lamp/jpgraph-4.2.0/src/jpgraph.php");
-include ("/xampp/htdocs/Lamp/jpgraph-4.2.0/src/jpgraph_line.php");
 session_start();
 
 $bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
@@ -14,14 +11,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
 	
-	$analyse1 = $bdd->query('SELECT * FROM graph ');
-	$analyse1->execute();
-
-
 	
-	$analyse = $bdd->prepare('SELECT commentaire FROM 	analyse WHERE id_utilisateur=?');
-	$analyse->execute(array($_SESSION['id_utilisateur']));
-	$analyseinfo = $analyse->fetch();
 ?>
 
 <!DOCTYPE html>
@@ -48,12 +38,11 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <link href="bootstrap/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="Patient.css" rel="stylesheet">
-
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="Patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
+    <a class="navbar-brand" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -132,12 +121,13 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           </a>
           <div class="dropdown-menu" aria-labelledby="messagesDropdown">
             <h6 class="dropdown-header">Nouveaux messages:</h6>
-			
+			<!--Permet de diviser les élements-->
+            
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="messagerie_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">Voir tout les messages</a>
+             <a class="dropdown-item small" href="messagerie_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">Voir tout les messages</a>
           </div>
         </li>
-        
+		
         <!--Bienvenue-->
 		<li class="nav-item">
           <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
@@ -156,85 +146,35 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Mes relevés</a>
+          <a href="#">Mes message</a>
         </li>
-
       </ol>
-   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+		
 
-      function drawChart() {
-      
-	var data = google.visualization.arrayToDataTable([
-          ['col1', 'col2'],
-	  <?php
-		$nbr=0;
-		$echo = "";
-		while ($Camp = $analyse1->fetch(PDO::FETCH_ASSOC)) {
-		$nbr++;
-		$echo .= "['".$Camp['col2']."', ".$Camp['col1']."],";
-		}
-		echo substr($echo,0,-1); // on enlve la virgule de la fin
-		?>]);
-
-				
-        
-
-        var options = {
-          title: 'Analyse',
-          hAxis: {title: 'date',  titleTextStyle: {color: '#333'}},
-          
-        };
-
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
-<div id="chart_div" style="width: 100%; height: 500px;"></div>
-
-<div id="container">
-<div class="lead text-left text-info col-lg-12 ml-auto">
-			<?php echo '<br>'; ?>
-		Commentaires du médecin: <?php echo $analyseinfo['commentaire']; ?>
-		<hr class="barre-dark ">
+      <!-- Example DataTables Card-->
+      <div class="card mb-3">
+        <div class="card-header lead text-left text-info col-lg-12 ml-auto">
+          <i class="fa fa-fw fa-envelope"></i> Mes messages</div>
+        <div class="card-body">
+          		
+		
+		
+		
+		
 		</div>
-         
-</div>
-<div class="row">
-		<div class="lead text-center col-lg-12 ml-auto">
-		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
-		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj"><i class="fa fa-fw fa-sign-out"></i>Mettre à jour mes infos</a>
+		
 		</div>
+		   <div class="card mb-3">
+        <div class="card-header lead text-left text-info col-lg-12 ml-auto">
+          <a class="text-white btn btn-secondary" data-toggle="modal" data-target="#nouveau_message"><i class="fa fa-fw fa-edit"></i> Écrire un nouveau message</a></div>
+		  
+		
 		</div>
-<!--Mettre à jour infos-->
-	<div class="modal fade" id="maj" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Mettre à jour vos informations</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-			<form method="post" enctype="multipart/form-data">
-			<div class="form-group">
-			<label for="analyse">Résultat d'analyse</label><br />
-			<input type="text" name="analyse" id="analyse" placeholder="" /><br />
-
-
-		 </div>
-		 </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
-			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj" id="valider_maj">Enregistrer</button>
-          </div>
-        </div>
-      </div>
     </div>
+        
+       
+    </div>
+    
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -266,6 +206,38 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </div>
       </div>
     </div>
+	<!--Popup nouveau message-->
+	<div class="modal fade" id="nouveau_message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Écrire un nouveau message</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			<label for="destinataire">Destinataire :</label><br />
+			<select class="form-control" name="destinataire" id="destinataire">
+						<option class="form-control" label="Choisissez votre destinataire"></option>
+						
+					</select>
+					<br />
+			<label for="message">Votre message :</label><br />
+			<textarea name="message" id="message" rows="5" cols="50" /></textarea><br />
+		 </div>
+		 </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_message" id="valider_message">Enregister</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	
     <!-- Bootstrap core JavaScript-->
     <script src="bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

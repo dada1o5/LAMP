@@ -124,7 +124,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 			<!--Permet de diviser les élements-->
            
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="messagerie.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">Voir tout les messages</a>
+            <a class="dropdown-item small" href="messagerie_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">Voir tout les messages</a>
           </div>
         </li>
         
