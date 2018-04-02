@@ -17,10 +17,10 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$analyse1 = $bdd->query('SELECT * FROM graphique ');
 	$analyse1->execute();
 $reqmedecin = $bdd->query('SELECT * FROM utilisateurs');
-
+$analyse = $bdd->prepare('SELECT * FROM analyse WHERE id_utilisateur=?');
 	if(isset($_POST['select_docteur']))
 	{
-	$analyse = $bdd->prepare('SELECT * FROM analyse WHERE id_utilisateur=?');
+	
 	$analyse->execute(array($_POST['medecin']));
 
 	}
