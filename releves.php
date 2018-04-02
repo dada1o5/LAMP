@@ -24,6 +24,17 @@ $analyse = $bdd->prepare('SELECT * FROM analyse WHERE id_utilisateur=?');
 	$analyse->execute(array($_POST['medecin']));
 
 	}
+	if(isset($_POST['valider_maj']))
+	{
+
+		if(isset($_POST['analyse']) AND !empty($_POST['analyse']))
+		{
+			$nouvanalyse = htmlspecialchars($_POST['analyse']);
+			$insertanalyse = $bdd->prepare("INSERT INTO graphique(col1,id_utilisateur) VALUES(?,?)");
+			$insertanalyse->execute(array($nouvanalyse,$_SESSION['id_utilisateur']));
+			header('Location:releves.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -252,10 +263,10 @@ $analyse = $bdd->prepare('SELECT * FROM analyse WHERE id_utilisateur=?');
 	var data = google.visualization.arrayToDataTable([
           ['col1', 'col2'],
 	  <?php
-		$nbr=0;
+		
 		$echo = "";
 		while ($Camp = $analyse1->fetch(PDO::FETCH_ASSOC)) {
-		$nbr++;
+		
 		$echo .= "['".$Camp['col2']."', ".$Camp['col1']."],";
 		}
 		echo substr($echo,0,-1); // on enlve la virgule de la fin
@@ -303,7 +314,7 @@ $analyse = $bdd->prepare('SELECT * FROM analyse WHERE id_utilisateur=?');
           <div class="modal-body">
 			<form method="post" enctype="multipart/form-data">
 			<div class="form-group">
-			<label for="analyse">Résultat d'analyse</label><br />
+			<label for="analyse">entrée vos données d'analyse </label><br />
 			<input type="text" name="analyse" id="analyse" placeholder="" /><br />
 
 
