@@ -14,6 +14,15 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$reqpatients = $bdd->query('SELECT * FROM utilisateurs');
 	
 	$analyse = $bdd->query('SELECT * FROM graph');
+	
+	
+	if(!isset($_POST['comment']))
+	{
+		
+		$commentaire = htmlspecialchars($_POST['message']);
+		$ajoutcommentaire = $bdd->prepare("INSERT INTO analyse(commentaire, id_utilisateur) VALUES(?,?)");
+		$ajoutcommentaire->execute(array($commentaire,$_SESSION['id_utilisateur']));
+	}
 ?>
 
 
@@ -262,12 +271,13 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 
 <div id="container">
 <h2>Commentaires</h2>
-<form method="post" action="">
+<form method="post" action="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
 
-             <textarea name="message" rows="4" cols="100"></textarea>
+             <textarea  name="message" rows="4" cols="100"></textarea>
+			 
              <br />
 			  <br />
-             <input type="submit" value="Envoyer" />
+             <input id ="comment" type="submit" value="Envoyer" />
            </p>
          </form>
          <p></p>

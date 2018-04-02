@@ -16,8 +16,21 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
 	
-	$analyse1 = $bdd->query('SELECT * FROM graph');
+	$analyse1 = $bdd->query('SELECT * FROM graph ');
+	$analyse1->execute();
 
+	
+	if(isset($_POST['valider_maj']))
+	{
+
+		if(isset($_POST['analyse']) AND !empty($_POST['analyse']))
+		{
+			$nouvanalyse = htmlspecialchars($_POST['analyse']);
+			$insertanalyse = $bdd->prepare("UPDATE graph SET col1 = ? WHERE id_utilisateur = ?");
+			$insertanalyse->execute(array($nouvanalyse,$_SESSION['id_utilisateur']));
+			header('Location:releves.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -278,8 +291,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="modal-body">
 			<form method="post" enctype="multipart/form-data">
 			<div class="form-group">
-			<label for="email">Résultat d'analyse</label><br />
-			<input type="mail" name="resultat" id="email" placeholder="" /><br />
+			<label for="analyse">Résultat d'analyse</label><br />
+			<input type="text" name="analyse" id="analyse" placeholder="" /><br />
 
 
 		 </div>
