@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Client :  localhost
--- Généré le :  Lun 02 Avril 2018 à 22:12
--- Version du serveur :  5.6.35
--- Version de PHP :  7.1.1
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  lun. 02 avr. 2018 à 20:46
+-- Version du serveur :  5.7.19
+-- Version de PHP :  5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,15 +28,18 @@ SET time_zone = "+00:00";
 -- Structure de la table `allergies`
 --
 
-CREATE TABLE `allergies` (
-  `id_allergie` int(11) NOT NULL,
+DROP TABLE IF EXISTS `allergies`;
+CREATE TABLE IF NOT EXISTS `allergies` (
+  `id_allergie` int(11) NOT NULL AUTO_INCREMENT,
   `nom_allergie` varchar(50) DEFAULT NULL,
   `commentaire` text,
-  `id_utilisateur` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_utilisateur` int(11) NOT NULL,
+  PRIMARY KEY (`id_allergie`),
+  KEY `allergie_1` (`id_utilisateur`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `allergies`
+-- Déchargement des données de la table `allergies`
 --
 
 INSERT INTO `allergies` (`id_allergie`, `nom_allergie`, `commentaire`, `id_utilisateur`) VALUES
@@ -48,14 +53,16 @@ INSERT INTO `allergies` (`id_allergie`, `nom_allergie`, `commentaire`, `id_utili
 -- Structure de la table `analyse`
 --
 
-CREATE TABLE `analyse` (
+DROP TABLE IF EXISTS `analyse`;
+CREATE TABLE IF NOT EXISTS `analyse` (
   `commentaire` char(255) NOT NULL,
-  `id` int(11) NOT NULL,
-  `id_utilisateur` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_utilisateur` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `analyse`
+-- Déchargement des données de la table `analyse`
 --
 
 INSERT INTO `analyse` (`commentaire`, `id`, `id_utilisateur`) VALUES
@@ -73,18 +80,21 @@ INSERT INTO `analyse` (`commentaire`, `id`, `id_utilisateur`) VALUES
 -- Structure de la table `follow`
 --
 
-CREATE TABLE `follow` (
-  `id_abonnement` int(11) NOT NULL,
+DROP TABLE IF EXISTS `follow`;
+CREATE TABLE IF NOT EXISTS `follow` (
+  `id_abonnement` int(11) NOT NULL AUTO_INCREMENT,
   `id_abonne` int(11) NOT NULL,
-  `id_suivi` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `id_suivi` int(11) NOT NULL,
+  PRIMARY KEY (`id_abonnement`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `follow`
+-- Déchargement des données de la table `follow`
 --
 
 INSERT INTO `follow` (`id_abonnement`, `id_abonne`, `id_suivi`) VALUES
-(1, 7, 4);
+(1, 7, 4),
+(2, 9, 12);
 
 -- --------------------------------------------------------
 
@@ -92,15 +102,17 @@ INSERT INTO `follow` (`id_abonnement`, `id_abonne`, `id_suivi`) VALUES
 -- Structure de la table `graphique`
 --
 
-CREATE TABLE `graphique` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `graphique`;
+CREATE TABLE IF NOT EXISTS `graphique` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `col1` varchar(255) NOT NULL,
   `col2` date NOT NULL,
-  `id_utilisateur` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_utilisateur` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `graphique`
+-- Déchargement des données de la table `graphique`
 --
 
 INSERT INTO `graphique` (`id`, `col1`, `col2`, `id_utilisateur`) VALUES
@@ -114,18 +126,44 @@ INSERT INTO `graphique` (`id`, `col1`, `col2`, `id_utilisateur`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id_message` int(11) NOT NULL AUTO_INCREMENT,
+  `id_exp` int(11) NOT NULL,
+  `id_dest` int(11) NOT NULL,
+  `message` text NOT NULL,
+  PRIMARY KEY (`id_message`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `messages`
+--
+
+INSERT INTO `messages` (`id_message`, `id_exp`, `id_dest`, `message`) VALUES
+(1, 9, 12, 'Bonjour ! Serait-ce possible de prendre RDV pour demain ?'),
+(2, 12, 9, 'Bien sur ! A demain !');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `ordonnances`
 --
 
-CREATE TABLE `ordonnances` (
-  `id_ordonnance` int(11) NOT NULL,
+DROP TABLE IF EXISTS `ordonnances`;
+CREATE TABLE IF NOT EXISTS `ordonnances` (
+  `id_ordonnance` int(11) NOT NULL AUTO_INCREMENT,
   `nom_ordonnance` varchar(50) DEFAULT NULL,
   `commentaire` text NOT NULL,
-  `id_utilisateur` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_utilisateur` int(11) NOT NULL,
+  PRIMARY KEY (`id_ordonnance`),
+  KEY `ordonnance_1` (`id_utilisateur`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `ordonnances`
+-- Déchargement des données de la table `ordonnances`
 --
 
 INSERT INTO `ordonnances` (`id_ordonnance`, `nom_ordonnance`, `commentaire`, `id_utilisateur`) VALUES
@@ -138,15 +176,18 @@ INSERT INTO `ordonnances` (`id_ordonnance`, `nom_ordonnance`, `commentaire`, `id
 -- Structure de la table `pathologies`
 --
 
-CREATE TABLE `pathologies` (
-  `id_pathologie` int(11) NOT NULL,
+DROP TABLE IF EXISTS `pathologies`;
+CREATE TABLE IF NOT EXISTS `pathologies` (
+  `id_pathologie` int(11) NOT NULL AUTO_INCREMENT,
   `nom_pathologie` varchar(50) DEFAULT NULL,
   `commentaire` text NOT NULL,
-  `id_utilisateur` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_utilisateur` int(11) NOT NULL,
+  PRIMARY KEY (`id_pathologie`),
+  KEY `pathologie1` (`id_utilisateur`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `pathologies`
+-- Déchargement des données de la table `pathologies`
 --
 
 INSERT INTO `pathologies` (`id_pathologie`, `nom_pathologie`, `commentaire`, `id_utilisateur`) VALUES
@@ -159,8 +200,9 @@ INSERT INTO `pathologies` (`id_pathologie`, `nom_pathologie`, `commentaire`, `id
 -- Structure de la table `utilisateurs`
 --
 
-CREATE TABLE `utilisateurs` (
-  `id_utilisateur` int(11) NOT NULL,
+DROP TABLE IF EXISTS `utilisateurs`;
+CREATE TABLE IF NOT EXISTS `utilisateurs` (
+  `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `date` date NOT NULL,
@@ -173,11 +215,12 @@ CREATE TABLE `utilisateurs` (
   `numero_secu` int(11) DEFAULT NULL,
   `sexe` varchar(20) DEFAULT NULL,
   `numero_cps` int(11) DEFAULT NULL,
-  `specialites` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `specialites` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id_utilisateur`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `utilisateurs`
+-- Déchargement des données de la table `utilisateurs`
 --
 
 INSERT INTO `utilisateurs` (`id_utilisateur`, `nom`, `prenom`, `date`, `email`, `mdp`, `conf_mdp`, `statut`, `avatar`, `lieu_naissance`, `numero_secu`, `sexe`, `numero_cps`, `specialites`) VALUES
@@ -196,16 +239,19 @@ INSERT INTO `utilisateurs` (`id_utilisateur`, `nom`, `prenom`, `date`, `email`, 
 -- Structure de la table `vaccins`
 --
 
-CREATE TABLE `vaccins` (
-  `id_vaccin` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vaccins`;
+CREATE TABLE IF NOT EXISTS `vaccins` (
+  `id_vaccin` int(11) NOT NULL AUTO_INCREMENT,
   `nom_vaccin` varchar(50) DEFAULT NULL,
   `commentaire` text NOT NULL,
   `id_utilisateur` int(11) NOT NULL,
-  `date_vaccin` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `date_vaccin` date DEFAULT NULL,
+  PRIMARY KEY (`id_vaccin`),
+  KEY `vaccins1` (`id_utilisateur`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `vaccins`
+-- Déchargement des données de la table `vaccins`
 --
 
 INSERT INTO `vaccins` (`id_vaccin`, `nom_vaccin`, `commentaire`, `id_utilisateur`, `date_vaccin`) VALUES
@@ -214,107 +260,7 @@ INSERT INTO `vaccins` (`id_vaccin`, `nom_vaccin`, `commentaire`, `id_utilisateur
 (4, 'HÃ©patite B', 'douloureux', 10, NULL);
 
 --
--- Index pour les tables exportées
---
-
---
--- Index pour la table `allergies`
---
-ALTER TABLE `allergies`
-  ADD PRIMARY KEY (`id_allergie`),
-  ADD KEY `allergie_1` (`id_utilisateur`);
-
---
--- Index pour la table `analyse`
---
-ALTER TABLE `analyse`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `follow`
---
-ALTER TABLE `follow`
-  ADD PRIMARY KEY (`id_abonnement`);
-
---
--- Index pour la table `graphique`
---
-ALTER TABLE `graphique`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ordonnances`
---
-ALTER TABLE `ordonnances`
-  ADD PRIMARY KEY (`id_ordonnance`),
-  ADD KEY `ordonnance_1` (`id_utilisateur`);
-
---
--- Index pour la table `pathologies`
---
-ALTER TABLE `pathologies`
-  ADD PRIMARY KEY (`id_pathologie`),
-  ADD KEY `pathologie1` (`id_utilisateur`);
-
---
--- Index pour la table `utilisateurs`
---
-ALTER TABLE `utilisateurs`
-  ADD PRIMARY KEY (`id_utilisateur`);
-
---
--- Index pour la table `vaccins`
---
-ALTER TABLE `vaccins`
-  ADD PRIMARY KEY (`id_vaccin`),
-  ADD KEY `vaccins1` (`id_utilisateur`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `allergies`
---
-ALTER TABLE `allergies`
-  MODIFY `id_allergie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT pour la table `analyse`
---
-ALTER TABLE `analyse`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT pour la table `follow`
---
-ALTER TABLE `follow`
-  MODIFY `id_abonnement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `graphique`
---
-ALTER TABLE `graphique`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT pour la table `ordonnances`
---
-ALTER TABLE `ordonnances`
-  MODIFY `id_ordonnance` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
---
--- AUTO_INCREMENT pour la table `pathologies`
---
-ALTER TABLE `pathologies`
-  MODIFY `id_pathologie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `utilisateurs`
---
-ALTER TABLE `utilisateurs`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT pour la table `vaccins`
---
-ALTER TABLE `vaccins`
-  MODIFY `id_vaccin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- Contraintes pour les tables exportées
+-- Contraintes pour les tables déchargées
 --
 
 --
@@ -322,6 +268,7 @@ ALTER TABLE `vaccins`
 --
 ALTER TABLE `vaccins`
   ADD CONSTRAINT `vaccins1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateurs` (`id_utilisateur`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

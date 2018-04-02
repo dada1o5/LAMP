@@ -11,6 +11,17 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
 	
+	if(isset($_POST['valider_message']))
+	{
+		$message = htmlspecialchars($_POST['message']);
+		
+		$ins = $bdd->prepare('INSERT INTO messages(id_exp,id_dest,message) VALUES (?,?,?)');
+		$ins->execute(array($_SESSION['id_utilisateur'],$_POST['destinataire'],$message));
+	}
+	
+	$msg = $bdd->prepare('SELECT * FROM messages WHERE id_dest=?');
+    $msg->execute(array($_SESSION['id_utilisateur']));
+    $msg_nbr = $msg->rowCount();
 	
 ?>
 
@@ -151,7 +162,21 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <i class="fa fa-fw fa-envelope"></i> Mes messages</div>
         <div class="card-body">
           		
+		<?php
+			
+			if($msg_nbr == 0) { echo "Vous n'avez aucun message !"; }
+			while($m = $msg->fetch()) { 
+				
+				$p_exp = $bdd->prepare('SELECT prenom,nom FROM utilisateurs WHERE id_utilisateur=?');
+				$p_exp->execute(array($m['id_exp']));
+				$p_exp = $p_exp->fetch();
+			?>
+
+			<b><?php echo $p_exp['prenom']." ".$p_exp['nom']; ?></b> vous a envoyé : <br/>
+			<?= nl2br($m['message']); ?> <br><br><br>
+	
 		
+			<?php } ?>
 		
 		
 		
@@ -211,13 +236,30 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
             </button>
           </div>
           <div class="modal-body">
+			<?php $reponse = $bdd->query('SELECT * FROM utilisateurs'); ?>
 			<form method="post" enctype="multipart/form-data">
 			<div class="form-group">
 			<label for="destinataire">Destinataire :</label><br />
 			<select class="form-control" name="destinataire" id="destinataire">
-						<option class="form-control" label="Choisissez votre destinataire"></option>
-						
-					</select>
+				<option> Choisissez votre destinataire </option>
+				<?php
+				
+				while ($donnees = $reponse->fetch()){  
+					if($donnees['statut']=='Patient')
+					{
+					$reqfollow = $bdd->prepare('SELECT * FROM follow WHERE id_abonne=? AND id_suivi=?');
+					$reqfollow->execute(array($donnees['id_utilisateur'],$_SESSION['id_utilisateur']));
+					$follow_exist = $reqfollow->rowCount();
+					
+					if($follow_exist == 1)
+					{				
+					
+				?>
+					
+					<option value="<?php echo $donnees['id_utilisateur']; ?>"><?php echo $donnees['prenom']." ".$donnees['nom']; ?></option>
+				<?php  } } }
+			?>	
+			</select>
 					<br />
 			<label for="message">Votre message :</label><br />
 			<textarea name="message" id="message" rows="5" cols="50" /></textarea><br />
