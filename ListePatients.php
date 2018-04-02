@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -224,14 +224,21 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
               {
 				if($donnees['statut'] == "Patient")
 				{
-                ?>
-				  <tbody>
-					<tr>
-					  <td><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></td>
-					  <td><?php echo $donnees['date']; ?></td>
-					  <td><?php echo $donnees['email']; ?></td>
-					</tr>
-              <?php
+					$reqfollow = $bdd->prepare('SELECT * FROM follow WHERE id_abonne=? AND id_suivi=?');
+					$reqfollow->execute(array($donnees['id_utilisateur'],$_SESSION['id_utilisateur']));
+					$follow_exist = $reqfollow->rowCount();
+					
+					if($follow_exist == 1)
+					{
+					?>
+					  <tbody>
+						<tr>
+						  <td><a href="profil_patient.php?id_utilisateur=<?php echo $donnees['id_utilisateur']; ?>"><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></a></td>
+						  <td><?php echo $donnees['date']; ?></td>
+						  <td><?php echo $donnees['email']; ?></td>
+						</tr>
+				  <?php
+					}
 				}
             }
                ?>

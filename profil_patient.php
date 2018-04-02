@@ -11,18 +11,122 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
 	
-	if(isset($_POST['ajout_medecin']))
-	{
-		$reqmedecin = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
-		$reqmedecin->execute(array($_POST['medecin']));
-		$medecin = $reqmedecin->fetch();
-		
-		$addfollow = $bdd->prepare('INSERT INTO follow(id_abonne,id_suivi) VALUES (?,?)') ;
-		$addfollow->execute(array($_SESSION['id_utilisateur'],$medecin['id_utilisateur']));
-		
-	}
-?>
+	$reqmedecin = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
+	$reqmedecin->execute(array($_SESSION['id_utilisateur']));
+	$medecin = $reqmedecin->fetch();
 
+	if(isset($_POST['valider']))
+	{
+		if(isset($_FILES['profil']) AND !empty($_FILES['profil']['name']))
+		{
+			$tailleMax = 2097152;
+			$extensionValides = array('jpg','jpeg','gif','png');
+			if($_FILES['profil']['size']<= $tailleMax)
+			{
+				$extensionUpload = strtolower(substr(strrchr($_FILES['profil']['name'],'.'),1));
+				if(in_array($extensionUpload, $extensionValides))
+				{
+					$chemin = "membres/avatars/".$_SESSION['id_utilisateur'].".".$extensionUpload;
+					$resultat = move_uploaded_file($_FILES['profil']['tmp_name'],$chemin);
+					if($resultat)
+					{
+						$updatephoto = $bdd->prepare('UPDATE utilisateurs SET avatar=? WHERE id_utilisateur=?');
+						$updatephoto->execute(array($_SESSION['id_utilisateur'].".".$extensionUpload,$_SESSION['id_utilisateur']));
+						header("Location:profil.php?id_utilisateur=".$_SESSION['id_utilisateur']);
+					}
+					else
+					{
+						echo "Erreur pendant l'importation de la photo !";
+					}
+				}
+				else
+				{
+					echo "Votre photo doit être au format jpg, jpeg, gif ou png !";
+				}
+			}
+			else
+			{
+				echo "Votre photo ne doit pas dépasser 2Mo !";
+			}
+		}
+	}
+	
+	if(isset($_POST['valider_maj']))
+	{
+
+		if(isset($_POST['email']) AND !empty($_POST['email']))
+		{
+			$nouvmail = htmlspecialchars($_POST['email']);
+			$insertmail = $bdd->prepare("UPDATE utilisateurs SET email = ? WHERE id_utilisateur = ?");
+			$insertmail->execute(array($nouvmail,$_SESSION['id_utilisateur']));
+			header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+		if(isset($_POST['mdp']) AND !empty($_POST['mdp']) AND isset($_POST['mdp2']) AND !empty($_POST['mdp2']) AND isset($_POST['conf_mdp2']) AND !empty($_POST['conf_mdp2']))
+		{
+			$mdp = sha1($_POST['mdp']);
+			$mdp2 = sha1($_POST['mdp2']);
+			$conf_mdp2 = sha1($_POST['conf_mdp2']);
+			
+			if($mdp == $userinfo['mdp'])
+			{
+				if($mdp2 == $conf_mdp2)
+				{
+					$modifmdp=$bdd->prepare("UPDATE utilisateurs SET mdp=? WHERE id_utilisateur=?");
+					$modifmdp->execute(array($mdp2,$_SESSION['id_utilisateur']));
+					header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+				}
+			}
+		}
+		
+		if(!empty($_POST['date']))
+		{
+			$date = htmlspecialchars($_POST['date']);
+			$modifdate = $bdd->prepare("UPDATE utilisateurs SET date = ? WHERE id_utilisateur = ?");
+			$modifdate->execute(array($date,$_SESSION['id_utilisateur']));
+			header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+		if(!empty($_POST['lieu']))
+		{
+			$lieu = htmlspecialchars($_POST['lieu']);
+			$modiflieu = $bdd->prepare("UPDATE utilisateurs SET lieu_naissance = ? WHERE id_utilisateur = ?");
+			$modiflieu->execute(array($lieu,$_SESSION['id_utilisateur']));
+			header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+		if(!empty($_POST['numero_secu']))
+		{
+			$numero_secu = htmlspecialchars($_POST['numero_secu']);
+			$modifns = $bdd->prepare("UPDATE utilisateurs SET numero_secu = ? WHERE id_utilisateur = ?");
+			$modifns->execute(array($numero_secu,$_SESSION['id_utilisateur']));
+			header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+	}
+	
+	if(isset($_POST['valider_maj_allergie']) AND !empty($_POST['nom_allergie']))
+	{
+		$nom_allergie = htmlspecialchars($_POST['nom_allergie']);
+		$commentaire_allergie = htmlspecialchars($_POST['commentaire_allergie']);
+		$ajoutallergie = $bdd->prepare("INSERT INTO allergies(nom_allergie,commentaire,id_utilisateur) VALUES(?,?,?)");
+		$ajoutallergie->execute(array($nom_allergie,$commentaire_allergie,$_SESSION['id_utilisateur']));
+	}
+	
+	if(isset($_POST['valider_maj_pathologie']) AND !empty($_POST['nom_pathologie']))
+	{
+		$nom_pathologie = htmlspecialchars($_POST['nom_pathologie']);
+		$commentaire_pathologie = htmlspecialchars($_POST['commentaire_pathologie']);
+		$ajoutpathologie = $bdd->prepare("INSERT INTO pathologies(nom_pathologie,commentaire,id_utilisateur) VALUES(?,?,?)");
+		$ajoutpathologie->execute(array($nom_pathologie,$commentaire_pathologie,$_SESSION['id_utilisateur']));
+	}
+	
+	if(isset($_POST['valider_maj_vaccin']) AND !empty($_POST['nom_vaccin']))
+	{
+		$nom_vaccin = htmlspecialchars($_POST['nom_vaccin']);
+		$commentaire_vaccin = htmlspecialchars($_POST['commentaire_vaccin']);
+		$ajoutvaccin = $bdd->prepare("INSERT INTO vaccins(nom_vaccin,commentaire,id_utilisateur) VALUES(?,?,?)");
+		$ajoutvaccin->execute(array($nom_vaccin,$commentaire_vaccin,$_SESSION['id_utilisateur']));
+	}
+	
+	
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -33,6 +137,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <title>Page Patient</title>
   <!-- Fichier bootstrap CSS -->
 		<link href="bootstrap/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<!--php-->
+		<link rel="stylesheet" href="patient.php" />
     <!-- Polices -->
 		<link href="bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -46,7 +152,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <!-- Page level plugin CSS-->
   <link href="bootstrap/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link href="Patient.css" rel="stylesheet">
+  <link href="profil.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
@@ -61,50 +167,51 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
     </button>
     <div class="collapse navbar-collapse bg-secondary" id="navbarResponsive">
 	<!--Barre de navigation coté gauche-->
-      <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
+     <ul class="navbar-nav navbar-sidenav bg-secondary" id="exampleAccordion">
 	  <!--Tableau de bord-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tableau de bord">
-          <a class="nav-link" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="accueil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
-        <!--Mes relevés-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relevés">
-          <a class="nav-link" href="releves.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <!--Mes analyses-->
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Analyse">
+          <a class="nav-link" href="analyse_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Mes relevés</span>
+            <span class="nav-link-text">Mes analyses patients</span>
           </a>
         </li>
 		<!--Mes rendez-vous-->
 	   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Rendez vous">
-          <a class="nav-link" href="rdv_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="rdv_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Mes rendez-vous</span>
           </a>
         </li>
         <!--Mon profil-->
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
-          <a class="nav-link" href="profil.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+          <a class="nav-link" href="profil_docteur.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Mon Profil</span>
           </a>
         </li>
-        <!--Mes ordonnances-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ordonnances">
-          <a class="nav-link" href="ordonnance.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Mes ordonnances</span>
-          </a>
 
-        </li>
-        <!--Mes medecins-->
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Medecins">
-          <a class="nav-link" href="ListeMedecins.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
+        <!--Mes patients-->
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patients">
+          <a class="nav-link" href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">
             <i class="fa fa-fw fa-address-book"></i>
-            <span class="nav-link-text">Mes médecins</span>
+            <span class="nav-link-text">Mes patients</span>
           </a>
+        </li>
+      </ul>
 
+      <!--Bouton fleche du bas-->
+	  <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
         </li>
       </ul>
       <!--Bouton fleche du bas-->
@@ -199,7 +306,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </li>
         <!--Bienvenue-->
 		<li class="nav-item">
-          <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
+          <h3 class="text-white">Bienvenue <?php echo $medecin['prenom']; ?> !</h3>
         </li>
         <!--Bouton deconnexion-->
 		<li class="nav-item">
@@ -215,82 +322,155 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Liste Médecins</a>
+          <a href="#">Mon profil</a>
         </li>
-        <li class="breadcrumb-item active">Mes médecins</li>
+		<li class="breadcrumb-item active"> Mes informations</li>
       </ol>
-	  
-	  <h3> Ajouter un médecin </h3>
-	  <?php
-	  $reponse = $bdd->query('SELECT * FROM utilisateurs');
-	  ?>
-	  <form method="POST">
-		  <label>Médecin :</label>
-		  <select name="medecin">			
-			<?php
-				while ($donnees = $reponse->fetch()){  
-					if($donnees['statut']=='Docteur')
-					{
-				?>
-				<option value="<?php echo $donnees['id_utilisateur']; ?>"><?php echo $donnees['prenom']." ".$donnees['nom']; ?></option>
-			<?php } }
-			?>			
-		  </select>
-				
-		  <input type="submit" value="Ajouter" name="ajout_medecin" />
-			<br/><br/>
-	
-	  </form>	  
+
+      
+
+	   <!--Mon profil-->
+
+	 <section id="Profil">
+	<div class="container">
+
+		<h2 class="text-center text-uppercase text-secondary mb-0"><?php echo $userinfo['prenom']." ".$userinfo['nom']; ?></h2>
+
+		<div id="photo" >
+		<?php
+		if ($userinfo['avatar'] == NULL)
+		{
+		?>
+			<a class="nav-link"><img class="ronded-circle w-100 " src="membres/avatars/default.png" alt=""></a>
+		<?php
+		}
+		else
+		{
+		?>
+        <a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="rounded-circle w-100 " src="membres/avatars/<?php echo $userinfo['avatar']; ?>" alt=""></a>
+		<?php
+		}
+		?>
+	   </div>
+
+		<div class="row">
+		<div id="infos" >
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+			<?php echo '<br>'; ?>
+		Date de naissance : <?php echo $userinfo['date']; ?>
+		<hr class="barre-dark ">
+		</div>
+			<div class="lead text-left text-info col-lg-12 ml-auto">
+			Adresse e-mail : <?php echo $userinfo['email']; ?>
+			<hr class="barre-dark ">
+			</div>
+			<div class="lead text-left text-info col-lg-12 ml-auto">
+			Sexe :  <?php echo $userinfo['sexe']; ?>
+			<hr class="barre-dark">
+			</div>
 
 
-      <!-- Example DataTables Card-->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> Liste des médecins</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
-
-                </tr>
-              </thead>
-
-			<?php
-            $r = $bdd->query('SELECT * FROM utilisateurs');
-              while($donnees = $r->fetch())
-              {
-				if($donnees['statut'] == "Docteur")
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Lieu de naissance : <?php if($userinfo['lieu_naissance']==NULL) { echo "inconnu"; } else echo $userinfo['lieu_naissance']; ?>
+		<hr class="barre-dark ">
+		</div>
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Numéro de sécurité sociale : <?php if($userinfo['numero_secu']==NULL) { echo "inconnu"; } else echo $userinfo['numero_secu']; ?>
+		<hr class="barre-dark">
+		</div>
+		
+		<div class="row">
+		<div class="lead text-center col-lg-12 ml-auto">
+		
+		</div>
+		</div>
+		</div>
+		</div>
+		<div class="row">
+		<div id="pathologies">
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		
+		Allergies : 
+		<hr class="barre-dark ">
+		</div>
+		<div class="text-left col-lg-12 ml-auto">
+		<?php
+			$reqallergies = $bdd->prepare('SELECT * FROM allergies WHERE id_utilisateur = ?');
+			$reqallergies->execute(array($_SESSION['id_utilisateur']));
+			while($allergies = $reqallergies->fetch())
+			{
+			?>
+				Allergie : <?php echo $allergies['nom_allergie']."<br>"; 
+				if ($allergies['commentaire'] != NULL)
 				{
-					$reqfollow = $bdd->prepare('SELECT * FROM follow WHERE id_abonne=? AND id_suivi=?');
-					$reqfollow->execute(array($_SESSION['id_utilisateur'],$donnees['id_utilisateur']));
-					$follow_exist = $reqfollow->rowCount();
-					
-					if($follow_exist == 1)
-					{
-					?>
-					  <tbody>
-						<tr>
-						  <td><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></td>
-						  <td><?php echo $donnees['date']; ?></td>
-						  <td><?php echo $donnees['email']; ?></td>
-						</tr>
-				  <?php
-					}
+				?>
+				Commentaire : <?php echo $allergies['commentaire']; 
 				}
-            }
-               ?>
+				echo "<br>"."<br>";
+			}
+		
+		?>
+		</div>
 
-              </tbody>
-            </table>
-          </div>
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Pathologies : 
+		<hr class="barre-dark ">
+		</div>
+		<div class="text-left col-lg-12 ml-auto">
+		<?php
+			$reqpathologies = $bdd->prepare('SELECT * FROM pathologies WHERE id_utilisateur = ?');
+			$reqpathologies->execute(array($_SESSION['id_utilisateur']));
+			while($pathologies = $reqpathologies->fetch())
+			{
+			?>
+				Pathologie : <?php echo $pathologies['nom_pathologie']."<br>"; 
+				if ($pathologies['commentaire'] != NULL)
+				{
+				?>
+				Commentaire : <?php echo $pathologies['commentaire']; 
+				}
+				echo "<br>"."<br>";
+			}
+		
+		?>
+		</div>
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Mes vaccins : 
+		<hr class="barre-dark ">
+		</div>
+		<div class="text-left col-lg-12 ml-auto">
+		<?php
+			$reqvaccins = $bdd->prepare('SELECT * FROM vaccins WHERE id_utilisateur = ?');
+			$reqvaccins->execute(array($_SESSION['id_utilisateur']));
+			while($vaccins = $reqvaccins->fetch())
+			{
+			?>
+				Vaccin : <?php echo $vaccins['nom_vaccin']."<br>"; 
+				if ($vaccins['commentaire'] != NULL)
+				{
+				?>
+				Commentaire : <?php echo $vaccins['commentaire']; 
+				}
+				echo "<br>"."<br>";
+			}
+		
+		?>
+		
+		</div>
+		
+		
+		
+	</div>
+	<a href="ListePatients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">Retour</a>
+	</div>
+<br>
+		
+		<br><br>
+
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-      </div>
     </div>
+   </section>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -321,7 +501,9 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           </div>
         </div>
       </div>
-    </div>
+    </div>	
+	
+	
     <!-- Bootstrap core JavaScript-->
     <script src="bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -338,6 +520,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
     <script src="bootstrap/js/sb-admin-charts.min.js"></script>
   </div>
 </body>
+
 
 </html>
 
