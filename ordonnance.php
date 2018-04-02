@@ -247,7 +247,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		<div class="row">
 		<div class="lead text-center col-lg-12 ml-auto">
 		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
-		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj_vaccin"><i class="fa fa-fw fa-sign-out"></i>Ajouter un vaccin</a>
+		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj_ordonnance"><i class="fa fa-fw fa-sign-out"></i>Ajouter une ordonnance</a>
 		</div>
 		</div>
 		</div>
