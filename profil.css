@@ -1,6 +1,7 @@
 html {
   position: relative;
   min-height: 100%;
+  
 }
 #logo
 {
@@ -491,4 +492,32 @@ footer.sticky-footer {
 .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
   background-color: #1E6583;
   border-color: #1E6583;
+}
+#infos{
+	color:white;
+	width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+	background-color: #EEF3E9;
+	border-radius: 10px;
+	margin-top:15px;
+	margin-bottom:15px;
+}
+#pathologies{
+	text-align:left;
+	
+	color:#128f76;
+	font-family: 'Lato';
+	font-size: large;
+	width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+	background-color: #EEF3E9;
+	border-radius: 10px;
+	margin-top:15px;
+	margin-bottom:15px;
 }
