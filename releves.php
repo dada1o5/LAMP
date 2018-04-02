@@ -5,8 +5,10 @@ include ("/xampp/htdocs/Lamp/jpgraph-4.2.0/src/jpgraph.php");
 include ("/xampp/htdocs/Lamp/jpgraph-4.2.0/src/jpgraph_line.php");
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
-
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
+$analyse = $bdd->prepare('SELECT commentaire FROM 	analyse ');
+$analyse->execute();
+$analyseinfo = $analyse->fetch();
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
 	$getid = intval($_GET['id_utilisateur']);
@@ -39,6 +41,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
   <link href="bootstrap/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="Patient.css" rel="stylesheet">
+
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
@@ -218,6 +221,47 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
     width="100%"
 />
 
+<div id="container">
+<div class="lead text-left text-info col-lg-12 ml-auto">
+			<?php echo '<br>'; ?>
+		Commentaires du médecin: <?php echo $analyseinfo['commentaire']; ?>
+		<hr class="barre-dark ">
+		</div>
+         
+</div>
+<div class="row">
+		<div class="lead text-center col-lg-12 ml-auto">
+		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
+		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj"><i class="fa fa-fw fa-sign-out"></i>Mettre à jour mes infos</a>
+		</div>
+		</div>
+<!--Mettre à jour infos-->
+	<div class="modal fade" id="maj" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Mettre à jour vos informations</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			<label for="email">Résultat d'analyse</label><br />
+			<input type="mail" name="resultat" id="email" placeholder="" /><br />
+
+
+		 </div>
+		 </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj" id="valider_maj">Enregister</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
