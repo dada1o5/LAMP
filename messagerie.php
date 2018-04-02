@@ -10,6 +10,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
+	
+	
 ?>
 
 <!DOCTYPE html>
@@ -28,8 +30,6 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <!-- Plugin CSS -->
 		<link href="bootstrap/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
-		<!--php-->
-		<link rel="stylesheet" href="Patients.php" />
   <!-- Bootstrap core CSS-->
   <link href="bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -122,55 +122,12 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="dropdown-menu" aria-labelledby="messagesDropdown">
             <h6 class="dropdown-header">Nouveaux messages:</h6>
 			<!--Permet de diviser les élements-->
-           
+            
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="messagerie.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">Voir tout les messages</a>
+            <a class="dropdown-item small" href="messagerie.php">Voir tout les messages</a>
           </div>
         </li>
-        <!--Menu déroulant alertes-->
-		<li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-fw fa-bell"></i>
-            <span class="d-lg-none">
-			Alertes
-            </span>
-            <span class="indicator text-warning d-none d-lg-block">
-              <i class="fa fa-fw fa-circle"></i>
-            </span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-            <h6 class="dropdown-header">Nouvelles Alertes:</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <span class="text-success">
-                <strong>
-                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
-              </span>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <span class="text-danger">
-                <strong>
-                  <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
-              </span>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <span class="text-success">
-                <strong>
-                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
-              </span>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="#">Voir toutes les alertes</a>
-          </div>
-        </li>
+		
         <!--Bienvenue-->
 		<li class="nav-item">
           <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
@@ -189,48 +146,35 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Tableau de bord</a>
+          <a href="#">Mes message</a>
         </li>
-        <li class="breadcrumb-item active">Mon tableau de bord</li>
       </ol>
+		
 
-
-            <!-- Example Social Card-->
-            <div class="card mb-3">
-			<h2 class="text-center text-uppercase text-secondary mb-0">Mes actualités</h2>
-              <a href="#">
-                <img id="actualites" class="card-img-top img-fluid w-100" src="https://www.sitti.fr/themes/2015/08/s/sitti.fr/images/diapo/actualites/image1.jpg" alt="">
-              </a>
-              <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#"><?php echo $userinfo['prenom'];echo "   "; echo $userinfo['nom']  ?> </a></h6>
-                <p class="card-text small">Vos actualités récentes sur DocLink sont les suivantes :
-
-                </p>
-              </div>
-
-              <hr class="my-0">
-              <div class="card-body small bg-faded">
-                <div class="media">
-                  <img id="avatar" class="d-flex mr-3" src="Images/logo.png" alt="Medlink">
-                  <div class="media-body">
-                    <h6 class="mt-0 mb-1"><a href="#">DocLink</a></h6>Les articles qui nous ont interpellé ces derniers temps sont:
-                    <iframe
-					 src="https://www.20minutes.fr/sante/2244707-20180327-hepatite-b-pres-300-millions-personnes-touchees-monde"
-					 width="100%" height="400"
-					 sandbox>
-					  <p>
-						<a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/">
-						  Un lien à utiliser dans les cas où les navigateurs ne supportent
-						  pas les <i>iframes</i>.
-						</a>
-					  </p>
-					</iframe>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
+      <!-- Example DataTables Card-->
+      <div class="card mb-3">
+        <div class="card-header lead text-left text-info col-lg-12 ml-auto">
+          <i class="fa fa-fw fa-envelope"></i> Mes messages</div>
+        <div class="card-body">
+          		
+		
+		
+		
+		
+		</div>
+		
+		</div>
+		   <div class="card mb-3">
+        <div class="card-header lead text-left text-info col-lg-12 ml-auto">
+          <a class="text-white btn btn-secondary" data-toggle="modal" data-target="#nouveau_message"><i class="fa fa-fw fa-edit"></i> Écrire un nouveau message</a></div>
+		  
+		
+		</div>
+    </div>
+        
+       
+    </div>
+    
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -262,6 +206,38 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         </div>
       </div>
     </div>
+	<!--Popup nouveau message-->
+	<div class="modal fade" id="nouveau_message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Écrire un nouveau message</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			<label for="destinataire">Destinataire :</label><br />
+			<select class="form-control" name="destinataire" id="destinataire">
+						<option class="form-control" label="Choisissez votre destinataire"></option>
+						
+					</select>
+					<br />
+			<label for="message">Votre message :</label><br />
+			<textarea name="message" id="message" rows="5" cols="50" /></textarea><br />
+		 </div>
+		 </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_message" id="valider_message">Enregister</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	
     <!-- Bootstrap core JavaScript-->
     <script src="bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
