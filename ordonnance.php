@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -10,6 +10,14 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser = $bdd->prepare('SELECT * FROM utilisateurs WHERE id_utilisateur=?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
+	
+	if(isset($_POST['valider_maj_ordonnance']) AND !empty($_POST['nom_ordonnance']))
+	{
+		$nom_ordonnance = htmlspecialchars($_POST['nom_ordonnance']);
+		$commentaire_ordonnance = htmlspecialchars($_POST['commentaire_ordonnance']);
+		$ajoutordonnance = $bdd->prepare("INSERT INTO ordonnances(nom_ordonnance,commentaire,id_utilisateur) VALUES(?,?,?)");
+		$ajoutordonnance->execute(array($nom_ordonnance,$commentaire_ordonnance,$_SESSION['id_utilisateur']));
+	}
 ?>
 
 <!DOCTYPE html>
@@ -207,49 +215,45 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <a href="#">Mes ordonnances</a>
         </li>
       </ol>
+		
 
       <!-- Example DataTables Card-->
       <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
+        <div class="card-header lead text-left text-info col-lg-12 ml-auto">
+          <i class="fa fa-fw fa-file"></i> Mes Ordonnances</div>
         <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
-
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Titre</th>
-                  <th>Expéditeur</th>
-                  <th>Date</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>2011/04/25</td>
-
-                </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-
-                  <td>$170,750</td>
-                </tr>
-
-
-              </tbody>
-            </table>
+          		
+		
+		
+		<div class="text-left col-lg-12 ml-auto">
+		<?php
+			$reqordonnances = $bdd->prepare('SELECT * FROM ordonnances WHERE id_utilisateur = ?');
+			$reqordonnances->execute(array($_SESSION['id_utilisateur']));
+			while($ordonnances = $reqordonnances->fetch())
+			{
+			?>
+				Ordonnance : <?php echo $ordonnances['nom_ordonnance']."<br>"; 
+				if ($ordonnances['commentaire'] != NULL)
+				{
+				?>
+				Commentaire : <?php echo $ordonnances['commentaire']; 
+				}
+				echo "<br>"."<br>";
+			}
+		
+		?>
+		
+		</div>
+		<div class="row">
+		<div class="lead text-center col-lg-12 ml-auto">
+		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
+		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj_vaccin"><i class="fa fa-fw fa-sign-out"></i>Ajouter un vaccin</a>
+		</div>
+		</div>
+		</div>
           </div>
-        </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        
+        <div class="card-footer small text-muted">Gardez vos originaux d'ordonnances</div>
       </div>
     </div>
     <!-- /.container-fluid-->
@@ -279,6 +283,33 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
             <a class="btn btn-primary" href="deconnexion.php">Déconnexion</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!--Ordonnances-->
+	<div class="modal fade" id="maj_ordonnance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter une 	ordonnance</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			<label for="nom_ordonnance">Ordonnance :</label><br />
+			<input type="text" name="nom_ordonnance" id="nom_ordonnance" /><br />
+			<label for="commentaire_ordonnance">Commentaire :</label><br />
+			<textarea name="commentaire_ordonnance" id="commentaire_ordonnance" rows="5" cols="50" /></textarea><br />
+		 </div>
+		 </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj_ordonnance" id="valider_maj_ordonnance">Enregister</button>
           </div>
         </div>
       </div>

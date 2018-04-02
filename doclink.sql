@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 02 avr. 2018 à 16:32
+-- Généré le :  lun. 02 avr. 2018 à 17:32
 -- Version du serveur :  10.1.31-MariaDB
 -- Version de PHP :  7.2.3
 
@@ -41,7 +41,8 @@ CREATE TABLE `allergies` (
 
 INSERT INTO `allergies` (`id_allergie`, `nom_allergie`, `commentaire`, `id_utilisateur`) VALUES
 (1, 'acariens', 'gratte beaucoup', 10),
-(6, 'poils de chien', '', 10);
+(6, 'poils de chien', '', 10),
+(7, 'pollen', '', 13);
 
 -- --------------------------------------------------------
 
@@ -96,6 +97,27 @@ INSERT INTO `graph` (`col1`, `col2`, `id`, `id_utilisateur`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `ordonnances`
+--
+
+CREATE TABLE `ordonnances` (
+  `id_ordonnance` int(11) NOT NULL,
+  `nom_ordonnance` varchar(50) DEFAULT NULL,
+  `commentaire` text NOT NULL,
+  `id_utilisateur` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `ordonnances`
+--
+
+INSERT INTO `ordonnances` (`id_ordonnance`, `nom_ordonnance`, `commentaire`, `id_utilisateur`) VALUES
+(19, 'Doliprane', '1 boite', 13),
+(20, 'paracÃ©tamol', '2', 13);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `pathologies`
 --
 
@@ -112,9 +134,7 @@ CREATE TABLE `pathologies` (
 
 INSERT INTO `pathologies` (`id_pathologie`, `nom_pathologie`, `commentaire`, `id_utilisateur`) VALUES
 (1, 'mucovisidose', 'mÃ©dicaments toutes les 2 heures', 10),
-(2, 'sida', '', 10),
-(4, 'oi', 'bobo', 13),
-(5, 'oi', 'bobo', 13);
+(2, 'sida', '', 10);
 
 -- --------------------------------------------------------
 
@@ -154,8 +174,7 @@ INSERT INTO `utilisateurs` (`id_utilisateur`, `nom`, `prenom`, `date`, `email`, 
 (10, 'Tabel', 'Eugenie', '1996-01-22', 'et@hotmail.fr', 'bc19273ea1ff6d750da7631f9aece71d49940e3f', 'a5bc1d9b2ae74e7a8a249659c13b14f5c2eac13f', 'Patient', NULL, 'Paris', 1887348785, 'Femme'),
 (11, 'Potter', 'Harry', '1920-10-10', 'hp@hotmail.fr', 'e68b072303e1c28c4073630daeb803737a761e06', 'e68b072303e1c28c4073630daeb803737a761e06', 'Patient', NULL, NULL, NULL, 'Homme'),
 (12, 'Hallyday', 'Johnny', '1940-10-10', 'jh@hotmail.fr', 'a454492e42fd9810e577ebee548c7e59bd883bca', 'a454492e42fd9810e577ebee548c7e59bd883bca', 'Docteur', NULL, NULL, NULL, 'Homme'),
-(13, 'Audrain', 'Morgane', '1996-09-26', 'morgane.audrain@edu.ece.fr', 'd08cd6d1a8299aa4a1ff8d4f7223289a81f8ed83', 'd08cd6d1a8299aa4a1ff8d4f7223289a81f8ed83', 'Patient', NULL, NULL, NULL, 'Femme'),
-(14, 'Momo', 'Momo', '1996-09-26', 'ma@gmail.com', '1382244e1784be148fb78b24983c206ebc95928f', '1382244e1784be148fb78b24983c206ebc95928f', 'Docteur', NULL, NULL, NULL, 'Femme');
+(13, 'THEBAUD', 'David', '1996-10-15', 'da.thebaud@outlook.fr', '356a192b7913b04c54574d18c28d46e6395428ab', '356a192b7913b04c54574d18c28d46e6395428ab', 'Patient', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -190,7 +209,7 @@ INSERT INTO `vaccins` (`id_vaccin`, `nom_vaccin`, `commentaire`, `id_utilisateur
 ALTER TABLE `allergies`
   ADD PRIMARY KEY (`id_allergie`),
   ADD KEY `allergie_1` (`id_utilisateur`);
-
+  
 --
 -- Index pour la table `analyse`
 --
@@ -202,6 +221,13 @@ ALTER TABLE `analyse`
 --
 ALTER TABLE `graph`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `ordonnances`
+--
+ALTER TABLE `ordonnances`
+  ADD PRIMARY KEY (`id_ordonnance`),
+  ADD KEY `ordonnance_1` (`id_utilisateur`);
 
 --
 -- Index pour la table `pathologies`
@@ -231,7 +257,7 @@ ALTER TABLE `vaccins`
 -- AUTO_INCREMENT pour la table `allergies`
 --
 ALTER TABLE `allergies`
-  MODIFY `id_allergie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_allergie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `analyse`
@@ -246,16 +272,22 @@ ALTER TABLE `graph`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT pour la table `ordonnances`
+--
+ALTER TABLE `ordonnances`
+  MODIFY `id_ordonnance` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT pour la table `pathologies`
 --
 ALTER TABLE `pathologies`
-  MODIFY `id_pathologie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pathologie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `vaccins`
@@ -272,6 +304,12 @@ ALTER TABLE `vaccins`
 --
 ALTER TABLE `allergies`
   ADD CONSTRAINT `allergie_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateurs` (`id_utilisateur`);
+
+--
+-- Contraintes pour la table `ordonnances`
+--
+ALTER TABLE `ordonnances`
+  ADD CONSTRAINT `ordonnance_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateurs` (`id_utilisateur`);
 
 --
 -- Contraintes pour la table `pathologies`
