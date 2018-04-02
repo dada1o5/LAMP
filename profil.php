@@ -2,7 +2,7 @@
 
 session_start();
 
-$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', 'root');
+$bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
 
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
@@ -46,17 +46,82 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 			}
 		}
 	}
-$reqavatar = $bdd->prepare('SELECT avatar FROM utilisateurs WHERE id_utilisateur=?');
-$reqavatar->execute(array($_SESSION['id_utilisateur']));
-$avatar = $reqavatar->fetch();
-
-	if(isset($_POST['valider_maj']) AND !empty($_POST['email']))
+	
+	if(isset($_POST['valider_maj']))
 	{
-		$nouvmail = htmlspecialchars($_POST['email']);
-		$insertmail = $bdd->prepare("UPDATE utilisateurs SET email = ? WHERE id_utilisateur = ?");
-		$insertmail->execute(array($nouvmail,$_SESSION['id_utilisateur']));
-		header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+
+		if(isset($_POST['email']) AND !empty($_POST['email']))
+		{
+			$nouvmail = htmlspecialchars($_POST['email']);
+			$insertmail = $bdd->prepare("UPDATE utilisateurs SET email = ? WHERE id_utilisateur = ?");
+			$insertmail->execute(array($nouvmail,$_SESSION['id_utilisateur']));
+			header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+		if(isset($_POST['mdp']) AND !empty($_POST['mdp']) AND isset($_POST['mdp2']) AND !empty($_POST['mdp2']) AND isset($_POST['conf_mdp2']) AND !empty($_POST['conf_mdp2']))
+		{
+			$mdp = sha1($_POST['mdp']);
+			$mdp2 = sha1($_POST['mdp2']);
+			$conf_mdp2 = sha1($_POST['conf_mdp2']);
+			
+			if($mdp == $userinfo['mdp'])
+			{
+				if($mdp2 == $conf_mdp2)
+				{
+					$modifmdp=$bdd->prepare("UPDATE utilisateurs SET mdp=? WHERE id_utilisateur=?");
+					$modifmdp->execute(array($mdp2,$_SESSION['id_utilisateur']));
+					header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+				}
+			}
+		}
+		
+		if(!empty($_POST['date']))
+		{
+			$date = htmlspecialchars($_POST['date']);
+			$modifdate = $bdd->prepare("UPDATE utilisateurs SET date = ? WHERE id_utilisateur = ?");
+			$modifdate->execute(array($date,$_SESSION['id_utilisateur']));
+			header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+		if(!empty($_POST['lieu']))
+		{
+			$lieu = htmlspecialchars($_POST['lieu']);
+			$modiflieu = $bdd->prepare("UPDATE utilisateurs SET lieu_naissance = ? WHERE id_utilisateur = ?");
+			$modiflieu->execute(array($lieu,$_SESSION['id_utilisateur']));
+			header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+		if(!empty($_POST['numero_secu']))
+		{
+			$numero_secu = htmlspecialchars($_POST['numero_secu']);
+			$modifns = $bdd->prepare("UPDATE utilisateurs SET numero_secu = ? WHERE id_utilisateur = ?");
+			$modifns->execute(array($numero_secu,$_SESSION['id_utilisateur']));
+			header('Location:profil.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
 	}
+	
+	if(isset($_POST['valider_maj_allergie']) AND !empty($_POST['nom_allergie']))
+	{
+		$nom_allergie = htmlspecialchars($_POST['nom_allergie']);
+		$commentaire_allergie = htmlspecialchars($_POST['commentaire_allergie']);
+		$ajoutallergie = $bdd->prepare("INSERT INTO allergies(nom_allergie,commentaire,id_utilisateur) VALUES(?,?,?)");
+		$ajoutallergie->execute(array($nom_allergie,$commentaire_allergie,$_SESSION['id_utilisateur']));
+	}
+	
+	if(isset($_POST['valider_maj_pathologie']) AND !empty($_POST['nom_pathologie']))
+	{
+		$nom_pathologie = htmlspecialchars($_POST['nom_pathologie']);
+		$commentaire_pathologie = htmlspecialchars($_POST['commentaire_pathologie']);
+		$ajoutpathologie = $bdd->prepare("INSERT INTO pathologies(nom_pathologie,commentaire,id_utilisateur) VALUES(?,?,?)");
+		$ajoutpathologie->execute(array($nom_pathologie,$commentaire_pathologie,$_SESSION['id_utilisateur']));
+	}
+	
+	if(isset($_POST['valider_maj_vaccin']) AND !empty($_POST['nom_vaccin']))
+	{
+		$nom_vaccin = htmlspecialchars($_POST['nom_vaccin']);
+		$commentaire_vaccin = htmlspecialchars($_POST['commentaire_vaccin']);
+		$ajoutvaccin = $bdd->prepare("INSERT INTO vaccins(nom_vaccin,commentaire,id_utilisateur,date_vaccin) VALUES(?,?,?)");
+		$ajoutvaccin->execute(array($nom_vaccin,$commentaire_vaccin,$_SESSION['id_utilisateur']));
+	}
+	
+	
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -268,7 +333,7 @@ $avatar = $reqavatar->fetch();
 
 		<div id="photo" >
 		<?php
-		if ($avatar['avatar'] == NULL)
+		if ($userinfo['avatar'] == NULL)
 		{
 		?>
 			<a class="nav-link" data-toggle="modal" data-target="#profilModal"><img class="ronded-circle w-100 " src="membres/avatars/default.png" alt=""></a>
@@ -308,30 +373,105 @@ $avatar = $reqavatar->fetch();
 		Numéro de sécurité sociale : <?php if($userinfo['numero_secu']==NULL) { echo "inconnu"; } else echo $userinfo['numero_secu']; ?>
 		<hr class="barre-dark">
 		</div>
-
-
-		<div class="lead text-left text-info col-lg-12 ml-auto">
-		Mes allergies : <?php if($userinfo['allergies']==NULL) { echo "inconnu"; } else echo $userinfo['allergies']; ?>
-		<hr class="barre-dark ">
-		</div>
-
-		<div class="lead text-left text-info col-lg-12 ml-auto">
-		Mes pathologies : <?php if($userinfo['patho']==NULL) { echo "inconnu"; } else echo $userinfo['patho']; ?>
-		<hr class="barre-dark ">
-		</div>
-
-		<div class="lead text-left text-info col-lg-12 ml-auto">
-		Mes vaccins : <?php if($userinfo['vaccins']==NULL) { echo "inconnu"; } else echo $userinfo['vaccins']; ?>
-		<hr class="barre-dark ">
-		</div>
-	</div>
-<br>
+		
 		<div class="row">
 		<div class="lead text-center col-lg-12 ml-auto">
 		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
 		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj"><i class="fa fa-fw fa-sign-out"></i>Mettre à jour mes infos</a>
 		</div>
 		</div>
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Mes allergies : 
+		<hr class="barre-dark ">
+		</div>
+		
+		<?php
+			$reqallergies = $bdd->prepare('SELECT * FROM allergies WHERE id_utilisateur = ?');
+			$reqallergies->execute(array($_SESSION['id_utilisateur']));
+			while($allergies = $reqallergies->fetch())
+			{
+			?>
+				Allergie : <?php echo $allergies['nom_allergie']."<br>"; 
+				if ($allergies['commentaire'] != NULL)
+				{
+				?>
+				Commentaire : <?php echo $allergies['commentaire']; 
+				}
+				echo "<br>"."<br>";
+			}
+		
+		?>
+		
+		<div class="row">
+		<div class="lead text-center col-lg-12 ml-auto">
+		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
+		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj_allergie"><i class="fa fa-fw fa-sign-out"></i>Ajouter une allergie</a>
+		</div>
+		</div>
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Mes pathologies : 
+		<hr class="barre-dark ">
+		</div>
+		
+		<?php
+			$reqpathologies = $bdd->prepare('SELECT * FROM pathologies WHERE id_utilisateur = ?');
+			$reqpathologies->execute(array($_SESSION['id_utilisateur']));
+			while($pathologies = $reqpathologies->fetch())
+			{
+			?>
+				Pathologie : <?php echo $pathologies['nom_pathologie']."<br>"; 
+				if ($pathologies['commentaire'] != NULL)
+				{
+				?>
+				Commentaire : <?php echo $pathologies['commentaire']; 
+				}
+				echo "<br>"."<br>";
+			}
+		
+		?>
+		
+		<div class="row">
+		<div class="lead text-center col-lg-12 ml-auto">
+		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
+		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj_pathologie"><i class="fa fa-fw fa-sign-out"></i>Ajouter une pathologie</a>
+		</div>
+		</div>
+
+		<div class="lead text-left text-info col-lg-12 ml-auto">
+		Mes vaccins : 
+		<hr class="barre-dark ">
+		</div>
+		
+		<?php
+			$reqvaccins = $bdd->prepare('SELECT * FROM vaccins WHERE id_utilisateur = ?');
+			$reqvaccins->execute(array($_SESSION['id_utilisateur']));
+			while($vaccins = $reqvaccins->fetch())
+			{
+			?>
+				Vaccin : <?php echo $vaccins['nom_vaccin']."<br>"; 
+				if ($vaccins['commentaire'] != NULL)
+				{
+				?>
+				Commentaire : <?php echo $vaccins['commentaire']; 
+				}
+				echo "<br>"."<br>";
+			}
+		
+		?>
+		
+		
+		<div class="row">
+		<div class="lead text-center col-lg-12 ml-auto">
+		<!--<a class="nav-link" data-toggle="modal" data-target="#maj"><button type="submit" class="btn btn-primary btn-xl" name="maj" id="maj">Mettre à jour mes infos</button></a>-->
+		<a class="text-white btn btn-secondary" data-toggle="modal" data-target="#maj_vaccin"><i class="fa fa-fw fa-sign-out"></i>Ajouter un vaccin</a>
+		</div>
+		</div>
+		
+	</div>
+<br>
+		
 		<br><br>
 
         </div>
@@ -415,19 +555,10 @@ $avatar = $reqavatar->fetch();
 
 			<label for="date">Date de naissance :</label><br />
 			<input type="date" name="date" id="date" placeholder="<?php echo $userinfo['date'];  ?>" /><br />
-			<label for="sexe">Sexe :</label><br />
-			<input type="text" name="sexe" id="sexe" placeholder="<?php echo $userinfo['sexe'];  ?>" /><br />
 			<label for="lieu">Lieu de naissance :</label><br/>
-			<input type="text" name="lieu" id="lieu" <?php if($userinfo['lieu_naissance'] != NULL) { ?> placeholder="<?php $userinfo['lieu_naissance']; } ?>"><br/>
+			<input type="text" name="lieu" id="lieu" <?php if($userinfo['lieu_naissance'] != NULL) { ?> placeholder="<?php echo $userinfo['lieu_naissance']; } ?>"></br>
 			<label for="numero_secu">Numéro de sécurité social :</label><br/>
-			<input type="text" name="numero_secu" id="numero_secu" <?php if($userinfo['numero_secu'] != NULL) { ?> placeholder="<?php $userinfo['numero_secu']; } ?>"></br>
-			<label for="allergies">Mes allergies :</label><br />
-			<input type="text" name="allergies" id="allergies" placeholder="<?php echo $userinfo['allergies'];  ?>" /><br />
-			<label for="pathologies">Mes pathologies :</label><br />
-			<input type="pathologies" name="pathologies" id="pathologies" placeholder="<?php echo $userinfo['patho'];  ?>" /><br />
-			<label for="vaccins">Mes vaccins :</label><br />
-			<input type="vaccins" name="vaccins" id="vaccins" placeholder="<?php echo $userinfo['vaccins'];  ?>" /><br />
-
+			<input type="text" name="numero_secu" id="numero_secu" <?php if($userinfo['numero_secu'] != NULL) { ?> placeholder="<?php echo $userinfo['numero_secu']; } ?>"></br>
 
 		 </div>
 		 </div>
@@ -439,6 +570,86 @@ $avatar = $reqavatar->fetch();
         </div>
       </div>
     </div>
+	<div class="modal fade" id="maj_allergie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter une 	allergie</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			<label for="nom_allergie">Allergie :</label><br />
+			<input type="text" name="nom_allergie" id="nom_allergie" /><br />
+			<label for="commentaire_allergie">Commentaire :</label><br />
+			<textarea name="commentaire_allergie" id="commentaire_allergie" rows="5" cols="50" /></textarea><br />
+		 </div>
+		 </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj_allergie" id="valider_maj_allergie">Enregister</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	<div class="modal fade" id="maj_pathologie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter une 	pathologie</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			<label for="nom_pathologie">Pathologie :</label><br />
+			<input type="text" name="nom_pathologie" id="nom_pathologie" /><br />
+			<label for="commentaire_pathologie">Commentaire :</label><br />
+			<textarea name="commentaire_pathologie" id="commentaire_pathologie" rows="5" cols="50" /></textarea><br />
+		 </div>
+		 </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj_pathologie" id="valider_maj_pathologie">Enregister</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	<div class="modal fade" id="maj_vaccin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter un vaccin</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+			<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			<label for="nom_vaccin">Vaccin :</label><br />
+			<input type="text" name="nom_vaccin" id="nom_vaccin" /><br />
+			<label for="commentaire_vaccin">Commentaire :</label><br />
+			<textarea name="commentaire_vaccin" id="commentaire_vaccin" rows="5" cols="50" /></textarea><br />
+		 </div>
+		 </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj_vaccin" id="valider_maj_vaccin">Enregister</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	
     <!-- Bootstrap core JavaScript-->
     <script src="bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
