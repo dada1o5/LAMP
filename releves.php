@@ -14,14 +14,16 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
 	
-	$analyse1 = $bdd->query('SELECT * FROM graph ');
+	$analyse1 = $bdd->query('SELECT * FROM graphique ');
 	$analyse1->execute();
+$reqmedecin = $bdd->query('SELECT * FROM utilisateurs');
 
+	if(isset($_POST['select_docteur']))
+	{
+	$analyse = $bdd->prepare('SELECT * FROM analyse WHERE id_utilisateur=?');
+	$analyse->execute(array($_POST['medecin']));
 
-	
-	$analyse = $bdd->prepare('SELECT commentaire FROM 	analyse WHERE id_utilisateur=?');
-	$analyse->execute(array($_SESSION['id_utilisateur']));
-	$analyseinfo = $analyse->fetch();
+	}
 ?>
 
 <!DOCTYPE html>
@@ -132,12 +134,73 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           </a>
           <div class="dropdown-menu" aria-labelledby="messagesDropdown">
             <h6 class="dropdown-header">Nouveaux messages:</h6>
-			
+			<!--Permet de diviser les élements-->
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="messagerie_patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">Voir tout les messages</a>
+            <a class="dropdown-item" href="#">
+              <strong>David Miller</strong>
+              <span class="small float-right text-muted">11:21 AM</span>
+              <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <strong>Jane Smith</strong>
+              <span class="small float-right text-muted">11:21 AM</span>
+              <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <strong>John Doe</strong>
+              <span class="small float-right text-muted">11:21 AM</span>
+              <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let me know and we can discuss distribution.</div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item small" href="#">Voir tout les messages</a>
           </div>
         </li>
-        
+        <!--Menu déroulant alertes-->
+		<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-fw fa-bell"></i>
+            <span class="d-lg-none">
+			Alertes
+            </span>
+            <span class="indicator text-warning d-none d-lg-block">
+              <i class="fa fa-fw fa-circle"></i>
+            </span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+            <h6 class="dropdown-header">Nouvelles Alertes:</h6>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <span class="text-success">
+                <strong>
+                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
+              </span>
+              <span class="small float-right text-muted">11:21 AM</span>
+              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <span class="text-danger">
+                <strong>
+                  <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
+              </span>
+              <span class="small float-right text-muted">11:21 AM</span>
+              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <span class="text-success">
+                <strong>
+                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
+              </span>
+              <span class="small float-right text-muted">11:21 AM</span>
+              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item small" href="#">Voir toutes les alertes</a>
+          </div>
+        </li>
         <!--Bienvenue-->
 		<li class="nav-item">
           <h3 class="text-white">Bienvenue <?php echo $userinfo['prenom']; ?> !</h3>
@@ -158,8 +221,27 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         <li class="breadcrumb-item">
           <a href="#">Mes relevés</a>
         </li>
-
-      </ol>
+		</ol>
+<div class="dropdown">
+        <span class="caret"></span></button>
+		<form method="POST">
+        <label>Medecin :</label>
+		<select name="medecin">
+			<?php
+			while ($donnees = $reqmedecin->fetch()){
+			if($donnees['statut']=='Docteur')
+			{
+			?>
+			<option value="<?php echo $donnees['id_utilisateur']; ?>"><?php echo " ".$donnees['prenom']." ".$donnees['nom']."<br>"; ?></option>
+			<?php
+			}
+		}
+		?>
+		</select>
+		<input type="submit" value="Valider" name="select_docteur" />
+		 </form>	 
+      </div>
+     
    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -197,7 +279,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 <div id="container">
 <div class="lead text-left text-info col-lg-12 ml-auto">
 			<?php echo '<br>'; ?>
-		Commentaires du médecin: <?php echo $analyseinfo['commentaire']; ?>
+		Commentaires du médecin: <?php while($analyseinfo= $analyse->fetch()){echo $analyseinfo['commentaire']; }?>
 		<hr class="barre-dark ">
 		</div>
          
