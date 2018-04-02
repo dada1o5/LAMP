@@ -180,7 +180,7 @@ if(isset($_POST['connect']))
    <!-- S'inscrire -->
    <section id="inscrire">
 	<div class="container">
-		<h2 class="text-center text-uppercase text-secondary mb-0">S'incrire</h2>
+		<h2 class="text-center text-uppercase text-secondary mb-0">S'inscrire</h2>
 		<hr class="barre-dark mb-5">
 		<div class="row">
 		<div class="col-lg-8 mx-auto">
