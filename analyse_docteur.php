@@ -249,7 +249,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		$echo = "";
 		while ($Camp = $analyse->fetch(PDO::FETCH_ASSOC)) {
 		$nbr++;
-		$echo .= "['".$Camp['col2']."', ".$Camp['col1']."],";
+		$echo .= "['".$Camp['col1']."', ".$Camp['col2']."],";
 		}
 		echo substr($echo,0,-1); // on enlve la virgule de la fin
 		?>]);
@@ -258,8 +258,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         
 
         var options = {
-          title: 'Analyse ',
-          hAxis: {title: 'date',  titleTextStyle: {color: '#333'}},
+          title: 'Company Performance',
+          hAxis: {title: 'col1',  titleTextStyle: {color: '#333'}},
           
         };
 

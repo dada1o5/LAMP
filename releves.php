@@ -6,7 +6,9 @@ include ("/xampp/htdocs/Lamp/jpgraph-4.2.0/src/jpgraph_line.php");
 session_start();
 
 $bdd = new PDO('mysql:host=localhost;dbname=doclink', 'root', '');
-
+$analyse = $bdd->prepare('SELECT commentaire FROM 	analyse ');
+$analyse->execute();
+$analyseinfo = $analyse->fetch();
 if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 {
 	$getid = intval($_GET['id_utilisateur']);
@@ -17,11 +19,18 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 	$analyse1 = $bdd->query('SELECT * FROM graph ');
 	$analyse1->execute();
 
-
 	
-	$analyse = $bdd->prepare('SELECT commentaire FROM 	analyse WHERE id_utilisateur=?');
-	$analyse->execute(array($_SESSION['id_utilisateur']));
-	$analyseinfo = $analyse->fetch();
+	if(isset($_POST['valider_maj']))
+	{
+
+		if(isset($_POST['analyse']) AND !empty($_POST['analyse']))
+		{
+			$nouvanalyse = htmlspecialchars($_POST['analyse']);
+			$insertanalyse = $bdd->prepare("UPDATE graph SET col1 = ? WHERE id_utilisateur = ?");
+			$insertanalyse->execute(array($nouvanalyse,$_SESSION['id_utilisateur']));
+			header('Location:releves.php?id_utilisateur='.$_SESSION['id_utilisateur']);
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -235,7 +244,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
 		$echo = "";
 		while ($Camp = $analyse1->fetch(PDO::FETCH_ASSOC)) {
 		$nbr++;
-		$echo .= "['".$Camp['col2']."', ".$Camp['col1']."],";
+		$echo .= "['".$Camp['col1']."', ".$Camp['col2']."],";
 		}
 		echo substr($echo,0,-1); // on enlve la virgule de la fin
 		?>]);
@@ -244,8 +253,8 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
         
 
         var options = {
-          title: 'Analyse',
-          hAxis: {title: 'date',  titleTextStyle: {color: '#333'}},
+          title: 'Company Performance',
+          hAxis: {title: 'col1',  titleTextStyle: {color: '#333'}},
           
         };
 
@@ -291,7 +300,7 @@ if(isset($_GET['id_utilisateur']) AND $_GET['id_utilisateur']>0)
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
             <!--<a class="btn btn-primary" href="profil.php?id_utilisateur?">Enregistrer</a>-->
-			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj" id="valider_maj">Enregistrer</button>
+			<button type="submit" class="btn btn-primary btn-xl" name="valider_maj" id="valider_maj">Enregister</button>
           </div>
         </div>
       </div>

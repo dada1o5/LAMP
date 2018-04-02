@@ -4,7 +4,7 @@ try
 
 {
 
-    $bdd = new PDO('mysql:host=localhost;dbname=sante;charset=utf8', 'root', '');
+    $bdd = new PDO('mysql:host=localhost;dbname=sante;charset=utf8', 'root', 'root');
 
 }
 
