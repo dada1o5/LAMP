@@ -66,7 +66,7 @@ $analyse = $bdd->prepare('SELECT * FROM analyse WHERE id_utilisateur=?');
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Barre de Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top" id="mainNav">
-    <a class="navbar-brand" href="Patient.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
+    <a class="navbar-brand" href="Patients.php?id_utilisateur=<?php echo $_SESSION['id_utilisateur']; ?>">DocLink</a>
 	<div id="logo">
 			<img src="Images/logo.png" alt="Medlink" />
 		</div>
@@ -254,7 +254,7 @@ $analyse = $bdd->prepare('SELECT * FROM analyse WHERE id_utilisateur=?');
           <div class="modal-body">
 			<form method="post" enctype="multipart/form-data">
 			<div class="form-group">
-			<label for="analyse">entrée vos données d'analyse </label><br />
+			<label for="analyse">entrez vos données d'analyse </label><br />
 			<input type="text" name="analyse" id="analyse" placeholder="" /><br />
 
 
